@@ -4,7 +4,7 @@
 typedef struct {
 	int a;
 	int b;
-} Complex;
+} Personaje;
 
 
 
