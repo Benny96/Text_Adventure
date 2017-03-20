@@ -1,3 +1,5 @@
+#include "ComplexNumber.h"
+
 #include <stdio.h>
 
 int main (void)
