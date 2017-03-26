@@ -6,7 +6,4 @@ typedef struct {
 	int b;
 } Personaje;
 
-
-
-
 #endif
