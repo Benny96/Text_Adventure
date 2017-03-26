@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "personaje.h"
+
 #define MAX_LENGTH	20
 
 void clear_if_needed(char *str);
@@ -64,16 +66,103 @@ int main (void)
 	int x=0;
 	int y=0;
 
-	bool **a[3][3];
+
+	FILE * file;	
+	int num;
+	Personaje personajes[20];
+	int i;
+
+	file = fopen("personajes.dat", "rb");
+	
+	//leer la cantidad de elementos
+	num = fgetc(file);
+	//crear memoria para guardar los datos
+	//personajes = (Personaje*)malloc(num * sizeof(Personaje));	
+	//leer los datos binarios al array
+	fread(personajes, sizeof(Personaje), num, file);
+
+       
+	//leer la longitud de la cadena de char
+	//cerrar el fichero
+	fclose(file);
+
+
+	Personaje a;
+
+	printf("Introduce el nombre de tu personaje \n");
 
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
+
+	int aux;
+
+	printf("dfghj  %d\n",num);
+	int q=-1;
+
+	do{
+	
+	fgets(str, MAX_LENGTH, stdin);
+	clear_if_needed(str);
+	sscanf(str, "%s", frmt_str); //eliminar el \n final
+
+	//reservar la memoria justa para la cadena almacenada
+	//a.nombre = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
+	strcpy(a.nombre, frmt_str);
+
+	
+	aux=0;
+	for(int i=0;i<num;i++)
+	{
+		printf("iiiiiiiiiii  %d\n",i);
+		printf("ssssssssssss   %s\n", personajes[i].nombre);
+		q=i;
+		if(strcmp(a.nombre,personajes[i].nombre)==0)
+		{
+			printf("Introduce otro nombre este ya esta \n");
+			aux=1;
+		}
+	}
+
+	}while(aux==1);
+
+	printf("Introduce la contrasena  \n");
+
+	fgets(str, MAX_LENGTH, stdin);
+	clear_if_needed(str);
+	sscanf(str, "%s", frmt_str); //eliminar el \n final
+
+	//reservar la memoria justa para la cadena almacenada
+	//a.contrasena = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
+	strcpy(a.contrasena, frmt_str);
+
+		 //abrir fichero
+
+	a.x=0;
+	a.y=0;
+
+	printf("aaaaaaaaaaaaaaaaaaaaaaaaaaa%i\n", q);
+	personajes[q+1]=a;
+
+  	file = fopen("personajes.dat", "wb");
+  
+
+  	//escribir la cantidad de elementos
+  	fputc(num+1, file); 
+  	//escribir datos binarios
+  	fwrite(personajes, sizeof(Personaje), num+1, file);
+  
+  
+  	//cerrar fichero
+  	fclose(file);
+
+	//bool **a[3][3];
+
 
 	mapear(x,y);
 
 	do
 	{
-		printf("Introduce cosas \n");
+		printf("Desplazate hasta abajo a la derecha usando w ,a,s y d \n");
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
@@ -83,7 +172,7 @@ int main (void)
 		{
 			if(x==0)
 			{
-				printf("Mal x=0 \n");
+				printf("No se puede ir más para arriba \n");
 			}
 			else
 			{
@@ -94,7 +183,7 @@ int main (void)
 		{
 			if(y==0)
 			{
-				printf("Mal y=0 \n");
+				printf("No se puede ir más para la izquierda \n");
 			}
 			else
 			{
@@ -105,7 +194,7 @@ int main (void)
 		{
 				if(y==2)
 			{
-				printf("Mal y=2 \n");
+				printf("No se puede ir más para la derecha  \n");
 			}
 			else
 			{
@@ -116,7 +205,7 @@ int main (void)
 		{
 			if(x==2)
 			{
-				printf("Mal x=2 \n");
+				printf("No se puede ir más para abajo  \n");
 			}
 			else
 			{
@@ -130,8 +219,10 @@ int main (void)
 
 
 		mapear(x,y);
+
 	}while(!(x==2 &&y==2));
 
+	printf("Llegaste, fin del juego  \n");
 
 	
 	return 0;
