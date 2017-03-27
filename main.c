@@ -67,10 +67,16 @@ int main (void)
 	int y=0;
 
 
+
+	
 	FILE * file;	
 	int num;
 	Personaje personajes[20];
 	int i;
+	Personaje a;
+
+	char str[MAX_LENGTH];
+	char frmt_str[MAX_LENGTH];
 
 	file = fopen("personajes.dat", "rb");
 	
@@ -87,12 +93,32 @@ int main (void)
 	fclose(file);
 
 
-	Personaje a;
+	printf("Bienvenido \n");
 
+	int len;
+	int option;
+	do 
+	{
+		printf("Introduce:  \n");
+		printf(" 1 para crear un peraonaje  \n");
+		printf(" 2 para cargar un peraonaje  \n");
+
+		fgets(str, MAX_LENGTH, stdin);
+		clear_if_needed(str);
+		len = sscanf(str, "%d", &option);
+
+
+	}while(option!=2 && option!=1);
+
+	if(option==2)
+	{
+
+	}
+
+	
+	if(option==1)
+	{
 	printf("Introduce el nombre de tu personaje \n");
-
-	char str[MAX_LENGTH];
-	char frmt_str[MAX_LENGTH];
 
 	int aux;
 
@@ -156,9 +182,31 @@ int main (void)
   	fclose(file);
 
 	//bool **a[3][3];
+  }
+
+  do 
+	{
+		printf("Introduce:  \n");
+		printf(" 1 comenzar una partida  \n");
+		printf(" 2 para cargar una partida  \n");
+
+		fgets(str, MAX_LENGTH, stdin);
+		clear_if_needed(str);
+		len = sscanf(str, "%d", &option);
 
 
-	mapear(x,y);
+	}while(option!=2 && option!=1);
+
+
+	if(option==1)
+	{
+
+	}
+	if(option==2)
+	{
+
+	}
+	mapear(a.x,a.y);
 
 	do
 	{
@@ -170,46 +218,46 @@ int main (void)
 
 		if (strcmp(frmt_str, "w") == 0)
 		{
-			if(x==0)
+			if(a.x==0)
 			{
 				printf("No se puede ir más para arriba \n");
 			}
 			else
 			{
-				x--;
+				a.x--;
 			}
 		}
 		else if(strcmp(frmt_str, "a") == 0)
 		{
-			if(y==0)
+			if(a.y==0)
 			{
 				printf("No se puede ir más para la izquierda \n");
 			}
 			else
 			{
-				y--;
+				a.y--;
 			}
 		}
 		else if(strcmp(frmt_str, "d") == 0)
 		{
-				if(y==2)
+				if(a.y==2)
 			{
 				printf("No se puede ir más para la derecha  \n");
 			}
 			else
 			{
-				y++;
+				a.y++;
 			}
 		}
 		else if(strcmp(frmt_str, "s") == 0)
 		{
-			if(x==2)
+			if(a.x==2)
 			{
 				printf("No se puede ir más para abajo  \n");
 			}
 			else
 			{
-				x++;
+				a.x++;
 			}
 		}
 		else
@@ -218,9 +266,9 @@ int main (void)
 		}
 
 
-		mapear(x,y);
+		mapear(a.x,a.y);
 
-	}while(!(x==2 &&y==2));
+	}while(!(a.x==2 && a.y==2));
 
 	printf("Llegaste, fin del juego  \n");
 
