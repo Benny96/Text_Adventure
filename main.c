@@ -112,17 +112,77 @@ int main (void)
 
 	if(option==2)
 	{
+	printf("Introduce el nombre de tu personaje \n");
 
+	int aux;
+
+	int q=-1;
+
+	do{
+	
+	fgets(str, MAX_LENGTH, stdin);
+	clear_if_needed(str);
+	sscanf(str, "%s", frmt_str); //eliminar el \n final
+
+	
+
+	
+	aux=0;
+
+	printf("El numero es %i\n",num  );
+
+	for(int i=0;i<(num+1);i++)
+	{
+		
+		if(strcmp(frmt_str,personajes[i].nombre)==0)
+		{
+			q=i;
+			printf("Perfecto  \n");
+			aux=1;
+		}
+
+	}
+
+	if(aux!=1)
+		printf("El nombre no existe introduce otro  \n");
+
+	}while(aux!=1);
+
+
+	printf("Introduce tu contraseña \n");
+
+
+	do{
+	
+	fgets(str, MAX_LENGTH, stdin);
+	clear_if_needed(str);
+	sscanf(str, "%s", frmt_str); //eliminar el \n final
+
+	//reservar la memoria justa para la cadena almacenada
+	//a.nombre = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
+	
+	
+	
+	
+
+	if(strcmp(frmt_str,personajes[i].contrasena)!=0)
+		printf("La contrasena es incorrecta introduce otra  \n");
+
+	}while(strcmp(frmt_str,personajes[q].contrasena)!=0);
+
+
+	a=personajes[q];
 	}
 
 	
 	if(option==1)
 	{
+	
+
 	printf("Introduce el nombre de tu personaje \n");
 
 	int aux;
 
-	printf("dfghj  %d\n",num);
 	int q=-1;
 
 	do{
@@ -139,14 +199,14 @@ int main (void)
 	aux=0;
 	for(int i=0;i<num;i++)
 	{
-		printf("iiiiiiiiiii  %d\n",i);
-		printf("ssssssssssss   %s\n", personajes[i].nombre);
 		q=i;
 		if(strcmp(a.nombre,personajes[i].nombre)==0)
 		{
-			printf("Introduce otro nombre este ya esta \n");
+			
+			printf("Este nombre ya existe  \n");
 			aux=1;
 		}
+
 	}
 
 	}while(aux==1);
@@ -163,23 +223,22 @@ int main (void)
 
 		 //abrir fichero
 
-	a.x=0;
-	a.y=0;
+	a.nump=0;
 
-	printf("aaaaaaaaaaaaaaaaaaaaaaaaaaa%i\n", q);
+	//a.nump=2;
+
+	/*a.a[0]=1;
+	a.a[1]=1;
+	a.a[2]=2;
+
+	a.b[2]=0;
+	a.b[1]=1;
+	a.b[0]=2;
+	*/
+
 	personajes[q+1]=a;
 
-  	file = fopen("personajes.dat", "wb");
-  
-
-  	//escribir la cantidad de elementos
-  	fputc(num+1, file); 
-  	//escribir datos binarios
-  	fwrite(personajes, sizeof(Personaje), num+1, file);
-  
-  
-  	//cerrar fichero
-  	fclose(file);
+  	
 
 	//bool **a[3][3];
   }
@@ -200,21 +259,63 @@ int main (void)
 
 	if(option==1)
 	{
+		a.nump++;
+		a.x=0;
+		a.y=0;
 
 	}
 	if(option==2)
 	{
+		if(a.nump!=0)
+		{
 
+			int i;
+			for(i=0;i<a.nump;i++)
+			{
+				printf("Intrdoduce %d para iniciar la partida en la que la posición era x= %d e y= %d \n",i, a.a[i],a.b[i]);
+				
+			}
+			int hola;
+			do
+			{
+				printf("Introduce una opcion  \n");
+				fgets(str, MAX_LENGTH, stdin);
+				clear_if_needed(str);
+				sscanf(str, "%d", &hola);
+
+				if(hola>a.nump || hola<0)
+					printf("No es una opcion valida  \n");
+
+			}while(hola>a.nump || hola<0);
+
+			a.x=a.a[hola];
+			a.y=a.b[hola];
+		}
+		else
+		{
+			printf("No hay partidas que mostrar \n");
+
+		}
+		
 	}
+
+
 	mapear(a.x,a.y);
 
 	do
 	{
-		printf("Desplazate hasta abajo a la derecha usando w ,a,s y d \n");
+		printf("Desplazate hasta abajo a la derecha usando w ,a,s y d , g para guardar \n");
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
 		sscanf(str, "%s", frmt_str);
+
+		if (strcmp(frmt_str, "g") == 0)
+		{
+			a.a[a.nump]=a.x;
+			a.a[a.nump]=a.y;
+			break;
+		}
 
 		if (strcmp(frmt_str, "w") == 0)
 		{
@@ -272,7 +373,19 @@ int main (void)
 
 	printf("Llegaste, fin del juego  \n");
 
-	
+	file = fopen("personajes.dat", "wb");
+  
+
+  	//escribir la cantidad de elementos
+  	fputc(num+1, file); 
+  	//escribir datos binarios
+  	fwrite(personajes, sizeof(Personaje), num+1, file);
+  
+  
+  	//cerrar fichero
+  	fclose(file);
+
+
 	return 0;
 }
 
