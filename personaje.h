@@ -1,8 +1,6 @@
 #ifndef PERSONAJE_H_
 #define PERSONAJE_H_
 
-#include <string.h>
-
 typedef struct {
 	int nump;
 	int x;

@@ -72,6 +72,7 @@ int main (void)
 	FILE * file;	
 	int num;
 	Personaje personajes[20];
+	//Personaje *personajes;
 	int i;
 	Personaje a;
 
@@ -93,26 +94,29 @@ int main (void)
 	fclose(file);
 
 
-	printf("Bienvenido \n");
+	printf("Bienvenido! \n");
 
 	int len;
 	int option;
 	do 
 	{
 		printf("Introduce:  \n");
-		printf(" 1 para crear un peraonaje  \n");
-		printf(" 2 para cargar un peraonaje  \n");
+		printf(" 1.- Crear un personaje.\n");
+		printf(" 2.- Cargar un personaje.\n");
 
-		fgets(str, MAX_LENGTH, stdin);
+		fgets(str, MAX_LENGTH, stdin); //No seria suficiente con poner 2 caracteres(el numero y la \0) como max_length en vez de 20?
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
 
 
 	}while(option!=2 && option!=1);
 
+
+	//Aqui empieza la opcion de cargar un personaje
 	if(option==2)
 	{
-	printf("Introduce el nombre de tu personaje \n");
+	printf("Ha seleccionado cargarun personaje.\n");
+	printf("Introduce el nombre de tu personaje: \n");
 
 	int aux;
 
@@ -123,13 +127,10 @@ int main (void)
 	fgets(str, MAX_LENGTH, stdin);
 	clear_if_needed(str);
 	sscanf(str, "%s", frmt_str); //eliminar el \n final
-
-	
-
 	
 	aux=0;
 
-	printf("El numero es %i\n",num  );
+	printf("El numero es %i\n", num);
 
 	for(int i=0;i<(num+1);i++)
 	{
@@ -137,19 +138,19 @@ int main (void)
 		if(strcmp(frmt_str,personajes[i].nombre)==0)
 		{
 			q=i;
-			printf("Perfecto  \n");
+			printf("Perfecto\n");
 			aux=1;
 		}
 
 	}
 
 	if(aux!=1)
-		printf("El nombre no existe introduce otro  \n");
+		printf("El nombre no existe, introduce otro.\n");
 
 	}while(aux!=1);
 
 
-	printf("Introduce tu contraseña \n");
+	printf("Introduce tu contraseña: \n");
 
 
 	do{
@@ -166,20 +167,23 @@ int main (void)
 	
 
 	if(strcmp(frmt_str,personajes[i].contrasena)!=0)
-		printf("La contrasena es incorrecta introduce otra  \n");
+		printf("La contrasenya es incorrecta, introduce otra.  \n");
 
 	}while(strcmp(frmt_str,personajes[q].contrasena)!=0);
 
 
 	a=personajes[q];
 	}
+	//Aqui acaba la opcion de cargar un personaje
+	
+
 
 	
+	//Aqui empieza la opcion de crear un personaje
 	if(option==1)
 	{
-	
-
-	printf("Introduce el nombre de tu personaje \n");
+	printf("Ha seleccionado crear un personaje.\n");
+	printf("Introduce el nombre de tu personaje: \n");
 
 	int aux;
 
@@ -203,7 +207,7 @@ int main (void)
 		if(strcmp(a.nombre,personajes[i].nombre)==0)
 		{
 			
-			printf("Este nombre ya existe  \n");
+			printf("Este nombre ya existe, introduce otro.\n");
 			aux=1;
 		}
 
@@ -211,7 +215,7 @@ int main (void)
 
 	}while(aux==1);
 
-	printf("Introduce la contrasena  \n");
+	printf("Introduce la contrasenya: \n");
 
 	fgets(str, MAX_LENGTH, stdin);
 	clear_if_needed(str);
@@ -221,7 +225,7 @@ int main (void)
 	//a.contrasena = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
 	strcpy(a.contrasena, frmt_str);
 
-		 //abrir fichero
+		
 
 	a.nump=0;
 
@@ -242,6 +246,11 @@ int main (void)
 
 	//bool **a[3][3];
   }
+  //Aqui acaba la opcion de crear un personaje
+
+
+
+
 
   do 
 	{
@@ -302,9 +311,11 @@ int main (void)
 
 	mapear(a.x,a.y);
 
+
+
 	do
 	{
-		printf("Desplazate hasta abajo a la derecha usando w ,a,s y d , g para guardar \n");
+		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
@@ -321,7 +332,7 @@ int main (void)
 		{
 			if(a.x==0)
 			{
-				printf("No se puede ir más para arriba \n");
+				printf("No se puede ir mas para arriba.\n");
 			}
 			else
 			{
@@ -332,7 +343,7 @@ int main (void)
 		{
 			if(a.y==0)
 			{
-				printf("No se puede ir más para la izquierda \n");
+				printf("No se puede ir mas para la izquierda.\n");
 			}
 			else
 			{
@@ -343,7 +354,7 @@ int main (void)
 		{
 				if(a.y==2)
 			{
-				printf("No se puede ir más para la derecha  \n");
+				printf("No se puede ir mas para la derecha.\n");
 			}
 			else
 			{
@@ -363,7 +374,7 @@ int main (void)
 		}
 		else
 		{
-			printf("Mal \n");
+			printf("Introduce una tecla valida.\n");
 		}
 
 
