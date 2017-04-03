@@ -71,9 +71,11 @@ int main (void)
 	
 	FILE * file;	
 	int num;
-	Personaje personajes[20];
+	Personaje *personajes;
+	Personaje *listan;
 	//Personaje *personajes;
 	int i;
+	int q;
 	Personaje a;
 
 	char str[MAX_LENGTH];
@@ -83,8 +85,12 @@ int main (void)
 	
 	//leer la cantidad de elementos
 	num = fgetc(file);
+
+	printf("El numero %i\n", num);
+
+	
 	//crear memoria para guardar los datos
-	//personajes = (Personaje*)malloc(num * sizeof(Personaje));	
+	personajes = (Personaje*)malloc(num * sizeof(Personaje));	
 	//leer los datos binarios al array
 	fread(personajes, sizeof(Personaje), num, file);
 
@@ -111,7 +117,8 @@ int main (void)
 
 	}while(option!=2 && option!=1);
 
-
+	memset(str, 0, 20);
+	
 	//Aqui empieza la opcion de cargar un personaje
 	if(option==2)
 	{
@@ -120,7 +127,7 @@ int main (void)
 
 	int aux;
 
-	int q=-1;
+	 q=-1;
 
 	do{
 	
@@ -132,14 +139,16 @@ int main (void)
 
 	printf("El numero es %i\n", num);
 
-	for(int i=0;i<(num+1);i++)
+	for(int i=0;i<num;i++)
 	{
-		
+		printf("asdf%i\n", i);
 		if(strcmp(frmt_str,personajes[i].nombre)==0)
 		{
+			printf("%i\n", i);
 			q=i;
 			printf("Perfecto\n");
 			aux=1;
+			break;
 		}
 
 	}
@@ -149,7 +158,8 @@ int main (void)
 
 	}while(aux!=1);
 
-
+	memset(str, 0, 20);
+	memset(frmt_str, 0, 20);
 	printf("Introduce tu contraseña: \n");
 
 
@@ -166,13 +176,17 @@ int main (void)
 	
 	
 
-	if(strcmp(frmt_str,personajes[i].contrasena)!=0)
+	if(strcmp(frmt_str,personajes[q].contrasena)!=0)
 		printf("La contrasenya es incorrecta, introduce otra.  \n");
 
 	}while(strcmp(frmt_str,personajes[q].contrasena)!=0);
 
+	memset(str, 0, 20);
+	memset(frmt_str, 0, 20);
 
 	a=personajes[q];
+
+	
 	}
 	//Aqui acaba la opcion de cargar un personaje
 	
@@ -187,7 +201,7 @@ int main (void)
 
 	int aux;
 
-	int q=-1;
+	q=-1;
 
 	do{
 	
@@ -215,6 +229,9 @@ int main (void)
 
 	}while(aux==1);
 
+	memset(str, 0, 20);
+	memset(frmt_str, 0, 20);
+	
 	printf("Introduce la contrasenya: \n");
 
 	fgets(str, MAX_LENGTH, stdin);
@@ -225,6 +242,8 @@ int main (void)
 	//a.contrasena = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
 	strcpy(a.contrasena, frmt_str);
 
+	memset(str, 0, 20);
+	memset(frmt_str, 0, 20);
 		
 
 	a.nump=0;
@@ -240,7 +259,18 @@ int main (void)
 	a.b[0]=2;
 	*/
 
-	personajes[q+1]=a;
+	if (num==-1)
+		listan = (Personaje*)malloc((num+2) * sizeof(Personaje));
+	else
+		listan = (Personaje*)malloc((num+1) * sizeof(Personaje));
+
+	for(int i=0;i<=num;i++)
+	{
+		listan[i]=personajes[i];
+	}
+	listan[num+1]=a;
+
+	num++;
 
   	
 
@@ -251,7 +281,7 @@ int main (void)
 
 
 
-
+option=3;
   do 
 	{
 		printf("Introduce:  \n");
@@ -388,9 +418,14 @@ int main (void)
   
 
   	//escribir la cantidad de elementos
-  	fputc(num+1, file); 
+  	printf("numero final %i\n",num );
+  	if(num==0)
+  		num++;
+  	printf("numero final %i\n",num );
+  	fputc(num, file); 
   	//escribir datos binarios
-  	fwrite(personajes, sizeof(Personaje), num+1, file);
+  	fwrite(listan, sizeof(Personaje), num, file);
+  
   
   
   	//cerrar fichero
