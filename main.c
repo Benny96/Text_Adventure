@@ -258,17 +258,16 @@ int main (void)
 	a.b[1]=1;
 	a.b[0]=2;
 	*/
+	if(num==-1)
+  		num++;
+  	
+  			listan = (Personaje*)malloc((num+1) * sizeof(Personaje));
 
-	if (num==-1)
-		listan = (Personaje*)malloc((num+2) * sizeof(Personaje));
-	else
-		listan = (Personaje*)malloc((num+1) * sizeof(Personaje));
-
-	for(int i=0;i<=num;i++)
+	for(int i=0;i<num;i++)
 	{
 		listan[i]=personajes[i];
 	}
-	listan[num+1]=a;
+	listan[num]=a;
 
 	num++;
 
