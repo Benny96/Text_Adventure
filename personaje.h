@@ -15,3 +15,4 @@ typedef struct {
 //void personaje();
 
 #endif
+printf("---------\n");
