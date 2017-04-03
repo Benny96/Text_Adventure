@@ -101,7 +101,7 @@ int main (void)
 	do 
 	{
 		printf("Introduce:  \n");
-		printf(" 1.- Crear un personaje.\n");
+		printf(" 1.-  Crear un personaje.\n");
 		printf(" 2.- Cargar un personaje.\n");
 
 		fgets(str, MAX_LENGTH, stdin); //No seria suficiente con poner 2 caracteres(el numero y la \0) como max_length en vez de 20?
