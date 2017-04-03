@@ -99,6 +99,11 @@ int main (void)
 	//cerrar el fichero
 	fclose(file);
 
+	//Un for que saque por pantalla los nombres.
+	for (int i = 0; i < num; i++)
+	{
+		printf("%s \n", personajes[i].nombre);
+	}
 
 	printf("Bienvenido! \n");
 
