@@ -68,7 +68,6 @@ int main (void)
 
 
 
-	
 	FILE * file;	
 	int num;
 	Personaje *personajes;
@@ -86,7 +85,6 @@ int main (void)
 	//leer la cantidad de elementos
 	num = fgetc(file);
 
-	printf("El numero %i\n", num);
 
 	
 	//crear memoria para guardar los datos
@@ -119,8 +117,11 @@ int main (void)
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
 
+	printf("El numero %i\n", num);
+		if(num==-1)
+			printf(" No hay personajes\n");
 
-	}while(option!=2 && option!=1);
+	}while( (option!=1 && num==-1 ) || (option!=2 && option!=1) );
 
 	memset(str, 0, 20);
 	
@@ -189,7 +190,16 @@ int main (void)
 	memset(str, 0, 20);
 	memset(frmt_str, 0, 20);
 
-	a=personajes[q];
+		if(num==-1)
+  		num++;
+  	
+  			listan = (Personaje*)malloc((num+1) * sizeof(Personaje));
+
+	for(int i=0;i<num;i++)
+	{
+		listan[i]=personajes[i];
+	}
+	a=listan[q];
 
 	
 	}
@@ -343,6 +353,59 @@ option=3;
 	}
 
 
+	char hist[2][2][20];
+
+	
+
+
+int o;
+int p;
+int mn=0;
+	FILE* fd1;
+  fd1 = fopen("historia.txt", "r");
+  char str2[20];
+  char frmt_str2[20];
+  while(fgets(str2, 20, fd1)) {
+    int d;
+    if(sscanf(str2, "%d", &d) == 0) {
+      printf("Not a number!\n");
+      sscanf(str2, "%s", frmt_str2);
+    }
+    else {
+      printf("Number is: %d\n", d);
+    }
+
+    if(mn==0)
+    {
+    	o=d;
+    	mn++;
+    }
+
+    else if(mn==1)
+    {
+    	p=d;
+    	mn++;
+    }
+    else if(mn==2)
+    {
+    	mn=0;
+    	printf("oooooooo %i\n", o);
+    	printf("ppppppp %i\n", p);
+
+    	strncpy(hist[o][p], frmt_str2, 20);
+
+    	memset(frmt_str2, 0, 20);
+    }
+    clear_if_needed(str2);
+
+}
+
+if(option=1)
+{
+	a.x=0;
+	a.y=0;
+}
+printf("Termine\n");
 	mapear(a.x,a.y);
 
 
@@ -350,6 +413,11 @@ option=3;
 	do
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
+
+		printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
+
+		printf("xxxxxxxxxxxxx %i\n", a.x);
+    	printf("yyyyyyyyyyy %i\n", a.y);
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
@@ -411,7 +479,6 @@ option=3;
 			printf("Introduce una tecla valida.\n");
 		}
 
-
 		mapear(a.x,a.y);
 
 	}while(!(a.x==2 && a.y==2));
@@ -435,7 +502,8 @@ option=3;
   	//cerrar fichero
   	fclose(file);
 
-
+  	free(personajes);
+  	free(listan);
 	return 0;
 }
 
