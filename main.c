@@ -101,6 +101,8 @@ int main (void)
 	for (int i = 0; i < num; i++)
 	{
 		printf("%s \n", personajes[i].nombre);
+		printf("%i \n", personajes[i].nump);
+
 	}
 
 	printf("Bienvenido! \n");
@@ -190,10 +192,8 @@ int main (void)
 	memset(str, 0, 20);
 	memset(frmt_str, 0, 20);
 
-		if(num==-1)
-  		num++;
   	
-  			listan = (Personaje*)malloc((num+1) * sizeof(Personaje));
+  			listan = (Personaje*)malloc((num) * sizeof(Personaje));
 
 	for(int i=0;i<num;i++)
 	{
@@ -261,7 +261,7 @@ int main (void)
 	memset(frmt_str, 0, 20);
 		
 
-	a.nump=0;
+	a.nump=-1;
 
 	//a.nump=2;
 
@@ -282,6 +282,8 @@ int main (void)
 	{
 		listan[i]=personajes[i];
 	}
+
+	q=num;
 	listan[num]=a;
 
 	num++;
@@ -306,24 +308,29 @@ option=3;
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
 
+		printf("numpppppp       444444444444444       pppppppppp %i\n", a.nump);
 
-	}while(option!=2 && option!=1);
+	}while((option!=1 && a.nump==-1 ) || (option!=2 && option!=1));
 
 
 	if(option==1)
 	{
-		a.nump++;
+
+		printf("numpppppp       222222222222       pppppppppp %i\n", a.nump);
+
+
+		printf("numpppppp        3333333333333333      pppppppppp %i\n", a.nump);
 		a.x=0;
 		a.y=0;
 
 	}
 	if(option==2)
 	{
-		if(a.nump!=0)
+		if(a.nump!=-1)
 		{
 
 			int i;
-			for(i=0;i<a.nump;i++)
+			for(i=0;i<=a.nump;i++)
 			{
 				printf("Intrdoduce %d para iniciar la partida en la que la posición era x= %d e y= %d \n",i, a.a[i],a.b[i]);
 				
@@ -340,6 +347,8 @@ option=3;
 					printf("No es una opcion valida  \n");
 
 			}while(hola>a.nump || hola<0);
+
+			printf("hola       %i  \n",hola );
 
 			a.x=a.a[hola];
 			a.y=a.b[hola];
@@ -358,7 +367,7 @@ option=3;
 	
 
 
-int o;
+/*int o;
 int p;
 int mn=0;
 	FILE* fd1;
@@ -400,11 +409,13 @@ int mn=0;
 
 }
 
+*/
 if(option=1)
 {
 	a.x=0;
 	a.y=0;
 }
+
 printf("Termine\n");
 	mapear(a.x,a.y);
 
@@ -414,7 +425,7 @@ printf("Termine\n");
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
 
-		printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
+		//printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
 
 		printf("xxxxxxxxxxxxx %i\n", a.x);
     	printf("yyyyyyyyyyy %i\n", a.y);
@@ -425,8 +436,33 @@ printf("Termine\n");
 
 		if (strcmp(frmt_str, "g") == 0)
 		{
+
+			a.nump=a.nump+1;
+
+			printf("numpppppppppppppppp %i\n", a.nump);
+
+			printf("nombreeeeee %s\n", a.nombre);
+
 			a.a[a.nump]=a.x;
-			a.a[a.nump]=a.y;
+			a.b[a.nump]=a.y;
+
+			printf("nmmmmmmmmmmmmmmmmmm %i\n", num);
+			printf("qqqqqqqqqqqqqqq %i\n", q);
+
+			listan[q].nump=a.nump;
+			listan[q].a[a.nump]=a.x;
+			listan[q].b[a.nump]=a.y;
+			strncpy(listan[q].contrasena, a.contrasena, 20);
+			strncpy(listan[q].nombre, a.nombre, 20);
+
+
+			//listan[num].contrasena=a.contrasena;
+			//listan[num].nombre=a.nombre;
+			listan[q].x=a.x;
+			listan[q].y=a.y;
+
+			printf("111111111111111 numpppppppppppppppp %i\n", listan[q].nump);
+
 			break;
 		}
 
