@@ -77,6 +77,9 @@ int main (void)
 	int q;
 	Personaje a;
 
+	int xx=0;
+	int yy=0;
+
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
 
@@ -350,8 +353,10 @@ option=3;
 
 			printf("hola       %i  \n",hola );
 
-			a.x=a.a[hola];
-			a.y=a.b[hola];
+			printf("aaaaaaaaa%i\n", a.a[hola]);
+			printf("bbbbbbbbbbbb%i\n", a.b[hola]);
+			xx=a.a[hola];
+			yy=a.b[hola];
 		}
 		else
 		{
@@ -367,7 +372,7 @@ option=3;
 	
 
 
-/*int o;
+int o;
 int p;
 int mn=0;
 	FILE* fd1;
@@ -409,7 +414,9 @@ int mn=0;
 
 }
 
-*/
+
+
+	printf("opriooooooooon%i\n", option);
 if(option=1)
 {
 	a.x=0;
@@ -417,6 +424,8 @@ if(option=1)
 }
 
 printf("Termine\n");
+	a.x=xx;
+	a.y=yy;
 	mapear(a.x,a.y);
 
 
@@ -425,7 +434,7 @@ printf("Termine\n");
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
 
-		//printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
+		printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
 
 		printf("xxxxxxxxxxxxx %i\n", a.x);
     	printf("yyyyyyyyyyy %i\n", a.y);
@@ -433,6 +442,9 @@ printf("Termine\n");
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
 		sscanf(str, "%s", frmt_str);
+
+		
+		memset(str, 0, 20);
 
 		if (strcmp(frmt_str, "g") == 0)
 		{
@@ -516,6 +528,7 @@ printf("Termine\n");
 		}
 
 		mapear(a.x,a.y);
+		memset(frmt_str, 0, 20);
 
 	}while(!(a.x==2 && a.y==2));
 
