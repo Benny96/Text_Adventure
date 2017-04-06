@@ -61,12 +61,15 @@ void mapear(int x, int y)
 		printf("\n");
 	}
 }
+
+int hola=-2;
+int nump_aux = 0;
+int option = -1;
+
 int main (void)
 {
-	int x=0;
-	int y=0;
 
-
+//xx, opcion, yy, 
 
 	FILE * file;	
 	int num;
@@ -77,7 +80,6 @@ int main (void)
 	int q;
 	Personaje a;
 
-	int hola=-2;
 
 	int xx=0;
 	int yy=0;
@@ -113,7 +115,6 @@ int main (void)
 	printf("Bienvenido! \n");
 
 	int len;
-	int option;
 	do 
 	{
 		printf("Introduce:  \n");
@@ -206,7 +207,7 @@ int main (void)
 	}
 	a=listan[q];
 
-	
+	nump_aux = listan[q].nump;
 	}
 	//Aqui acaba la opcion de cargar un personaje
 	
@@ -266,7 +267,9 @@ int main (void)
 	memset(frmt_str, 0, 20);
 		
 
-	a.nump=-1;
+	nump_aux=-1;
+
+
 
 	//a.nump=2;
 
@@ -382,6 +385,8 @@ option=3;
   char frmt_str2[20];
   while(fgets(str2, 20, fd1)) {
     int d;
+    printf("aaaaa %i\n", hola);
+
     if(sscanf(str2, "%d", &d) == 0) {
       printf("Not a number!\n");
       sscanf(str2, "%s", frmt_str2);
@@ -414,7 +419,7 @@ option=3;
     clear_if_needed(str2);
 
 }
-
+	fclose(fd1);
 
 
 
@@ -463,21 +468,21 @@ printf("Termine\n");
 				break;
 			}
 			else{
-			a.nump=a.nump+1;
+			nump_aux=nump_aux+1;
 
-			printf("numpppppppppppppppp %i\n", a.nump);
+			printf("numpppppppppppppppp %i\n", nump_aux);
 
 			printf("nombreeeeee %s\n", a.nombre);
 
-			a.a[a.nump]=a.x;
-			a.b[a.nump]=a.y;
+			a.a[nump_aux]=a.x;
+			a.b[nump_aux]=a.y;
 
 			printf("nmmmmmmmmmmmmmmmmmm %i\n", num);
 			printf("qqqqqqqqqqqqqqq %i\n", q);
 
-			listan[q].nump=a.nump;
-			listan[q].a[a.nump]=a.x;
-			listan[q].b[a.nump]=a.y;
+			listan[q].nump=nump_aux;
+			listan[q].a[nump_aux]=a.x;
+			listan[q].b[nump_aux]=a.y;
 			strncpy(listan[q].contrasena, a.contrasena, 20);
 			strncpy(listan[q].nombre, a.nombre, 20);
 
@@ -548,7 +553,7 @@ printf("Termine\n");
 		if((a.x==2 && a.y==2) && hola!=-2)
 		{
 			int h=-2;
-			for(int i=0;i<=a.nump;i++)
+			for(int i=0;i<=nump_aux;i++)
 			{
 
 				if(hola==i)
@@ -561,7 +566,7 @@ printf("Termine\n");
 					listan[q].b[i-1]=listan[q].b[i];
 				}
 			}
-			listan[q].nump=a.nump-1;
+			listan[q].nump=nump_aux-1;
 
 			strncpy(listan[q].contrasena, a.contrasena, 20);
 			strncpy(listan[q].nombre, a.nombre, 20);
