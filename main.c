@@ -77,6 +77,8 @@ int main (void)
 	int q;
 	Personaje a;
 
+	int hola=-2;
+
 	int xx=0;
 	int yy=0;
 
@@ -337,7 +339,7 @@ option=3;
 				printf("Intrdoduce %d para iniciar la partida en la que la posición era x= %d e y= %d \n",i, a.a[i],a.b[i]);
 				
 			}
-			int hola;
+			
 			do
 			{
 				printf("Introduce una opcion  \n");
@@ -365,15 +367,15 @@ option=3;
 		
 	}
 
-
+/*
 	char hist[2][2][20];
 
 	
 
 
-int o;
-int p;
-int mn=0;
+	int o;
+	int p;
+	int mn=0;
 	FILE* fd1;
   fd1 = fopen("historia.txt", "r");
   char str2[20];
@@ -413,6 +415,8 @@ int mn=0;
 
 }
 
+*/
+
 
 
 	printf("opriooooooooon%i\n", option);
@@ -433,7 +437,7 @@ printf("Termine\n");
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
 
-		printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
+		//printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
 
 		printf("xxxxxxxxxxxxx %i\n", a.x);
     	printf("yyyyyyyyyyy %i\n", a.y);
@@ -447,7 +451,17 @@ printf("Termine\n");
 
 		if (strcmp(frmt_str, "g") == 0)
 		{
-
+			int me;
+			int cago;
+			if(hola!=-2)
+			{
+				me=a.x;
+				cago=a.y;
+				listan[q].a[hola]=me;
+				listan[q].b[hola]=cago;
+				break;
+			}
+			else{
 			a.nump=a.nump+1;
 
 			printf("numpppppppppppppppp %i\n", a.nump);
@@ -475,6 +489,7 @@ printf("Termine\n");
 			printf("111111111111111 numpppppppppppppppp %i\n", listan[q].nump);
 
 			break;
+		}
 		}
 
 		if (strcmp(frmt_str, "w") == 0)
@@ -529,6 +544,33 @@ printf("Termine\n");
 		mapear(a.x,a.y);
 		memset(frmt_str, 0, 20);
 
+		if((a.x==2 && a.y==2) && hola!=-2)
+		{
+			int h=-2;
+			for(int i=0;i<=a.nump;i++)
+			{
+
+				if(hola==i)
+				{
+					h=hola;
+				}
+				else if(h!=-2)
+				{
+					listan[q].a[i-1]=listan[q].a[i];
+					listan[q].b[i-1]=listan[q].b[i];
+				}
+			}
+			listan[q].nump=a.nump-1;
+
+			strncpy(listan[q].contrasena, a.contrasena, 20);
+			strncpy(listan[q].nombre, a.nombre, 20);
+
+
+			//listan[num].contrasena=a.contrasena;
+			//listan[num].nombre=a.nombre;
+			listan[q].x=a.x;
+			listan[q].y=a.y;
+		}
 	}while(!(a.x==2 && a.y==2));
 
 	printf("Llegaste, fin del juego  \n");
