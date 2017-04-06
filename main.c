@@ -79,7 +79,6 @@ int main (void)
 
 	int xx=0;
 	int yy=0;
-	int hola1=-2;
 
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
@@ -272,7 +271,6 @@ int main (void)
 	/*a.a[0]=1;
 	a.a[1]=1;
 	a.a[2]=2;
-
 	a.b[2]=0;
 	a.b[1]=1;
 	a.b[0]=2;
@@ -358,7 +356,6 @@ option=3;
 			printf("bbbbbbbbbbbb%i\n", a.b[hola]);
 			xx=a.a[hola];
 			yy=a.b[hola];
-			hola1=hola;
 		}
 		else
 		{
@@ -450,32 +447,22 @@ printf("Termine\n");
 
 		if (strcmp(frmt_str, "g") == 0)
 		{
-			printf("hola  22222222222     %i  \n",hola1);
 
-			int lol;
-			if(hola1!=-2)
-			{
-				lol=hola1;
-			}
-			else
-			{
-				lol=a.nump;
-			}
 			a.nump=a.nump+1;
 
 			printf("numpppppppppppppppp %i\n", a.nump);
 
 			printf("nombreeeeee %s\n", a.nombre);
 
-			a.a[lol]=a.x;
-			a.b[lol]=a.y;
+			a.a[a.nump]=a.x;
+			a.b[a.nump]=a.y;
 
 			printf("nmmmmmmmmmmmmmmmmmm %i\n", num);
 			printf("qqqqqqqqqqqqqqq %i\n", q);
 
 			listan[q].nump=a.nump;
-			listan[q].a[lol]=a.x;
-			listan[q].b[lol]=a.y;
+			listan[q].a[a.nump]=a.x;
+			listan[q].b[a.nump]=a.y;
 			strncpy(listan[q].contrasena, a.contrasena, 20);
 			strncpy(listan[q].nombre, a.nombre, 20);
 
