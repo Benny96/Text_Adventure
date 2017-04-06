@@ -367,7 +367,7 @@ option=3;
 		
 	}
 
-/*
+
 	char hist[2][2][20];
 
 	
@@ -415,7 +415,7 @@ option=3;
 
 }
 
-*/
+
 
 
 
@@ -437,7 +437,7 @@ printf("Termine\n");
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
 
-		//printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
+		printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
 
 		printf("xxxxxxxxxxxxx %i\n", a.x);
     	printf("yyyyyyyyyyy %i\n", a.y);
@@ -451,6 +451,7 @@ printf("Termine\n");
 
 		if (strcmp(frmt_str, "g") == 0)
 		{
+			printf("holaaaaaaaaaaaaaaaaa %i\n", hola);
 			int me;
 			int cago;
 			if(hola!=-2)
