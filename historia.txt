@@ -1,27 +1,27 @@
 0
 0
-Bienvendido
+Info de la primera casilla
 0
 1
-Estasilla01
+Info de la segunda casilla
 0
 2
-Estaasilla02
+Info de la tercera casilla
 1
 0
-Estasasilla10
+Info de la cuarta casilla
 1
 1
-Estasilla11
+Info de la quinta casilla
 1
 2
-Estasasilla12
+Info de la sexta casilla
 2
 0
-Estaasilla20
+Info de la septima casilla
 2
 1
-Eslla21
+Info de la octava casilla
 2
 2
-Esaasill22
+Info de la novena casilla

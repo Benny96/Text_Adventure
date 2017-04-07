@@ -208,6 +208,7 @@ int main (void)
 		
 
 	nump_aux=-1;
+	a.nump=-1;
 
 	if(num==-1)
   		num++;
@@ -240,6 +241,12 @@ option=3;
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
+
+		if(a.nump==-1)
+			printf("No hay partidas guardadas\n");
+
+		else if(a.nump!=-1 && option!=2 && option!=1)
+			printf("Esta no es una opcúon valida.\n");
 
 	}while((option!=1 && a.nump==-1 ) || (option!=2 && option!=1));
 
@@ -287,20 +294,20 @@ option=3;
 	}
 
 
-	char hist[2][2][20]; ///////////////////////////////////////////Esto es un array bidimensional de lo que en Java llamabamos Strings
+	char hist[3][3][80]; ///////////////////////////////////////////Esto es un array bidimensional de lo que en Java llamabamos Strings
 
 	int o;
 	int p;
 	int mn=0;
 	FILE* fd1;
   fd1 = fopen("historia.txt", "r"); ///////////////////////////////Ahora vamos a leer del fichero de texto
-  char str2[20];
-  char frmt_str2[20];
-  while(fgets(str2, 20, fd1)) {
+  char str2[80];
+  char frmt_str2[80];
+  while(fgets(str2, 80, fd1)) {
     int d;
 
     if(sscanf(str2, "%d", &d) == 0) {
-      sscanf(str2, "%s", frmt_str2);
+      sscanf(str2, "%[^\n]s", frmt_str2);
     }
     else 
     {
@@ -320,9 +327,9 @@ option=3;
     else if(mn==2)
     {
     	mn=0;
-       	strncpy(hist[o][p], frmt_str2, 20);
+       	strncpy(hist[o][p], frmt_str2, 80);
 
-    	memset(frmt_str2, 0, 20);
+    	memset(frmt_str2, 0, 80);
     }
     clear_if_needed(str2);
 
@@ -345,6 +352,8 @@ if(option=1)
 	do
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
+
+		printf("Info de la casilla (%i, %i): %s\n", a.x, a.y, hist[a.x][a.y]);
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
