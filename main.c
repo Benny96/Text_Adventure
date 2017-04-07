@@ -61,8 +61,11 @@ int main (void)
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);    ////////////////////////////////////Guardamos lo que haya introducido en la direccion de option
 
-		if(num==-1&&option==2)
+		if(num==-1 && option==2)
 			printf("No hay personajes\n");
+
+		if(option!=1 && option!=2)
+			printf("Introduce una opcion valida\n");
 
 	}while( (option!=1 && num==-1 ) || (option!=2 && option!=1) );
 
@@ -242,11 +245,11 @@ option=3;
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
 
-		if(a.nump==-1)
+		if(a.nump==-1 && option==2)
 			printf("No hay partidas guardadas\n");
 
-		else if(a.nump!=-1 && option!=2 && option!=1)
-			printf("Esta no es una opcúon valida.\n");
+		else if(option!=2 && option!=1)
+			printf("Esta no es una opcion valida.\n");
 
 	}while((option!=1 && a.nump==-1 ) || (option!=2 && option!=1));
 
