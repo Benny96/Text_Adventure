@@ -9,58 +9,7 @@
 
 void clear_if_needed(char *str);
 
-void dibujar(bool **a)
-{
-	for(int i=0;i<3;i++)
-	{
-		for(int j=0;j<3;j++)
-			{
 
-				
-				if(a[i][j])
-				{
-					
-				}
-				else
-				{
-
-				}
-			}
-			printf("\n");	
-	}
-}
-
-void mapear(int x, int y)
-{
-	for(int i=0;i<=3*5;i++)
-	{
-		
-		for(int j=0;j<=3*5;j++)
-		{
-			
-			if(j%5==0 || i%5==0)
-				printf("*");
-			else
-			{
-				if(i==(x*5 +2) && j==(y*5 +2))
-				{
-					printf("Tu");
-				}
-				else if (i==(x*5 +2) && j<(y*5 +2) && j>((y*5)-1))
-				{
-					/* code */
-				}
-				else
-					printf(" ");
-			}
-				
-			
-
-			
-		}
-		printf("\n");
-	}
-}
 
 int hola=-2;
 int nump_aux = 0;
@@ -69,13 +18,12 @@ int option = -1;
 int main (void)
 {
 
-//xx, opcion, yy, 
+
 
 	FILE * file;	
 	int num;
-	Personaje *personajes;
-	Personaje *listan;
-	//Personaje *personajes;
+	Personaje *personajes;  /////////////////////////////Array de personajes
+	Personaje *listan;    //////////////////////////////////Otro array de personajes para volcar en el los datos a la hora de guardar
 	int i;
 	int q;
 	Personaje a;
@@ -87,56 +35,60 @@ int main (void)
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
 
-	file = fopen("personajes.dat", "rb");
+	file = fopen("personajes.dat", "rb");     ////////////////////////Emepzamos a leer el archivo binario
 	
 	//leer la cantidad de elementos
 	num = fgetc(file);
 
 
 	
-	//crear memoria para guardar los datos
-	personajes = (Personaje*)malloc(num * sizeof(Personaje));	
-	//leer los datos binarios al array
-	fread(personajes, sizeof(Personaje), num, file);
+	personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
+	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
 
        
-	//leer la longitud de la cadena de char
 	//cerrar el fichero
 	fclose(file);
 
-	//Un for que saque por pantalla los nombres.
-	for (int i = 0; i < num; i++)
-	{
-		printf("%s \n", personajes[i].nombre);
-		printf("%i \n", personajes[i].nump);
-
-	}
+	
 
 	printf("Bienvenido! \n");
 
 	int len;
 	do 
 	{
-		printf("Introduce:  \n");
-		printf(" 1.-  Crear un personaje.\n");
-		printf(" 2.- Cargar un personaje.\n");
-
-		fgets(str, MAX_LENGTH, stdin); //No seria suficiente con poner 2 caracteres(el numero y la \0) como max_length en vez de 20?
+		menuPrincipal();
+		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
-		len = sscanf(str, "%d", &option);
+		len = sscanf(str, "%d", &option);    ////////////////////////////////////Guardamos lo que haya introducido en la direccion de option
 
-	printf("El numero %i\n", num);
-		if(num==-1)
-			printf(" No hay personajes\n");
+		if(num==-1&&option==2)
+			printf("No hay personajes\n");
 
 	}while( (option!=1 && num==-1 ) || (option!=2 && option!=1) );
 
 	memset(str, 0, 20);
+
+
+
+
 	
 	//Aqui empieza la opcion de cargar un personaje
 	if(option==2)
 	{
-	printf("Ha seleccionado cargarun personaje.\n");
+	printf("Ha seleccionado cargar un personaje.\n");
+
+	if(num!=0)
+	{
+		printf("Estos son los nombres existentes en el sistema: \n");
+		//Un for que saque por pantalla los nombres existentes en el sistema.
+		for (int i = 0; i < num; i++)
+		{
+			printf("%s \n", personajes[i].nombre);
+		}
+
+	}
+
+	
 	printf("Introduce el nombre de tu personaje: \n");
 
 	int aux;
@@ -147,20 +99,15 @@ int main (void)
 	
 	fgets(str, MAX_LENGTH, stdin);
 	clear_if_needed(str);
-	sscanf(str, "%s", frmt_str); //eliminar el \n final
+	sscanf(str, "%s", frmt_str); 
 	
 	aux=0;
 
-	printf("El numero es %i\n", num);
-
 	for(int i=0;i<num;i++)
 	{
-		printf("asdf%i\n", i);
-		if(strcmp(frmt_str,personajes[i].nombre)==0)
+		if(strcmp(frmt_str,personajes[i].nombre)==0) //////////////////////Validamos que exista ese nombre en el sistema
 		{
-			printf("%i\n", i);
 			q=i;
-			printf("Perfecto\n");
 			aux=1;
 			break;
 		}
@@ -174,36 +121,30 @@ int main (void)
 
 	memset(str, 0, 20);
 	memset(frmt_str, 0, 20);
-	printf("Introduce tu contraseña: \n");
+	printf("Introduce tu contrasenya: \n");
 
 
 	do{
 	
 	fgets(str, MAX_LENGTH, stdin);
 	clear_if_needed(str);
-	sscanf(str, "%s", frmt_str); //eliminar el \n final
+	sscanf(str, "%s", frmt_str); 
 
-	//reservar la memoria justa para la cadena almacenada
-	//a.nombre = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
-	
-	
-	
-	
 
 	if(strcmp(frmt_str,personajes[q].contrasena)!=0)
-		printf("La contrasenya es incorrecta, introduce otra.  \n");
+		printf("La contrasenya es incorrecta, introduce otra.\n");
 
-	}while(strcmp(frmt_str,personajes[q].contrasena)!=0);
+	}while(strcmp(frmt_str,personajes[q].contrasena)!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
 
 	memset(str, 0, 20);
 	memset(frmt_str, 0, 20);
 
   	
-  			listan = (Personaje*)malloc((num) * sizeof(Personaje));
+  	listan = (Personaje*)malloc((num) * sizeof(Personaje)); //////////////////Crear memoria para el array de personajes auxiliar
 
 	for(int i=0;i<num;i++)
 	{
-		listan[i]=personajes[i];
+		listan[i]=personajes[i];   /////////////////Copiamos todos los datos del array personaje al array listan
 	}
 	a=listan[q];
 
@@ -211,6 +152,9 @@ int main (void)
 	}
 	//Aqui acaba la opcion de cargar un personaje
 	
+
+
+
 
 
 	
@@ -228,10 +172,8 @@ int main (void)
 	
 	fgets(str, MAX_LENGTH, stdin);
 	clear_if_needed(str);
-	sscanf(str, "%s", frmt_str); //eliminar el \n final
+	sscanf(str, "%s", frmt_str); 
 
-	//reservar la memoria justa para la cadena almacenada
-	//a.nombre = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
 	strcpy(a.nombre, frmt_str);
 
 	
@@ -239,7 +181,7 @@ int main (void)
 	for(int i=0;i<num;i++)
 	{
 		q=i;
-		if(strcmp(a.nombre,personajes[i].nombre)==0)
+		if(strcmp(a.nombre,personajes[i].nombre)==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
 		{
 			
 			printf("Este nombre ya existe, introduce otro.\n");
@@ -259,9 +201,7 @@ int main (void)
 	clear_if_needed(str);
 	sscanf(str, "%s", frmt_str); //eliminar el \n final
 
-	//reservar la memoria justa para la cadena almacenada
-	//a.contrasena = (char *)malloc((strlen(frmt_str) + 1) * sizeof(char));
-	strcpy(a.contrasena, frmt_str);
+	strcpy(a.contrasena, frmt_str);   /////////////////////////////////////La contrasenya se le asigna a ese nombre. Puede haber mas de una igual, por lo que no validamos que sea unica
 
 	memset(str, 0, 20);
 	memset(frmt_str, 0, 20);
@@ -269,25 +209,14 @@ int main (void)
 
 	nump_aux=-1;
 
-
-
-	//a.nump=2;
-
-	/*a.a[0]=1;
-	a.a[1]=1;
-	a.a[2]=2;
-	a.b[2]=0;
-	a.b[1]=1;
-	a.b[0]=2;
-	*/
 	if(num==-1)
   		num++;
   	
-  			listan = (Personaje*)malloc((num+1) * sizeof(Personaje));
+  	listan = (Personaje*)malloc((num+1) * sizeof(Personaje)); //////////////////Crear memoria para el array de personajes auxiliar
 
 	for(int i=0;i<num;i++)
 	{
-		listan[i]=personajes[i];
+		listan[i]=personajes[i];  /////////////////Copiamos todos los datos del array personaje al array listan
 	}
 
 	q=num;
@@ -295,11 +224,10 @@ int main (void)
 
 	num++;
 
-  	
-
-	//bool **a[3][3];
   }
   //Aqui acaba la opcion de crear un personaje
+
+
 
 
 
@@ -307,31 +235,23 @@ int main (void)
 option=3;
   do 
 	{
-		printf("Introduce:  \n");
-		printf(" 1 comenzar una partida  \n");
-		printf(" 2 para cargar una partida  \n");
+		menuPartida();
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
 
-		printf("numpppppp       444444444444444       pppppppppp %i\n", a.nump);
-
 	}while((option!=1 && a.nump==-1 ) || (option!=2 && option!=1));
 
 
-	if(option==1)
+	if(option==1)///////////////////////////////////////////////Si escoge la opcion 1, empezamos en la posicion (0, 0)
 	{
-
-		printf("numpppppp       222222222222       pppppppppp %i\n", a.nump);
-
-
-		printf("numpppppp        3333333333333333      pppppppppp %i\n", a.nump);
 		a.x=0;
 		a.y=0;
-
 	}
-	if(option==2)
+
+
+	if(option==2)///////////////////////////////////////Si escoge la opcion 2, le mostraremos todas las partidas que tiene guardadas, si es que las hay
 	{
 		if(a.nump!=-1)
 		{
@@ -339,26 +259,22 @@ option=3;
 			int i;
 			for(i=0;i<=a.nump;i++)
 			{
-				printf("Intrdoduce %d para iniciar la partida en la que la posición era x= %d e y= %d \n",i, a.a[i],a.b[i]);
+				printf("Intrdoduce %d para iniciar la partida en la que la posicion era (%d, %d)\n",i, a.a[i], a.b[i]);
 				
 			}
 			
 			do
 			{
-				printf("Introduce una opcion  \n");
+				printf("Introduce la partida que quieras cargar:\n");
 				fgets(str, MAX_LENGTH, stdin);
 				clear_if_needed(str);
 				sscanf(str, "%d", &hola);
 
 				if(hola>a.nump || hola<0)
-					printf("No es una opcion valida  \n");
+					printf("No es una opcion valida.\n");
 
 			}while(hola>a.nump || hola<0);
 
-			printf("hola       %i  \n",hola );
-
-			printf("aaaaaaaaa%i\n", a.a[hola]);
-			printf("bbbbbbbbbbbb%i\n", a.b[hola]);
 			xx=a.a[hola];
 			yy=a.b[hola];
 		}
@@ -371,28 +287,23 @@ option=3;
 	}
 
 
-	char hist[2][2][20];
-
-	
-
+	char hist[2][2][20]; ///////////////////////////////////////////Esto es un array bidimensional de lo que en Java llamabamos Strings
 
 	int o;
 	int p;
 	int mn=0;
 	FILE* fd1;
-  fd1 = fopen("historia.txt", "r");
+  fd1 = fopen("historia.txt", "r"); ///////////////////////////////Ahora vamos a leer del fichero de texto
   char str2[20];
   char frmt_str2[20];
   while(fgets(str2, 20, fd1)) {
     int d;
-    printf("aaaaa %i\n", hola);
 
     if(sscanf(str2, "%d", &d) == 0) {
-      printf("Not a number!\n");
       sscanf(str2, "%s", frmt_str2);
     }
-    else {
-      printf("Number is: %d\n", d);
+    else 
+    {
     }
 
     if(mn==0)
@@ -409,43 +320,31 @@ option=3;
     else if(mn==2)
     {
     	mn=0;
-    	printf("oooooooo %i\n", o);
-    	printf("ppppppp %i\n", p);
-
-    	strncpy(hist[o][p], frmt_str2, 20);
+       	strncpy(hist[o][p], frmt_str2, 20);
 
     	memset(frmt_str2, 0, 20);
     }
     clear_if_needed(str2);
 
 }
-	fclose(fd1);
+	fclose(fd1); ////////////////////////////Cerramos el fichero de texto
 
 
 
-
-	printf("opriooooooooon%i\n", option);
 if(option=1)
 {
 	a.x=0;
 	a.y=0;
 }
 
-printf("Termine\n");
+
 	a.x=xx;
 	a.y=yy;
 	mapear(a.x,a.y);
 
-
-
 	do
 	{
 		printf("Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida).\n");
-
-		printf("EEEEEEEEEEEEEEEEEE  %s\n", hist[a.x][a.y]);
-
-		printf("xxxxxxxxxxxxx %i\n", a.x);
-    	printf("yyyyyyyyyyy %i\n", a.y);
 
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
@@ -456,7 +355,6 @@ printf("Termine\n");
 
 		if (strcmp(frmt_str, "g") == 0)
 		{
-			printf("holaaaaaaaaaaaaaaaaa %i\n", hola);
 			int me;
 			int cago;
 			if(hola!=-2)
@@ -467,18 +365,12 @@ printf("Termine\n");
 				listan[q].b[hola]=cago;
 				break;
 			}
-			else{
+			else
+			{
 			nump_aux=nump_aux+1;
-
-			printf("numpppppppppppppppp %i\n", nump_aux);
-
-			printf("nombreeeeee %s\n", a.nombre);
 
 			a.a[nump_aux]=a.x;
 			a.b[nump_aux]=a.y;
-
-			printf("nmmmmmmmmmmmmmmmmmm %i\n", num);
-			printf("qqqqqqqqqqqqqqq %i\n", q);
 
 			listan[q].nump=nump_aux;
 			listan[q].a[nump_aux]=a.x;
@@ -486,23 +378,19 @@ printf("Termine\n");
 			strncpy(listan[q].contrasena, a.contrasena, 20);
 			strncpy(listan[q].nombre, a.nombre, 20);
 
-
-			//listan[num].contrasena=a.contrasena;
-			//listan[num].nombre=a.nombre;
 			listan[q].x=a.x;
 			listan[q].y=a.y;
 
-			printf("111111111111111 numpppppppppppppppp %i\n", listan[q].nump);
-
 			break;
-		}
+			}
+
 		}
 
 		if (strcmp(frmt_str, "w") == 0)
 		{
 			if(a.x==0)
 			{
-				printf("No se puede ir mas para arriba.\n");
+				printf("No se puede ir mas arriba.\n");
 			}
 			else
 			{
@@ -513,7 +401,7 @@ printf("Termine\n");
 		{
 			if(a.y==0)
 			{
-				printf("No se puede ir mas para la izquierda.\n");
+				printf("No se puede ir mas a la izquierda.\n");
 			}
 			else
 			{
@@ -524,7 +412,7 @@ printf("Termine\n");
 		{
 				if(a.y==2)
 			{
-				printf("No se puede ir mas para la derecha.\n");
+				printf("No se puede ir mas a la derecha.\n");
 			}
 			else
 			{
@@ -535,7 +423,7 @@ printf("Termine\n");
 		{
 			if(a.x==2)
 			{
-				printf("No se puede ir más para abajo  \n");
+				printf("No se puede ir mas abajo  \n");
 			}
 			else
 			{
@@ -547,7 +435,7 @@ printf("Termine\n");
 			printf("Introduce una tecla valida.\n");
 		}
 
-		mapear(a.x,a.y);
+		mapear(a.x,a.y);   ////////////////////////Renovamos el mapa una vez que haya introducido una tecla
 		memset(frmt_str, 0, 20);
 
 		if((a.x==2 && a.y==2) && hola!=-2)
@@ -571,35 +459,28 @@ printf("Termine\n");
 			strncpy(listan[q].contrasena, a.contrasena, 20);
 			strncpy(listan[q].nombre, a.nombre, 20);
 
-
-			//listan[num].contrasena=a.contrasena;
-			//listan[num].nombre=a.nombre;
 			listan[q].x=a.x;
 			listan[q].y=a.y;
 		}
 	}while(!(a.x==2 && a.y==2));
 
-	printf("Llegaste, fin del juego  \n");
+	printf("El juego se ha acabado, Agur!\n");
 
 	file = fopen("personajes.dat", "wb");
   
 
   	//escribir la cantidad de elementos
-  	printf("numero final %i\n",num );
   	if(num==0)
   		num++;
-  	printf("numero final %i\n",num );
   	fputc(num, file); 
   	//escribir datos binarios
   	fwrite(listan, sizeof(Personaje), num, file);
   
-  
-  
-  	//cerrar fichero
+   	//cerrar fichero
   	fclose(file);
 
-  	free(personajes);
-  	free(listan);
+  	free(personajes);///////////////////////////////Liberar memoria del array personajes
+  	free(listan); ///////////////////////////////Liberar memoria del array listan
 	return 0;
 }
 

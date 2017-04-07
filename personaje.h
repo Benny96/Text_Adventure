@@ -12,7 +12,8 @@ typedef struct {
 
 } Personaje;
 
-//void personaje();
+void menuPrincipal();
+void menuPartida();
+void mapear(int x, int y);
 
 #endif
-//printf("---------\n");
