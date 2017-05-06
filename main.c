@@ -5,21 +5,14 @@
 
 #include "personaje.h"
 
-#define MAX_LENGTH	20
+#define MAX_LENGTH 20
 
 void clear_if_needed(char *str);
 
 
 
-int hola=-2;
-int nump_aux = 0;
-int option = -1;
-
 int main (void)
 {
-
-
-
 	FILE * file;	
 	int num;
 	Personaje *personajes;  /////////////////////////////Array de personajes
@@ -27,20 +20,25 @@ int main (void)
 	int i;
 	int q;
 	Personaje a;
-
-
+	int option = -1;
+	int nump_aux = 0;
+	int hola=-2;
+	
 	int xx=0;
 	int yy=0;
 
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
 
-	file = fopen("personajes.dat", "rb");     ////////////////////////Emepzamos a leer el archivo binario
+	file = fopen("personajes.dat", "rb");     ////////////////////////Empezamos a leer el archivo binario
 	
 	//leer la cantidad de elementos
 	num = fgetc(file);
 
-
+	if (num == NULL)
+	{
+		num = MAX_LENGTH;
+	}
 	
 	personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
 	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
