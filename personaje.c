@@ -1,40 +1,26 @@
 #include "personaje.h"
 #include <stdio.h>
 
-
-void menuPrincipal()
-{
-	printf("Introduce:  \n");
-	printf("1.- Crear un personaje.\n");
-	printf("2.- Cargar un personaje.\n");
-}
-
-void menuPartida()
-{
-	printf("Introduce:  \n");
-	printf("1.- Comenzar una partida nueva.\n");
-	printf("2.- Cargar una partida existente.\n");
-}
-
-
+#define ESPACIADO 5
+#define TABLERO 3
 
 void mapear(int x, int y)
 {
-	for(int i=0;i<=3*5;i++)
+	for(int i=0;i<=TABLERO*ESPACIADO;i++)
 	{
 		
-		for(int j=0;j<=3*5;j++)
+		for(int j=0;j<=TABLERO*ESPACIADO;j++)
 		{
 			
-			if(j%5==0 || i%5==0)
+			if(j%ESPACIADO==0 || i%ESPACIADO==0)
 				printf("*");
 			else
 			{
-				if(i==(x*5 +2) && j==(y*5 +2))
+				if(i==(x*ESPACIADO +2) && j==(y*ESPACIADO +2))
 				{
 					printf("Tu");
 				}
-				else if (i==(x*5 +2) && j<(y*5 +2) && j>((y*5)-1))
+				else if (i==(x*ESPACIADO +2) && j<(y*ESPACIADO +2) && j>((y*ESPACIADO)-1))
 				{
 					
 				}

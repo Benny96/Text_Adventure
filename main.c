@@ -6,17 +6,27 @@
 #include "personaje.h"
 
 #define MAX_LENGTH 20
+#define INIT_PERSONAJES 5
 
+void menu_personajes();
+void menu_partidas();
 void clear_if_needed(char *str);
-
-
 
 int main (void)
 {
+	/*Inicializamos una serie de variables que usaremos en nuestro main:
+		FILE * file: Puntero que nos permitirá gestionar el fichero binario "personajes.dat".
+		num: int que nos permitirá guardar el número de personajes que hay en el fichero binario.
+		Personaje *personajes: Array/puntero de personajes.
+		Personaje *listan: Array de personajes en el que se volcarán los datos a la hora de guardar.
+
+		i, q, a, option, nump_aux, hola, xx e yy: Variables auxiliares que utilizaremos a lo largo
+		del programa.
+	*/
 	FILE * file;	
 	int num;
-	Personaje *personajes;  /////////////////////////////Array de personajes
-	Personaje *listan;    //////////////////////////////////Otro array de personajes para volcar en el los datos a la hora de guardar
+	Personaje *personajes;
+	Personaje *listan;
 	int i;
 	int q;
 	Personaje a;
@@ -30,14 +40,15 @@ int main (void)
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
 
-	file = fopen("personajes.dat", "rb");     ////////////////////////Empezamos a leer el archivo binario
+	/*Proceso de lectura del archivo binario:*/
+	file = fopen("personajes.dat", "rb");
 	
-	//leer la cantidad de elementos
+	/*Obtenemos la cantidad de personajes guardados*/
 	num = fgetc(file);
 
-	if (num == NULL)
+	if (num == 0)
 	{
-		num = MAX_LENGTH;
+		num = INIT_PERSONAJES;
 	}
 	
 	personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
@@ -54,7 +65,7 @@ int main (void)
 	int len;
 	do 
 	{
-		menuPrincipal();
+		menu_personajes();
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);    ////////////////////////////////////Guardamos lo que haya introducido en la direccion de option
@@ -66,11 +77,6 @@ int main (void)
 			printf("Introduce una opcion valida\n");
 
 	}while( (option!=1 && num==-1 ) || (option!=2 && option!=1) );
-
-	memset(str, 0, 20);
-
-
-
 
 	
 	//Aqui empieza la opcion de cargar un personaje
@@ -86,9 +92,7 @@ int main (void)
 		{
 			printf("%s \n", personajes[i].nombre);
 		}
-
 	}
-
 	
 	printf("Introduce el nombre de tu personaje: \n");
 
@@ -237,8 +241,7 @@ int main (void)
 option=3;
   do 
 	{
-		menuPartida();
-
+		menu_partidas();
 		fgets(str, MAX_LENGTH, stdin);
 		clear_if_needed(str);
 		len = sscanf(str, "%d", &option);
@@ -494,6 +497,18 @@ if(option=1)
 	return 0;
 }
 
+void menu_personajes()
+{
+	printf("Introduce:  \n");
+	printf("1.- Crear un personaje.\n");
+	printf("2.- Cargar un personaje.\n");
+}
+void menu_partidas()
+{
+	printf("Introduce:  \n");
+	printf("1.- Comenzar una partida nueva.\n");
+	printf("2.- Cargar una partida existente.\n");
+}
 
 void clear_if_needed(char *str)
 {
