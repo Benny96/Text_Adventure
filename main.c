@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "personaje.h"
+#include "Personaje.h"
 
 #define MAX_LENGTH 20
 #define INIT_PERSONAJES 5
