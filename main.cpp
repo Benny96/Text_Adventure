@@ -78,8 +78,13 @@ int main (void)
 		{
 			cout << "No hay personajes" << endl;
 		}
-
-		if(option!=1 && option!=2)
+		if (option == 3)
+		{
+			cout << "Agur!" << endl;
+			delete [] personajes;
+			return 0;
+		}
+		if(option!=1 && option!=2 && option!=3)
 		{
 			cout << "Introduce una opcion valida" << endl;
 		}
@@ -197,7 +202,14 @@ int main (void)
 		{
 			cout << "No hay partidas guardadas" << endl;
 		}
-		else if(option!=2 && option!=1)
+		if (option == 3)
+		{
+			cout << "Agur!" << endl;
+			delete [] listan;
+			delete [] personajes;
+			return 0;
+		}
+		else if(option!=1 && option!=2 && option!=3)
 		{
 			cout << "Esta no es una opcion valida." << endl;
 		}
