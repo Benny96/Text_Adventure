@@ -1,0 +1,4 @@
+Para compilar lo que por ahora nos interesa:
+
+gcc personajes.c fichero.c -c
+g++ main.cpp personajes.o fichero. -o maincpp
