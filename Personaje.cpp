@@ -1,5 +1,8 @@
 #include "Personaje.h"
 #include <string.h>
+#include <iostream>
+
+using namespace std;
 
 //Personaje::Personaje(const char* nombre, int nump, int x, int y, int *a, int *b, char* contrasena): Persona(nombre)
 Personaje::Personaje(const char* nombre, int nump, int x, int y, char* contrasena): Persona(nombre)
