@@ -46,4 +46,8 @@ char* Personaje::getContrasena() const
 {
 	return contrasena;
 }
+void Personaje::mostrarDatos() const
+{
+	cout << "Posicion del personaje: (" << this->x <<","<<this->y << ")" << endl;
+}
 

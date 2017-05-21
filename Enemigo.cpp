@@ -9,4 +9,8 @@ int Enemigo::getDificultad() const
 {
 	return dificultad;
 }
+void Personaje::mostrarDatos() const
+{
+	cout << "Posicion del personaje: (" << this->nombre <<","<<this->dificultad << ")" << endl;
+}
 

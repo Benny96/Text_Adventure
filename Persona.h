@@ -7,9 +7,10 @@ class Persona
 
 public:
 	Persona(const char* nombre);
-	~Persona();
+	virtual ~Persona();
 	
 	char* getNombre() const;
+	virtual void mostrarDatos() const = 0;
 };
 
 #endif

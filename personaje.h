@@ -2,6 +2,7 @@
 #define PERSONAJE_H_
 
 #include "Persona.h"
+#include <iostream>
 
 #define TAMANYO_ARRAYS 10
 
@@ -20,7 +21,7 @@ public:
 	//Personaje(const char* nombre, int nump, int x, int y, int a, int b, char* contrasena);
 	Personaje(const char* nombre, int nump, int x, int y, char* contrasena);
 
-	~Personaje();
+	virtual ~Personaje();
 	
 	int getNump() const;
 	int getX() const;
@@ -28,7 +29,7 @@ public:
 	//int* getA() const;
 	//int* getB() const; 
 	char* getContrasena() const;
-
+	virtual void mostrarDatos() const;
 };
 
 #endif
