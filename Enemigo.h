@@ -8,8 +8,7 @@ class Enemigo: public Persona
 	int dificultad;
 
 public:
-	Trabajador(const char* nombre, int dificultad);
-	
+	Enemigo(const char* nombre, int dificultad);
 	int getDificultad() const;
 };
 

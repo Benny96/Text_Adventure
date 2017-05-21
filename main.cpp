@@ -55,8 +55,8 @@ int main (void)
 		num = INIT_PERSONAJES;
 	}
 	
-	//Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
-	Personaje * personajes = new Personaje [num * sizeof(Personaje)];
+	Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
+	//Personaje * personajes = new Personaje [num * sizeof(Personaje)];
 	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar la info que hay en el fichero al array de personajes
 
 	//cerrar el fichero
