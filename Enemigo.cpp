@@ -16,7 +16,7 @@ void Enemigo::mostrarDatos() const
 {
 	//cout << "Posicion del personaje: (" << this->nombre <<","<<this->dificultad << ")" << endl;
 	cout << "Datos del enemigo:" << endl;
-	//cout << "\tNombre: " << this-> nombre << endl;
+	cout << "\tNombre: " << this-> getNombre() << endl;
 	cout << "\tDificultad: " << this-> dificultad << endl;  
 }
 
