@@ -8,6 +8,7 @@ class Enemigo: public Persona
 	int dificultad;
 
 public:
+	Enemigo();
 	Enemigo(const char* nombre, int dificultad);
 	int getDificultad() const;
 	virtual void mostrarDatos() const;

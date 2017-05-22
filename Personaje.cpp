@@ -4,6 +4,13 @@
 
 using namespace std;
 
+Personaje::Personaje(): Persona()
+{
+	this->nump = 0;
+	this->x = 0;
+	this->y = 0;
+	this->contrasena = new char[1];
+}
 //Personaje::Personaje(const char* nombre, int nump, int x, int y, int *a, int *b, char* contrasena): Persona(nombre)
 Personaje::Personaje(const char* nombre, int nump, int x, int y, char* contrasena): Persona(nombre)
 {
@@ -53,4 +60,20 @@ void Personaje::mostrarDatos() const
 {
 	cout << "Posicion del personaje: (" << this->x <<","<<this->y << ")" << endl;
 }
-
+void Personaje::setContrasena(char * contrasena)
+{
+	this->contrasena = new char[strlen(contrasena) + 1];
+	strcpy(this->contrasena, contrasena);	
+}
+void Personaje::setNump(int nump)
+{
+	this->nump = nump;
+}
+void Personaje::setX(int x)
+{
+	this->x = x;
+}
+void Personaje::setY(int y)
+{
+	this->y = y;
+}

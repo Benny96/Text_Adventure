@@ -18,6 +18,7 @@ class Personaje: public Persona
 	char *contrasena;
 
 public:
+	Personaje();
 	//Personaje(const char* nombre, int nump, int x, int y, int a, int b, char* contrasena);
 	Personaje(const char* nombre, int nump, int x, int y, char* contrasena);
 
@@ -30,6 +31,10 @@ public:
 	//int* getB() const; 
 	char* getContrasena() const;
 	virtual void mostrarDatos() const;
+	void setContrasena(char * contrasena);
+	void setNump(int nump);
+	void setX(int x);
+	void setY(int y);
 };
 
 #endif

@@ -3,6 +3,11 @@
 #include <iostream>
 using namespace std;
 
+
+Enemigo::Enemigo():Persona()
+{
+	this->dificultad = 0;
+}
 Enemigo::Enemigo(const char* nombre, int dificultad): Persona(nombre)
 {
 	this->dificultad = dificultad;

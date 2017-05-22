@@ -5,13 +5,15 @@
 #include <iostream>
 
 #include "Personaje.h"
-#include "Fichero.h"
+//#include "Fichero.h"
 
 using namespace std;
 
 #define MAX_LENGTH 20
 #define TABLERO 3
 #define ESPACIADO 5
+#define FICHERO_BINARIO "personajes.dat"
+#define INIT_PERSONAJES 5
 
 void menu_personajes();
 void menu_partidas();
@@ -55,8 +57,8 @@ int main (void)
 		num = INIT_PERSONAJES;
 	}
 	
-	Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
-	//Personaje * personajes = new Personaje [num * sizeof(Personaje)];
+	//Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	
+	Personaje * personajes = new Personaje [num]; ///////////////Reservar memoria para el array de personajes
 	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar la info que hay en el fichero al array de personajes
 
 	//cerrar el fichero
@@ -101,7 +103,7 @@ int main (void)
 			//Un for que saque por pantalla los nombres existentes en el sistema.
 			for (int i = 0; i < num; i++)
 			{
-				cout << personajes[i].nombre << endl;
+				cout << personajes[i].getNombre() << endl;
 			}
 		}	
 		cout << "Introduce el nombre de tu personaje" << endl;
@@ -113,7 +115,7 @@ int main (void)
 			aux=0;
 			for(int i=0;i<num;i++)
 			{
-				if(strcmp(frmt_str,personajes[i].nombre)==0) //////////////////////Validamos que exista ese nombre en el sistema
+				if(strcmp(frmt_str,personajes[i].getNombre())==0) //////////////////////Validamos que exista ese nombre en el sistema
 				{
 					q=i;
 					aux=1;
@@ -131,21 +133,21 @@ int main (void)
 		do
 		{
 			cin >> frmt_str;
-			if(strcmp(frmt_str,personajes[q].contrasena)!=0)
+			if(strcmp(frmt_str,personajes[q].getContrasena())!=0)
 				{
 					cout << "La contrasenya es incorrecta, introduce otra." << endl;
 				}
 		}
-		while(strcmp(frmt_str,personajes[q].contrasena)!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
+		while(strcmp(frmt_str,personajes[q].getContrasena())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
 
-		listan = new Personaje [num*sizeof(Personaje)]; //////////////////Crear memoria para el array de personajes auxiliar
+		listan = new Personaje [num]; //////////////////Crear memoria para el array de personajes auxiliar
 
 		for(int i=0;i<num;i++)
 		{
 			listan[i]=personajes[i];   /////////////////Copiamos todos los datos del array personaje al array listan
 		}
 		a=listan[q];
-		nump_aux = listan[q].nump;
+		nump_aux = listan[q].getNump();
 	}
 	//Aqui acaba la opcion de cargar un personaje
 
@@ -155,15 +157,17 @@ int main (void)
 		cout << "Ha seleccionado crear un personaje." << endl;
 		cout << "Introduce el nombre de tu personaje:" << endl; 
 		int aux;
+		char * aux2 = new char[MAX_LENGTH];
 		q=-1;
 		do
 		{
-			cin >> a.nombre;
+			cin >> aux2;
+			a.setNombre(aux2);
 			aux=0;
 			for(int i=0;i<num;i++)
 			{
 				q=i;
-				if(strcmp(a.nombre,personajes[i].nombre)==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
+				if(strcmp(a.getNombre(),personajes[i].getNombre())==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
 				{	
 					cout << "Este nombre ya existe, introduce otro." << endl;
 					aux=1;
@@ -173,15 +177,17 @@ int main (void)
 		while(aux==1);
 
 		cout << "Introduce la contrasenya" << endl;
-		cin >> a.contrasena; /////////////////////////////////////La contrasenya se le asigna a ese nombre. Puede haber mas de una igual, por lo que no validamos que sea unica
+		char * contra = new char [MAX_LENGTH];
+		cin >> contra;
+		a.setContrasena(contra); /////////////////////////////////////La contrasenya se le asigna a ese nombre. Puede haber mas de una igual, por lo que no validamos que sea unica
 		nump_aux=-1;
-		a.nump=-1;
+		a.setNump(-1);
 
 		if(num==-1)
 		{
   			num++;
 		}
-  		listan = new Personaje [num*sizeof(Personaje)];
+  		listan = new Personaje [num];
 
 		for(int i=0;i<num;i++)
 		{
@@ -198,7 +204,7 @@ int main (void)
 	{
 		menu_partidas();
 		cin >> option;
-		if(a.nump==-1 && option==2)
+		if(a.getNump()==-1 && option==2)
 		{
 			cout << "No hay partidas guardadas" << endl;
 		}
@@ -214,20 +220,20 @@ int main (void)
 			cout << "Esta no es una opcion valida." << endl;
 		}
 	}
-	while((option!=1 && a.nump==-1 ) || (option!=2 && option!=1));
+	while((option!=1 && a.getNump()==-1 ) || (option!=2 && option!=1));
 
 	if(option==1)///////////////////////////////////////////////Si escoge la opcion 1, empezamos en la posicion (0, 0)
 	{
-		a.x=0;
-		a.y=0;
+		a.setX(0);
+		a.setY(0);
 	}
 
 	if(option==2)///////////////////////////////////////Si escoge la opcion 2, le mostraremos todas las partidas que tiene guardadas, si es que las hay
 	{
-		if(a.nump!=-1)
+		if(a.getNump()!=-1)
 		{
 			int i;
-			for(i=0;i<=a.nump;i++)
+			for(i=0;i<=a.getNump();i++)
 			{
 				cout << "Introduce " << i << " para iniciar la partida en la que la posicion era (" << a.a[i] << ", " << a.b[i] << ")" << endl;
 			}		
@@ -235,12 +241,12 @@ int main (void)
 			{
 				cout << "Introduce la partida que quieras cargar:" << endl;
 				cin >> hola;
-				if(hola>a.nump || hola<0)
+				if(hola>a.getNump() || hola<0)
 				{
 					cout << "No es una opcion valida." << endl;
 				}
 			}
-			while(hola>a.nump || hola<0);
+			while(hola>a.getNump() || hola<0);
 			xx=a.a[hola];
 			yy=a.b[hola];
 		}
@@ -286,16 +292,16 @@ int main (void)
 
 	if(option=1)
 	{
-		a.x=0;
-		a.y=0;
+		a.setX(0);
+		a.setY(0);
 	}
-	a.x=xx;
-	a.y=yy;
-	mapear(a.x,a.y);
+	a.setX(xx);
+	a.setY(yy);
+	mapear(a.getX(),a.getY());
 	do
 	{
 		cout << "Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida)." << endl;
-		cout << "Info de la casilla (" << a.x << ", "<< a.y << "): " << hist[a.x][a.y] << endl;
+		cout << "Info de la casilla (" << a.getX() << ", "<< a.getY() << "): " << hist[a.getX()][a.getY()] << endl;
 		cin >> frmt_str;
 		if (strcmp(frmt_str, "g") == 0)
 		{
@@ -303,8 +309,8 @@ int main (void)
 			int cago;
 			if(hola!=-2)
 			{
-				me=a.x;
-				cago=a.y;
+				me=a.getX();
+				cago=a.getY();
 				listan[q].a[hola]=me;
 				listan[q].b[hola]=cago;
 				break;
@@ -312,60 +318,65 @@ int main (void)
 			else
 			{
 				nump_aux=nump_aux+1;
-				a.a[nump_aux]=a.x;
-				a.b[nump_aux]=a.y;
-				listan[q].nump=nump_aux;
-				listan[q].a[nump_aux]=a.x;
-				listan[q].b[nump_aux]=a.y;
-				strncpy(listan[q].contrasena, a.contrasena, 20);
-				strncpy(listan[q].nombre, a.nombre, 20);
-				listan[q].x=a.x;
-				listan[q].y=a.y;
+				a.a[nump_aux]=a.getX();
+				a.b[nump_aux]=a.getY();
+				listan[q].setNump(nump_aux);
+				//listan[q].nump=nump_aux;
+				listan[q].a[nump_aux]=a.getX();
+				listan[q].b[nump_aux]=a.getY();
+				listan[q].setContrasena(a.getContrasena());
+				//strncpy(listan[q].contrasena, a.getContrasena(), 20);
+				listan[q].setNombre(a.getNombre());
+				//strncpy(listan[q].nombre, a.nombre, 20);
+				//listan[q].x=a.x;
+				listan[q].setX(a.getX());
+				//listan[q].y=a.y;
+				listan[q].setY(a.getY());
 				break;
 			}
 		}
 		if (strcmp(frmt_str, "w") == 0)
 		{
-			if(a.x==0)
+			if(a.getX()==0)
 			{
 				cout << "No se puede ir mas arriba." << endl;
 			}
 			else
 			{
-				a.x--;
+				a.setX(a.getX()-1);
 			}
 		}
 		else if(strcmp(frmt_str, "a") == 0)
 		{
-			if(a.y==0)
+			if(a.getY()==0)
 			{
 				cout << "No se puede ir mas a la izquierda." << endl;
 			}
 			else
 			{
-				a.y--;
+				a.setY(a.getY()-1);
 			}
 		}
 		else if(strcmp(frmt_str, "d") == 0)
 		{
-			if(a.y==2)
+			if(a.getY()==2)
 			{
 				cout << "No se puede ir mas a la derecha." << endl;
 			}
 			else
 			{
-				a.y++;
+				a.setY(a.getY()+1);
 			}
 		}
 		else if(strcmp(frmt_str, "s") == 0)
 		{
-			if(a.x==2)
+			if(a.getX()==2)
 			{
 				cout << "No se puede ir mas abajo." << endl;
 			}
 			else
 			{
-				a.x++;
+				a.setX(a.getX()+1);
 			}
 		}
 		else
@@ -373,9 +384,9 @@ int main (void)
 			cout << "Introduce una tecla valida." << endl;
 		}
 
-		mapear(a.x,a.y);   ////////////////////////Renovamos el mapa una vez que haya introducido una tecla
+		mapear(a.getX(),a.getY());   ////////////////////////Renovamos el mapa una vez que haya introducido una tecla
 
-		if((a.x==2 && a.y==2) && hola!=-2)
+		if((a.getX()==2 && a.getY()==2) && hola!=-2)
 		{
 			int h=-2;
 			for(int i=0;i<=nump_aux;i++)
@@ -390,14 +401,16 @@ int main (void)
 					listan[q].b[i-1]=listan[q].b[i];
 				}
 			}
-			listan[q].nump=nump_aux-1;
-			strncpy(listan[q].contrasena, a.contrasena, 20);
-			strncpy(listan[q].nombre, a.nombre, 20);
-			listan[q].x=a.x;
-			listan[q].y=a.y;
+			listan[q].setNump(nump_aux-1);
+			listan[q].setContrasena(a.getContrasena());
+			//strncpy(listan[q].contrasena, a.contrasena, 20);
+			listan[q].setNombre(a.getNombre());
+			//strncpy(listan[q].nombre, a.nombre, 20);
+			listan[q].setX(a.getX());
+			listan[q].setY(a.getY());
 		}
 	}
-	while(!(a.x==2 && a.y==2));
+	while(!(a.getX()==2 && a.getY()==2));
 	cout << "El juego se ha acabado. Agur!" << endl;
 	file = fopen(FICHERO_BINARIO, "wb");
   
