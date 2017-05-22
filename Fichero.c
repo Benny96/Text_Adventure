@@ -3,6 +3,8 @@
 #include <stdio.h>
 //#include <string.h>
 #include <stdlib.h>
+
+
 //#include <stdbool.h>
 
 //Personaje leerFicheroPersonajes()
@@ -43,3 +45,40 @@
 //  	free(p);
    	//cerrar fichero
 //}
+char *** lecturaHistoria (char hist [TABLERO][TABLERO][TAMANYO_LINEA])
+{
+	int o;
+	int p;
+	int mn=0;
+	FILE* fd1;
+	fd1 = fopen(FICHERO_HISTORIA, "r"); ///////////////////////////////Ahora vamos a leer del fichero de texto
+	char str2[TAMANYO_LINEA];
+	char frmt_str2[TAMANYO_LINEA];
+	int d;
+	while(fgets(str2, TAMANYO_LINEA, fd1)) 
+	{
+    	d = 0;
+	    if(sscanf(str2, "%d", &d) == 0) 
+	    {
+	    	sscanf(str2, "%[^\n]s", frmt_str2);
+	    }
+	    if(mn==0)
+	    {
+	    	o=d;
+	    	mn++;
+	    }
+	    else if(mn==1)
+	    {
+	    	p=d;
+	    	mn++;
+	    }
+	    else if(mn==2)
+	    {
+	    	mn=0;
+	       	strncpy(hist[o][p], frmt_str2, TAMANYO_LINEA);
+	    }
+	    clear_if_needed(str2);
+	}
+	fclose(fd1); ////////////////////////////Cerramos el fichero de texto
+	return hist;
+}

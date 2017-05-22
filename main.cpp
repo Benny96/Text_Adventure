@@ -13,6 +13,8 @@ using namespace std;
 #define TABLERO 3
 #define ESPACIADO 5
 #define FICHERO_BINARIO "personajes.dat"
+#define FICHERO_HISTORIA "historia.txt"
+#define TAMANYO_LINEA 80
 #define INIT_PERSONAJES 5
 
 void menu_personajes();
@@ -36,7 +38,7 @@ int main (void)
 	Personaje *listan;
 	int i;
 	int q;
-	Personaje a;
+	Personaje * a = new Personaje();
 	int option = -1;
 	int nump_aux = 0;
 	int hola=-2;
@@ -57,8 +59,8 @@ int main (void)
 		num = INIT_PERSONAJES;
 	}
 	
-	//Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	
-	Personaje * personajes = new Personaje [num]; ///////////////Reservar memoria para el array de personajes
+	Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	
+	//Personaje * personajes = new Personaje [num]; ///////////////Reservar memoria para el array de personajes
 	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar la info que hay en el fichero al array de personajes
 
 	//cerrar el fichero
@@ -140,7 +142,8 @@ int main (void)
 		}
 		while(strcmp(frmt_str,personajes[q].getContrasena())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
 
-		listan = new Personaje [num]; //////////////////Crear memoria para el array de personajes auxiliar
+		listan = (Personaje*)malloc(num * sizeof(Personaje));
+		//listan = new Personaje [num]; //////////////////Crear memoria para el array de personajes auxiliar
 
 		for(int i=0;i<num;i++)
 		{
@@ -187,7 +190,8 @@ int main (void)
 		{
   			num++;
 		}
-  		listan = new Personaje [num];
+		listan = (Personaje*)malloc(num * sizeof(Personaje));
+  		//listan = new Personaje [num];
 
 		for(int i=0;i<num;i++)
 		{
@@ -204,6 +208,7 @@ int main (void)
 	{
 		menu_partidas();
 		cin >> option;
+		cout << "HOLAAAAAAAAAAAAAAA" << endl;
 		if(a.getNump()==-1 && option==2)
 		{
 			cout << "No hay partidas guardadas" << endl;
@@ -235,7 +240,7 @@ int main (void)
 			int i;
 			for(i=0;i<=a.getNump();i++)
 			{
-				cout << "Introduce " << i << " para iniciar la partida en la que la posicion era (" << a.a[i] << ", " << a.b[i] << ")" << endl;
+				cout << "Introduce " << i << " para iniciar la partida en la que la posicion era (" << a.getA(i) << ", " << a.getB(i) << ")" << endl;
 			}		
 			do
 			{
@@ -247,8 +252,8 @@ int main (void)
 				}
 			}
 			while(hola>a.getNump() || hola<0);
-			xx=a.a[hola];
-			yy=a.b[hola];
+			xx=a.getA(hola);
+			yy=a.getB(hola);
 		}
 		else
 		{
@@ -257,16 +262,18 @@ int main (void)
 	}
 
 	char hist[TABLERO][TABLERO][80]; ///////////////////////////////////////////Esto es un array bidimensional de lo que en Java llamabamos Strings
+	//hist -> lecturaHistoria(hist);
 	int o;
 	int p;
 	int mn=0;
 	FILE* fd1;
-	fd1 = fopen("historia.txt", "r"); ///////////////////////////////Ahora vamos a leer del fichero de texto
-	char str2[80];
-	char frmt_str2[80];
-	while(fgets(str2, 80, fd1)) 
+	fd1 = fopen(FICHERO_HISTORIA, "r"); ///////////////////////////////Ahora vamos a leer del fichero de texto
+	char str2[TAMANYO_LINEA];
+	char frmt_str2[TAMANYO_LINEA];
+	int d;
+	while(fgets(str2, TAMANYO_LINEA, fd1)) 
 	{
-    	int d;
+    	d = 0;
 	    if(sscanf(str2, "%d", &d) == 0) 
 	    {
 	    	sscanf(str2, "%[^\n]s", frmt_str2);
@@ -284,7 +291,7 @@ int main (void)
 	    else if(mn==2)
 	    {
 	    	mn=0;
-	       	strncpy(hist[o][p], frmt_str2, 80);
+	       	strncpy(hist[o][p], frmt_str2, TAMANYO_LINEA);
 	    }
 	    clear_if_needed(str2);
 	}
@@ -311,19 +318,21 @@ int main (void)
 			{
 				me=a.getX();
 				cago=a.getY();
-				listan[q].a[hola]=me;
-				listan[q].b[hola]=cago;
+				listan[q].setA(hola, me);
+				listan[q].setB(hola, cago);
 				break;
 			}
 			else
 			{
 				nump_aux=nump_aux+1;
-				a.a[nump_aux]=a.getX();
-				a.b[nump_aux]=a.getY();
+				a.setA(nump_aux, a.getX());
+				a.setB(nump_aux, a.getY());
+				//a.a[nump_aux]=a.getX();
+				//a.b[nump_aux]=a.getY();
 				listan[q].setNump(nump_aux);
 				//listan[q].nump=nump_aux;
-				listan[q].a[nump_aux]=a.getX();
-				listan[q].b[nump_aux]=a.getY();
+				listan[q].setA(nump_aux, a.getX());
+				listan[q].setB(nump_aux, a.getY());
 				listan[q].setContrasena(a.getContrasena());
 				//strncpy(listan[q].contrasena, a.getContrasena(), 20);
 				listan[q].setNombre(a.getNombre());
@@ -386,7 +395,7 @@ int main (void)
 
 		mapear(a.getX(),a.getY());   ////////////////////////Renovamos el mapa una vez que haya introducido una tecla
 
-		if((a.getX()==2 && a.getY()==2) && hola!=-2)
+		if((a.getX()==(TABLERO-1) && a.getY()==(TABLERO-1)) && hola!=-2)
 		{
 			int h=-2;
 			for(int i=0;i<=nump_aux;i++)
@@ -397,8 +406,8 @@ int main (void)
 				}
 				else if(h!=-2)
 				{
-					listan[q].a[i-1]=listan[q].a[i];
-					listan[q].b[i-1]=listan[q].b[i];
+					listan[q].setA(i-1, listan[q].getA(i));
+					listan[q].setB(i-1, listan[q].getB(i));
 				}
 			}
 			listan[q].setNump(nump_aux-1);

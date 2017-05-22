@@ -44,14 +44,14 @@ int Personaje::getY() const
 {
 	return y;
 }
-/*int* Personaje::getA() const
+int Personaje::getA(int pos) const
 {
-	return a;
+	return a[pos];
 }
-int* Personaje::getB() const
+int Personaje::getB(int pos) const
 {
-	return b;
-}*/
+	return b[pos];
+}
 char* Personaje::getContrasena() const
 {
 	return contrasena;
@@ -77,3 +77,16 @@ void Personaje::setY(int y)
 {
 	this->y = y;
 }
+void Personaje::setA(int pos, int valor)
+{
+	this->a[pos] = valor;
+}
+void Personaje::setB(int pos, int valor)
+{
+	//for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
+	//{
+	//	this->b[i] = b[i];
+	//}
+	this->b[pos] = valor;
+}
+
