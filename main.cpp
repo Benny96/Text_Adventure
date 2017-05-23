@@ -85,7 +85,9 @@ int main (void)
 		if (option == 3)
 		{
 			cout << "Agur!" << endl;
-			delete [] personajes;
+			//delete [] a;
+			free (personajes);
+			//delete personajes;
 			return 0;
 		}
 		if(option!=1 && option!=2 && option!=3)
