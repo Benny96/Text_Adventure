@@ -1,6 +1,7 @@
 #include "Persona.h"
 #include <string.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -10,6 +11,8 @@ Persona::Persona()
 }
 Persona::Persona(const char* nombre)
 {
+	cout << nombre << endl;
+	cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
 	this->nombre = new char[strlen(nombre) + 1];
 	strcpy(this->nombre, nombre);	
 }
@@ -22,6 +25,7 @@ Persona::~Persona()
 
 char* Persona::getNombre() const
 {
+	cout << nombre << endl;
 	return nombre;
 }
 

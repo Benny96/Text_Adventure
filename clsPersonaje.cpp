@@ -7,6 +7,7 @@ using namespace std;
 
 clsPersonaje::clsPersonaje(Personaje p): Persona(p.nombre)
 {
+		//cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
 	this->nump = p.nump;
 	this->x = p.x;
 	this->y = p.y;

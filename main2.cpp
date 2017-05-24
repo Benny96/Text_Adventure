@@ -51,35 +51,51 @@ int main (void)
 	
 	/*Obtenemos la cantidad de personajes guardados*/
 	num = fgetc(file);
-
-	if (num == 0)
+	cout << num << endl;
+	if (num == -1)
 	{
 		//AÑADIR VARIABLE AUXILIAR PARA SABER QUE SE HA ENTRADO AQUI
 		num = INIT_PERSONAJES;
 		inicializacion = 1;
 	}
-	personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
-	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
-
+	if (inicializacion == 0)
+	{
+		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
+		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
+	}
+	
 	//cerrar el fichero
 	fclose(file);
-
 	vector <clsPersonaje> clspersonajes;
-	cout << "AQUI PETA!!!!" << endl;
-	for (int i = 0; i < num; i++)
+	clspersonajes.reserve(num);
+	if (inicializacion == 1)
 	{
-		clsPersonaje * clasePers = new clsPersonaje(personajes[i]);
-		clspersonajes.push_back(*clasePers);
-		delete clasePers;
+		/*for (int i = 0; i < num; i++)
+		{
+			clsPersonaje * clasePers = new clsPersonaje();
+			clspersonajes.push_back(*clasePers);
+		}*/
+	}
+	else
+	{
+		for (int i = 0; i < num; i++)
+		{
+			cout << personajes[i].x;
+			clsPersonaje * clasePers = new clsPersonaje(personajes[i]);
+			clspersonajes.push_back(*clasePers);
+		}
 	}
 
 	vector <clsPersonaje> listan;
-	for (int i = 0; i < num; i++)
-	{
-		clsPersonaje * clasePers = new clsPersonaje();
-		listan.push_back(*clasePers);
-		delete clasePers;
-	}
+	listan.reserve(num);
+	if (inicializacion == 0)
+		{
+			for (int i = 0; i < num; i++)
+			{
+				listan.push_back(clspersonajes.at(i));
+			}
+		}
+
 	/*
 	A modificar:
 	Si se combina con un new de Personaje *personajes, puede que no haya problema.
@@ -168,11 +184,11 @@ int main (void)
 		//listan = (Personaje*)malloc(num * sizeof(Personaje));
 		//listan = new Personaje [num]; //////////////////Crear memoria para el array de personajes auxiliar
 
-		for(int i=0;i<num;i++)
-		{
-			listan[i]=clspersonajes.at(i);   /////////////////Copiamos todos los datos del array personaje al array listan
-		}
-		//a=listan[q];
+		//for(int i=0;i<num;i++)
+		//{
+		//	listan[i]=clspersonajes.at(i);   /////////////////Copiamos todos los datos del array personaje al array listan
+		//}
+		*a=listan.at(q);
 		nump_aux = listan.at(q).getNump();
 	}
 	//Aqui acaba la opcion de cargar un personaje
@@ -216,11 +232,15 @@ int main (void)
 		//listan = (Personaje*)malloc(num * sizeof(Personaje));
   		//listan = new Personaje [num];
 
-		for(int i=0;i<num;i++)
-		{
-			listan.at(i)=clspersonajes.at(i);  /////////////////Copiamos todos los datos del array personaje al array listan
-		}
+		//for(int i=0;i<num;i++)
+		//{
+		//	listan.at(i)=clspersonajes.at(i);  /////////////////Copiamos todos los datos del array personaje al array listan
+		//}
+
 		listan.push_back(*a);
+		cout << a->getNombre() << endl;
+		cout << a->getContrasena() << endl;
+
 		num++;
   	}
   //Aqui acaba la opcion de crear un personaje
@@ -458,15 +478,18 @@ int main (void)
 			pers.a[j] = listan.at(i).getA(j);
 			pers.b[j] = listan.at(i).getB(j);
 		}
-		pers.nombre = listan.at(i).getNombre();
 		//pers.nombre = new char[strlen(listan.at(i).getNombre().c_str()) + 1];
 		pers.nombre = new char[strlen(listan.at(i).getNombre()) + 1];
 		strcpy(pers.nombre, listan.at(i).getNombre());	
 		//pers.contrasena = new char[strlen(listan.at(i).getContrasena().c_str()) + 1];
 		pers.contrasena = new char[strlen(listan.at(i).getContrasena()) + 1];
 		strcpy(pers.contrasena, listan.at(i).getContrasena());
+		cout << pers.nombre << "aaa" << endl;
+		cout << pers.contrasena << "bbb" << endl;
 		persaguardar[i] = pers; 
 	}
+	cout << persaguardar[0].nombre << "asdasdasd" << endl;
+
   	fwrite(persaguardar, sizeof(Personaje), num, file);
   
    	//cerrar fichero
@@ -475,7 +498,81 @@ int main (void)
   	free(persaguardar);
   	free(personajes);
   	delete a;
+  	//clspersonajes.clear();
+  	//listan.clear();
   	//delete[] listan;
+
+
+inicializacion = 0;
+file = fopen("personajes.dat", "rb");
+	
+	/*Obtenemos la cantidad de personajes guardados*/
+	num = fgetc(file);
+	cout << num << endl;
+	if (num == -1)
+	{
+		//AÑADIR VARIABLE AUXILIAR PARA SABER QUE SE HA ENTRADO AQUI
+		num = INIT_PERSONAJES;
+		inicializacion = 1;
+	}
+	if (inicializacion == 0)
+	{
+		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
+		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
+	}
+	cout << personajes[0].nombre << "nom" << endl;
+	cout << personajes[0].contrasena << "contra" << endl;
+	cout << personajes[0].x << "X" << endl;
+	cout << personajes[0].y << "Y" <<endl;
+	cout << personajes[0].nump << "nump" << endl;
+	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
+	{
+		cout << personajes[0].a[i] << "a" << i << endl;
+		cout << personajes[0].b[i] << "b" << i << endl;
+	}
+	//cerrar el fichero
+	fclose(file);
+	//vector <clsPersonaje> clspersonajes;
+	clspersonajes.reserve(num);
+	if (inicializacion == 1)
+	{
+		/*for (int i = 0; i < num; i++)
+		{
+			clsPersonaje * clasePers = new clsPersonaje();
+			clspersonajes.push_back(*clasePers);
+		}*/
+	}
+	else
+	{
+		for (int i = 0; i < num; i++)
+		{
+			cout << personajes[i].nombre;
+			clsPersonaje * clasePers = new clsPersonaje(personajes[i]);
+			clspersonajes.push_back(*clasePers);
+		}
+	}
+
+	//vector <clsPersonaje> listan;
+	listan.reserve(num);
+	if (inicializacion == 0)
+		{
+			for (int i = 0; i < num; i++)
+			{
+				listan.push_back(clspersonajes.at(i));
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
 	return 0;
 }
 
