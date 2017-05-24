@@ -7,10 +7,10 @@
 
 //#include <stdbool.h>
 
-//Personaje leerFicheroPersonajes()
-//{
-//	FILE * file;	
-//	int num;
+Personaje * leerFicheroPersonajes()
+{
+	FILE * file;	
+	int num;
 	/*Proceso de lectura del archivo binario:*/
 //	file = fopen(NOMBRE_BINARIO, "rb");
 //	

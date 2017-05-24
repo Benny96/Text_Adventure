@@ -1,5 +1,8 @@
 #include "Persona.h"
 #include <string.h>
+#include <iostream>
+
+using namespace std;
 
 Persona::Persona()
 {
@@ -13,6 +16,7 @@ Persona::Persona(const char* nombre)
 
 Persona::~Persona()
 {
+	cout << "EEEEEEEEEEEEEEEEEEEEE" << endl;
 	delete[] nombre;
 }
 

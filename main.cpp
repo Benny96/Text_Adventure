@@ -29,7 +29,6 @@ int main (void)
 		num: int que nos permitirá guardar el número de personajes que hay en el fichero binario.
 		Personaje *personajes: Array/puntero de personajes.
 		Personaje *listan: Array de personajes en el que se volcarán los datos a la hora de guardar.
-
 		i, q, a, option, nump_aux, hola, xx e yy: Variables auxiliares que utilizaremos a lo largo
 		del programa.
 	*/
@@ -59,12 +58,7 @@ int main (void)
 		num = INIT_PERSONAJES;
 	}
 	
-	Personaje * personajes [num];
-	for (int i = 0; i < num; i++)
-	{
-		personajes[i] = new Personaje();
-	}
-	//Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	
+	Personaje * personajes = (Personaje*)malloc(num * sizeof(Personaje));	
 	//Personaje * personajes = new Personaje [num]; ///////////////Reservar memoria para el array de personajes
 	fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar la info que hay en el fichero al array de personajes
 
@@ -90,12 +84,8 @@ int main (void)
 		if (option == 3)
 		{
 			cout << "Agur!" << endl;
-			for (int i = 0; i < num; i++)
-		  	{
-		  		delete [] personajes[i];
-		  	}
 			//delete [] a;
-			//free (personajes);
+			free (personajes);
 			//delete personajes;
 			return 0;
 		}
@@ -116,7 +106,7 @@ int main (void)
 			//Un for que saque por pantalla los nombres existentes en el sistema.
 			for (int i = 0; i < num; i++)
 			{
-				cout << personajes[i]->getNombre() << endl;
+				cout << personajes[i].getNombre() << endl;
 			}
 		}	
 		cout << "Introduce el nombre de tu personaje" << endl;
@@ -128,7 +118,7 @@ int main (void)
 			aux=0;
 			for(int i=0;i<num;i++)
 			{
-				if(strcmp(frmt_str,personajes[i]->getNombre())==0) //////////////////////Validamos que exista ese nombre en el sistema
+				if(strcmp(frmt_str,personajes[i].getNombre())==0) //////////////////////Validamos que exista ese nombre en el sistema
 				{
 					q=i;
 					aux=1;
@@ -146,19 +136,14 @@ int main (void)
 		do
 		{
 			cin >> frmt_str;
-			if(strcmp(frmt_str,personajes[q]->getContrasena())!=0)
+			if(strcmp(frmt_str,personajes[q].getContrasena())!=0)
 				{
 					cout << "La contrasenya es incorrecta, introduce otra." << endl;
 				}
 		}
-		while(strcmp(frmt_str,personajes[q]->getContrasena())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
+		while(strcmp(frmt_str,personajes[q].getContrasena())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
 
-		Personaje * listan [num];
-		for (int i = 0; i < num; i++)
-		{
-			listan[i] = new Personaje();
-		}
-		//listan = (Personaje*)malloc(num * sizeof(Personaje));
+		listan = (Personaje*)malloc(num * sizeof(Personaje));
 		//listan = new Personaje [num]; //////////////////Crear memoria para el array de personajes auxiliar
 
 		for(int i=0;i<num;i++)
@@ -166,7 +151,7 @@ int main (void)
 			listan[i]=personajes[i];   /////////////////Copiamos todos los datos del array personaje al array listan
 		}
 		//a=listan[q];
-		nump_aux = listan[q]->getNump();
+		nump_aux = listan[q].getNump();
 	}
 	//Aqui acaba la opcion de cargar un personaje
 
@@ -186,7 +171,7 @@ int main (void)
 			for(int i=0;i<num;i++)
 			{
 				q=i;
-				if(strcmp(a->getNombre(), personajes[i]->getNombre())==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
+				if(strcmp(a->getNombre(), personajes[i].getNombre())==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
 				{	
 					cout << "Este nombre ya existe, introduce otro." << endl;
 					aux=1;
@@ -206,12 +191,7 @@ int main (void)
 		{
   			num++;
 		}
-		Personaje * listan [num];
-		for (int i = 0; i < num; i++)
-		{
-			listan[i] = new Personaje();
-		}
-		//listan = (Personaje*)malloc(num * sizeof(Personaje));
+		listan = (Personaje*)malloc(num * sizeof(Personaje));
   		//listan = new Personaje [num];
 
 		for(int i=0;i<num;i++)
@@ -219,7 +199,7 @@ int main (void)
 			listan[i]=personajes[i];  /////////////////Copiamos todos los datos del array personaje al array listan
 		}
 		q=num;
-		listan[num]=a;
+		listan[num]=*a;
 		num++;
   	}
   //Aqui acaba la opcion de crear un personaje
@@ -237,16 +217,9 @@ int main (void)
 		if (option == 3)
 		{
 			cout << "Agur!" << endl;
-			for (int i = 0; i < num; i++)
-			{
-		  		delete [] personajes[i];
-		  	}
-		  	delete [] listan;
-			//delete[] listan;
-			//free (listan);
-			delete a;
-			//free (personajes);
-			//delete[] personajes;
+			delete[] listan;
+			delete[] a;
+			delete[] personajes;
 			return 0;
 		}
 		else if(option!=1 && option!=2 && option!=3)
@@ -462,14 +435,9 @@ int main (void)
    	//cerrar fichero
   	fclose(file);
 
-  	for (int i = 0; i < num; i++)
-  	{
-  		delete [] personajes[i];
-  	}
-  	delete [] listan;
-  	//delete[] personajes;
-  	delete a;
-  	//delete[] listan;
+  	delete[] personajes;
+  	delete[] a;
+  	delete[] listan;
 	return 0;
 }
 

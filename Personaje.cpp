@@ -27,6 +27,7 @@ Personaje::Personaje(const char* nombre, int nump, int x, int y, char* contrasen
 
 Personaje::~Personaje()
 {
+	cout << "EEEEEEEEEEEEEEEEEEEEE" << endl;
 	delete[] contrasena;
 }
 
