@@ -16,15 +16,11 @@ class clsPersonaje: public Persona
 	int y;
 	int a[TAMANYO_PARTIDAS_PERSONAJE];
 	int b[TAMANYO_PARTIDAS_PERSONAJE];
-	//int *a;
-	//int *b;
 	string contrasena;
 
 public:
 	clsPersonaje(Personaje *p);
-	//clsPersonaje(Personaje p);
 	clsPersonaje();
-	//clsPersonaje(const char* nombre, int nump, int x, int y, int a, int b, char* contrasena);
 	clsPersonaje(string nombre, int nump, int x, int y, string contrasena);
 
 	virtual ~clsPersonaje();
@@ -45,31 +41,3 @@ public:
 };
 
 #endif
-
-
-
-/*
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define TAMANYO_CADENAS 20
-#define TAMANYO_ARRAYS 10
-
-typedef struct {
-	int nump;
-	int x;
-	int y;
-	int a[TAMANYO_ARRAYS];
-	int b[TAMANYO_ARRAYS];
-	char nombre[TAMANYO_CADENAS];
-	char contrasena[TAMANYO_CADENAS];
-
-} Personaje;
-
-#ifdef __cplusplus
-}  /* end of the 'extern "C"' block */
-//#endif
-
-//#endif
-

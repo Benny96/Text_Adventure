@@ -135,7 +135,7 @@ int main (void)
 			//Un for que saque por pantalla los nombres existentes en el sistema.
 			for (int i = 0; i < num; i++)
 			{
-				cout << clspersonajes.at(i).getNombre() << endl;
+				cout << "\t" << clspersonajes.at(i).getNombre() << endl;
 			}
 		}	
 		cout << "Introduce el nombre de tu personaje" << endl;
@@ -165,12 +165,13 @@ int main (void)
 		do
 		{
 			cin >> frmt_str;
-			if(strcmp(frmt_str,clspersonajes.at(i).getContrasena().c_str())!=0)
+			if(strcmp(frmt_str,clspersonajes.at(q).getContrasena().c_str())!=0)
 				{
 					cout << "La contrasenya es incorrecta, introduce otra." << endl;
 				}
 		}
-		while(strcmp(frmt_str,clspersonajes.at(i).getContrasena().c_str())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
+		while(strcmp(frmt_str,clspersonajes.at(q).getContrasena().c_str())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
+		
 		*a=listan.at(q);
 		nump_aux = listan.at(q).getNump();
 	}

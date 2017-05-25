@@ -10,8 +10,6 @@ class Persona
 
 public:
 	Persona();
-	//Persona(const char* nombre);
-	//No me convence const string
 	Persona(const string nombre);
 	virtual ~Persona();
 	

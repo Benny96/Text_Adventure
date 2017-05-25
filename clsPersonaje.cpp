@@ -5,90 +5,46 @@
 
 
 using namespace std;
-									//*p
+
 clsPersonaje::clsPersonaje(Personaje *p): Persona(string(p->nombre))
 {
-		//cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
-	cout << "oooooooooooooooooooooooooooooooooooooooooooooooooo" << endl;
-
 	this->nump = p->nump;
 	this->x = p->x;
 	this->y = p->y;
 
 	this->contrasena = string(p->contrasena);
-	//this->contrasena=new char[strlen(contrasena.c_str())+1];
-	//strcpy(this->contrasena, contrasena.c_str());
-	//this->contrasena = new char[strlen(p.contrasena) + 1];
-	//strcpy(this->contrasena, p.contrasena);
-	//PUEDE PETAR.
 	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
 		setA(i, p->a[i]);
 		setB(i, p->b[i]);
 	}
-	
-	//this->a = p.a;
-	//this->b = p.b;
 }
-/*
-clsPersonaje::clsPersonaje(Personaje *p): Persona(p.nombre)
-{
-		//cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
-	cout << "personajeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" << endl;
-	this->nump = p.nump;
-	this->x = p.x;
-	this->y = p.y;
-	this->contrasena = string(p.contrasena)
-	strcpy(this->contrasena, p.contrasena);
-	//PUEDE PETAR.
-	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
-	{
-		setA(i, p.a[i]);
-		setB(i, p.b[i]);
-
-	}
-	
-	//this->a = p.a;
-	//this->b = p.b;
-}*/
 clsPersonaje::clsPersonaje(): Persona()
 {
 	cout << "constructor vacio clsPersonaje" << endl;
 	this->nump = 0;
 	this->x = 0;
 	this->y = 0;
+	
 	this->contrasena = string("");
 }
-//Personaje::Personaje(const char* nombre, int nump, int x, int y, int *a, int *b, char* contrasena): Persona(nombre)
 clsPersonaje::clsPersonaje(string nombre, int nump, int x, int y, string contrasena): Persona(nombre)
 {
 	cout << "constructor con todo clsPersonaje" << endl;
 	this->nump = nump;
 	this->x = x;
 	this->y = y;
-
 	for(int i=0; i<TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
 		setA(i, 0);
 		setB(i, 0);
 	}
-	//this->a = a;
-	//this->b = b;
-
 	this->contrasena = contrasena;
-	//this->contrasena = new char[strlen(contrasena) + 1];
-	//strcpy(this->contrasena, contrasena);	
 }
-
-
 clsPersonaje::~clsPersonaje()
 {
 	cout << "Destructor clsPersonaje" << endl;
-	//delete[] contrasena;
 }
-
-
-
 int clsPersonaje::getNump() const
 {
 	return nump;
@@ -120,8 +76,6 @@ void clsPersonaje::mostrarDatos() const
 void clsPersonaje::setContrasena(string contrasena)
 {
 	this->contrasena = contrasena;
-	//this->contrasena = new char[strlen(contrasena) + 1];
-	//strcpy(this->contrasena, contrasena);	
 }
 void clsPersonaje::setNump(int nump)
 {
@@ -141,10 +95,5 @@ void clsPersonaje::setA(int pos, int valor)
 }
 void clsPersonaje::setB(int pos, int valor)
 {
-	//for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
-	//{
-	//	this->b[i] = b[i];
-	//}
 	this->b[pos] = valor;
 }
-
