@@ -5,12 +5,9 @@
 
 using namespace std;
 
-clsPersonaje::clsPersonaje(Personaje *p): Persona(string(p->nombre))
+clsPersonaje::clsPersonaje(Personaje *p): Persona(string(p->nombre), p->x,p->y)
 {
 	this->nump = p->nump;
-	this->x = p->x;
-	this->y = p->y;
-
 	this->contrasena = string(p->contrasena);
 	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
@@ -22,17 +19,12 @@ clsPersonaje::clsPersonaje(): Persona()
 {
 	cout << "constructor vacio clsPersonaje" << endl;
 	this->nump = 0;
-	this->x = 0;
-	this->y = 0;
-	
 	this->contrasena = string("");
 }
-clsPersonaje::clsPersonaje(string nombre, int nump, int x, int y, string contrasena): Persona(nombre)
+clsPersonaje::clsPersonaje(string nombre, int x, int y, int nump, string contrasena): Persona(nombre,x,y)
 {
 	cout << "constructor con todo clsPersonaje" << endl;
 	this->nump = nump;
-	this->x = x;
-	this->y = y;
 	for(int i=0; i<TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
 		setA(i, 0);
@@ -49,14 +41,6 @@ clsPersonaje::~clsPersonaje()
 int clsPersonaje::getNump() const
 {
 	return nump;
-}
-int clsPersonaje::getX() const
-{
-	return x;
-}
-int clsPersonaje::getY() const
-{
-	return y;
 }
 int clsPersonaje::getA(int pos) const
 {
@@ -81,14 +65,6 @@ void clsPersonaje::setContrasena(string contrasena)
 void clsPersonaje::setNump(int nump)
 {
 	this->nump = nump;
-}
-void clsPersonaje::setX(int x)
-{
-	this->x = x;
-}
-void clsPersonaje::setY(int y)
-{
-	this->y = y;
 }
 void clsPersonaje::setA(int pos, int valor)
 {

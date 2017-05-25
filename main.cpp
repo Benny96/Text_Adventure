@@ -9,6 +9,7 @@
 #include "Personaje.h"
 
 #include "clsPersonaje.h"
+#include "Enemigo.h"
 #include "Persistencia/DBConnector.h"
 
 
@@ -17,10 +18,10 @@ using namespace std;
 #define MAX_LENGTH 20
 #define TABLERO 3
 #define ESPACIADO 5
+#define TAMANYO_LINEA 80
 #define FICHERO_BINARIO "personajes.dat"
 #define FICHERO_HISTORIA "historia.txt"
 #define FICHERO_BD "datos.bd"
-#define TAMANYO_LINEA 80
 
 void menu_personajes();
 void menu_partidas();
@@ -339,7 +340,24 @@ int main (void)
 	int reputacion = 0;
 	reputacion = dbConnector.recogerKarmaPersonaje(listan.at(q).getNombre());
 	cout << "VALOR DE REPUTACION: " << reputacion << endl;
-	
+
+	 /* Inicializar semilla variable con respecto al tiempo: */
+  	srand (time(NULL));
+  	int enemposX;
+  	int enemposY;
+  	do
+  	{
+  		/* genera un número aleatorio entre 0 y 2, hasta que no se de el caso de una posición (0,0): */
+  		enemposX = rand()%3;
+  		enemposY = rand()%3;
+  	}
+  	while (enemposX == 0 && enemposY == 0);
+  	
+  	//////////////////////////////////////////////////////////////////////////////
+  	Enemigo * e = new Enemigo (NOMBRE_DEL_MALO, enemposX, enemposY, -reputacion); 	//- reputacion hace que todo el Karma positivo acumulado por los anteriores personajes haga que la dificultad del enemigo sea mas baja.
+  	//////////////////////////////////////////////////////////////////////////////
+  	
+  	int seacabo = 0;
 	do
 	{
 		cout << "Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida)." << endl;
@@ -425,6 +443,7 @@ int main (void)
 
 		if((a->getX()==(TABLERO-1) && a->getY()==(TABLERO-1)) && hola!=-2)
 		{
+			seacabo = 1;
 			int h=-2;
 			for(int i=0;i<=nump_aux;i++)
 			{
@@ -449,11 +468,14 @@ int main (void)
 
 	cout << "El juego se ha acabado. Agur!" << endl;
 
-	result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), 1);
-	if (result != SQLITE_OK) 
+	if (seacabo == 1)
 	{
-		cout << "Error añadiendo el karma" << endl;
-		return result;
+		result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), 1);
+		if (result != SQLITE_OK) 
+		{
+			cout << "Error añadiendo el karma" << endl;
+			return result;
+		}
 	}
 	
 	file = fopen(FICHERO_BINARIO, "wb");
@@ -486,6 +508,7 @@ int main (void)
 
   	free(persaguardar);
   	free(personajes);
+  	delete e;
   	delete a;
   	clspersonajes.clear();
   	listan.clear();

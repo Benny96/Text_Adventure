@@ -6,11 +6,11 @@ using namespace std;
 
 Enemigo::Enemigo():Persona()
 {
-	this->dificultad = 0;
+	this->dificultad = NIVEL_DIFICULTAD;
 }
-Enemigo::Enemigo(const string nombre, int dificultad): Persona(nombre)
+Enemigo::Enemigo(const string nombre, int x, int y, int dificultad): Persona(nombre, x, y)
 {
-	this->dificultad = dificultad;
+	this->dificultad = NIVEL_DIFICULTAD + dificultad;
 }
 
 int Enemigo::getDificultad() const
