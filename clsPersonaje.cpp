@@ -8,6 +8,7 @@ using namespace std;
 clsPersonaje::clsPersonaje(Personaje p): Persona(p.nombre)
 {
 		//cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
+	cout << "personajeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" << endl;
 	this->nump = p.nump;
 	this->x = p.x;
 	this->y = p.y;
@@ -24,6 +25,7 @@ clsPersonaje::clsPersonaje(Personaje p): Persona(p.nombre)
 }
 clsPersonaje::clsPersonaje(): Persona()
 {
+	cout << "constructor vacio clsPersonaje" << endl;
 	this->nump = 0;
 	this->x = 0;
 	this->y = 0;
@@ -32,13 +34,15 @@ clsPersonaje::clsPersonaje(): Persona()
 //Personaje::Personaje(const char* nombre, int nump, int x, int y, int *a, int *b, char* contrasena): Persona(nombre)
 clsPersonaje::clsPersonaje(const char* nombre, int nump, int x, int y, char* contrasena): Persona(nombre)
 {
+	cout << "constructor con todo clsPersonaje" << endl;
 	this->nump = nump;
 	this->x = x;
 	this->y = y;
-	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
+
+	for(int i=0; i<TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
-		setA(i, 0);
-		setB(i, 0);
+		setA(i, p.a[i]);
+		setB(i, p.b[i]);
 	}
 	//this->a = a;
 	//this->b = b;
@@ -50,7 +54,7 @@ clsPersonaje::clsPersonaje(const char* nombre, int nump, int x, int y, char* con
 
 clsPersonaje::~clsPersonaje()
 {
-	cout << "EEEEEEEEEEEEEEEEEEEEE" << endl;
+	cout << "Destructor clsPersonaje" << endl;
 	delete[] contrasena;
 }
 

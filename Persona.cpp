@@ -7,19 +7,26 @@ using namespace std;
 
 Persona::Persona()
 {
+	cout << "constructor vacio Persona" << endl;
 	this->nombre = new char[1]; 
 }
 Persona::Persona(const char* nombre)
 {
-	cout << nombre << endl;
-	cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
+	cout << "constructor normal persona" << endl;
 	this->nombre = new char[strlen(nombre) + 1];
 	strcpy(this->nombre, nombre);	
 }
 
+Persona::Persona(const string nombre)
+{
+	cout << "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"  << endl;
+	this->nombre=new char[strlen(nombre.c_str())+1];
+	strcpy(this->nombre, nombre.c_str());
+}
+
 Persona::~Persona()
 {
-	cout << "EEEEEEEEEEEEEEEEEEEEE" << endl;
+	cout << "destructor Persona" << endl;
 	delete[] nombre;
 }
 

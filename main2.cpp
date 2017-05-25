@@ -51,7 +51,7 @@ int main (void)
 	
 	/*Obtenemos la cantidad de personajes guardados*/
 	num = fgetc(file);
-	cout << num << endl;
+	cout << "numero de personajes: "<< num << endl;
 	if (num == -1)
 	{
 		//AÑADIR VARIABLE AUXILIAR PARA SABER QUE SE HA ENTRADO AQUI
@@ -238,8 +238,8 @@ int main (void)
 		//}
 
 		listan.push_back(*a);
-		cout << a->getNombre() << endl;
-		cout << a->getContrasena() << endl;
+		//cout << a->getNombre() << endl;
+		//cout << a->getContrasena() << endl;
 
 		num++;
   	}
@@ -484,11 +484,11 @@ int main (void)
 		//pers.contrasena = new char[strlen(listan.at(i).getContrasena().c_str()) + 1];
 		pers.contrasena = new char[strlen(listan.at(i).getContrasena()) + 1];
 		strcpy(pers.contrasena, listan.at(i).getContrasena());
-		cout << pers.nombre << "aaa" << endl;
-		cout << pers.contrasena << "bbb" << endl;
+		//cout << pers.nombre << "aaa" << endl; //esto lo guarda bien
+		//cout << pers.contrasena << "bbb" << endl; //esto lo guarda bien
 		persaguardar[i] = pers; 
 	}
-	cout << persaguardar[0].nombre << "asdasdasd" << endl;
+	//cout << persaguardar[0].nombre << "asdasdasd" << endl;
 
   	fwrite(persaguardar, sizeof(Personaje), num, file);
   
@@ -502,13 +502,20 @@ int main (void)
   	//listan.clear();
   	//delete[] listan;
 
+cout << endl;
+cout << endl;
+cout << endl;
+
+
+
+cout << "LECTURA" << endl;
 
 inicializacion = 0;
 file = fopen("personajes.dat", "rb");
 	
 	/*Obtenemos la cantidad de personajes guardados*/
 	num = fgetc(file);
-	cout << num << endl;
+	cout << "Cantidad de personajes guardados: " << num << endl;
 	if (num == -1)
 	{
 		//AÑADIR VARIABLE AUXILIAR PARA SABER QUE SE HA ENTRADO AQUI
@@ -520,33 +527,35 @@ file = fopen("personajes.dat", "rb");
 		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
 		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
 	}
-	cout << personajes[0].nombre << "nom" << endl;
-	cout << personajes[0].contrasena << "contra" << endl;
-	cout << personajes[0].x << "X" << endl;
-	cout << personajes[0].y << "Y" <<endl;
-	cout << personajes[0].nump << "nump" << endl;
-	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
+	cout << "Nombre: " << personajes[0].nombre << endl;
+	cout << "Contrasena: " << personajes[0].contrasena << endl;
+	cout << "X: " << personajes[0].x << endl;
+	cout << "Y: " << personajes[0].y << endl;
+	cout << "partidas jugadas: "<< personajes[0].nump << endl;
+
+	/*for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
 		cout << personajes[0].a[i] << "a" << i << endl;
 		cout << personajes[0].b[i] << "b" << i << endl;
 	}
+	*/
 	//cerrar el fichero
 	fclose(file);
 	//vector <clsPersonaje> clspersonajes;
 	clspersonajes.reserve(num);
 	if (inicializacion == 1)
 	{
-		/*for (int i = 0; i < num; i++)
+		for (int i = 0; i < num; i++)
 		{
 			clsPersonaje * clasePers = new clsPersonaje();
 			clspersonajes.push_back(*clasePers);
-		}*/
+		}
 	}
 	else
 	{
 		for (int i = 0; i < num; i++)
 		{
-			cout << personajes[i].nombre;
+			//cout << personajes[i].nombre << endl;
 			clsPersonaje * clasePers = new clsPersonaje(personajes[i]);
 			clspersonajes.push_back(*clasePers);
 		}
