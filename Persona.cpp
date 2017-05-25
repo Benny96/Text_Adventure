@@ -15,11 +15,12 @@ Persona::Persona(const string nombre)
 {
 	this->nombre = nombre;
 }
-
+/*
+Al estar utilizando std::string, no necesitamos liberar ningun puntero. Con lo cual, el destructor tiene codigo vacio.
+{LO HEMOS PUESTO A MODO ILUSTRATIVO}
+*/
 Persona::~Persona()
-{
-	cout << "destructor Persona" << endl;
-}
+{}
 
 string Persona::getNombre() const
 {

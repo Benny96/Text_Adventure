@@ -3,7 +3,6 @@
 #include <string.h>
 #include <iostream>
 
-
 using namespace std;
 
 clsPersonaje::clsPersonaje(Personaje *p): Persona(string(p->nombre))
@@ -41,10 +40,12 @@ clsPersonaje::clsPersonaje(string nombre, int nump, int x, int y, string contras
 	}
 	this->contrasena = contrasena;
 }
+/*
+Al estar utilizando std::string, no necesitamos liberar ningun puntero. Con lo cual, el destructor tiene codigo vacio.
+{LO HEMOS PUESTO A MODO ILUSTRATIVO}
+*/
 clsPersonaje::~clsPersonaje()
-{
-	cout << "Destructor clsPersonaje" << endl;
-}
+{}
 int clsPersonaje::getNump() const
 {
 	return nump;

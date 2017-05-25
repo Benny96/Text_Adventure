@@ -2,6 +2,7 @@
 #define _ENEMIGO_H
 
 #include "Persona.h"
+using namespace std;
 
 class Enemigo: public Persona
 {
@@ -9,7 +10,7 @@ class Enemigo: public Persona
 
 public:
 	Enemigo();
-	Enemigo(const char* nombre, int dificultad);
+	Enemigo(const string nombre, int dificultad);
 	int getDificultad() const;
 	virtual void mostrarDatos() const;
 };

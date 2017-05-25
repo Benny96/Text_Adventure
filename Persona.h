@@ -6,8 +6,8 @@ using namespace std;
 
 class Persona
 {
+protected:
 	string nombre;
-
 public:
 	Persona();
 	Persona(const string nombre);
