@@ -17,9 +17,9 @@ clsPersonaje::clsPersonaje(Personaje p): Persona(p.nombre)
 	//PUEDE PETAR.
 	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
-		setA(i, 0;
+		setA(i, 0);
 		setB(i, 0);
-	}
+	
 	//this->a = p.a;
 	//this->b = p.b;
 }
