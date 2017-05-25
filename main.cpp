@@ -281,9 +281,10 @@ int main (void)
 		}
 	}
 
+	//char **** hist = leerFicheroTexto();
 	/*Bloque que se podría intentar mover*/
+	
 	char hist[TABLERO][TABLERO][80]; ///////////////////////////////////////////Esto es un array bidimensional de lo que en Java llamabamos Strings
-	//hist -> lecturaHistoria(hist);
 	int o;
 	int p;
 	int mn=0;
@@ -294,7 +295,7 @@ int main (void)
 	int d;
 	while(fgets(str2, TAMANYO_LINEA, fd1)) 
 	{
-    	d = 0;
+	   	d = 0;
 	    if(sscanf(str2, "%d", &d) == 0) 
 	    {
 	    	sscanf(str2, "%[^\n]s", frmt_str2);
@@ -356,12 +357,12 @@ int main (void)
   	//////////////////////////////////////////////////////////////////////////////
   	Enemigo * e = new Enemigo (NOMBRE_DEL_MALO, enemposX, enemposY, -reputacion); 	//- reputacion hace que todo el Karma positivo acumulado por los anteriores personajes haga que la dificultad del enemigo sea mas baja.
   	//////////////////////////////////////////////////////////////////////////////
-  	
+
   	int seacabo = 0;
 	do
 	{
 		cout << "Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida)." << endl;
-		cout << "Info de la casilla (" << a->getX() << ", "<< a->getY() << "): " << hist[a->getX()][a->getY()] << endl;
+		cout << "Info de la casilla (" << a->getX() << ", "<< a->getY() << "): " << &hist[a->getX()][a->getY()] << endl;
 		cin >> frmt_str;
 		if (strcmp(frmt_str, "g") == 0)
 		{
@@ -506,6 +507,28 @@ int main (void)
    	//cerrar fichero
   	fclose(file);
 
+  	//for (int i = 0; i < TABLERO; i++)
+  	//{
+  	//	for (int j = 0; j < TABLERO; j++)
+  	//	{
+  	//		for (int k = 0; k < TAMANYO_LINEA; k++)
+  	//		{
+  	//			free(hist[i][j][k]);
+  	//		}
+  	//	}
+  	//}
+  	//for (int i = 0; i < TABLERO; i++)
+  	//{
+  	//	for (int j = 0; j < TABLERO; j++)
+  	//	{
+  	//		free(hist[i][j]);
+  	//	}
+  	//}
+  	//for (int i = 0; i < TABLERO; i++)
+  	//{
+  	//	free(hist[i]);
+  	//}
+  	//free(hist);
   	free(persaguardar);
   	free(personajes);
   	delete e;

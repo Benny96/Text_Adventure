@@ -19,4 +19,7 @@ typedef struct {
 
 //Personaje * leerPersonajes();
 //void escribirPersonajes(int num, )
+//char **** leerFicheroTexto();
+//void clear_if_needed(char* str);
+
 #endif
