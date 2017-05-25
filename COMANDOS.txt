@@ -1,4 +1,4 @@
 Para compilar lo que por ahora nos interesa:
 
 gcc personaje.c -c
-g++ main2.cpp personaje.o enemigo.cpp clsPersonaje.cpp persona.cpp -o main
+g++ main.cpp personaje.o enemigo.cpp clsPersonaje.cpp persona.cpp -o main

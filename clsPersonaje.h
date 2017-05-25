@@ -5,6 +5,8 @@
 #include "Personaje.h"
 #include <iostream>
 
+using namespace std;
+
 #define TAMANYO_PARTIDAS_PERSONAJE 10
 
 class clsPersonaje: public Persona
@@ -16,14 +18,14 @@ class clsPersonaje: public Persona
 	int b[TAMANYO_PARTIDAS_PERSONAJE];
 	//int *a;
 	//int *b;
-	char *contrasena;
+	string contrasena;
 
 public:
-	clsPersonaje(Personaje p, string n);
-	clsPersonaje(Personaje p);
+	clsPersonaje(Personaje *p);
+	//clsPersonaje(Personaje p);
 	clsPersonaje();
 	//clsPersonaje(const char* nombre, int nump, int x, int y, int a, int b, char* contrasena);
-	clsPersonaje(const char* nombre, int nump, int x, int y, char* contrasena);
+	clsPersonaje(string nombre, int nump, int x, int y, string contrasena);
 
 	virtual ~clsPersonaje();
 	
@@ -32,9 +34,9 @@ public:
 	int getY() const;
 	int getA(int pos) const;
 	int getB(int pos) const; 
-	char* getContrasena() const;
+	string getContrasena() const;
 	virtual void mostrarDatos() const;
-	void setContrasena(char * contrasena);
+	void setContrasena(string contrasena);
 	void setNump(int nump);
 	void setX(int x);
 	void setY(int y);

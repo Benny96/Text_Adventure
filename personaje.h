@@ -13,8 +13,8 @@ typedef struct {
 	int y;
 	int a[TAMANYO_PARTIDAS_PERSONAJE];
 	int b[TAMANYO_PARTIDAS_PERSONAJE];
-	char* nombre;
-	char* contrasena;
+	char nombre[TAMANYO_CADENAS];
+	char contrasena[TAMANYO_CADENAS];
 } Personaje;
 
 #endif
