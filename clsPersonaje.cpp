@@ -17,8 +17,10 @@ clsPersonaje::clsPersonaje(Personaje p): Persona(p.nombre)
 	//PUEDE PETAR.
 	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
-		setA(i, 0);
-		setB(i, 0);
+		setA(i, p.a[i]);
+		setB(i, p.b[i]);
+
+	}
 	
 	//this->a = p.a;
 	//this->b = p.b;
@@ -41,8 +43,8 @@ clsPersonaje::clsPersonaje(const char* nombre, int nump, int x, int y, char* con
 
 	for(int i=0; i<TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
-		setA(i, p.a[i]);
-		setB(i, p.b[i]);
+		setA(i, 0);
+		setB(i, 0);
 	}
 	//this->a = a;
 	//this->b = b;
