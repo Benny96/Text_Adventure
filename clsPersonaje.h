@@ -19,6 +19,7 @@ class clsPersonaje: public Persona
 	char *contrasena;
 
 public:
+	clsPersonaje(Personaje p, string n);
 	clsPersonaje(Personaje p);
 	clsPersonaje();
 	//clsPersonaje(const char* nombre, int nump, int x, int y, int a, int b, char* contrasena);

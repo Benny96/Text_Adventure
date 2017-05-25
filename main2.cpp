@@ -46,10 +46,15 @@ int main (void)
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
 
-	/*Proceso de lectura del archivo binario:*/
+	
+	
+
+
+
+	//Proceso de lectura del archivo binario:
 	file = fopen("personajes.dat", "rb");
 	
-	/*Obtenemos la cantidad de personajes guardados*/
+	//Obtenemos la cantidad de personajes guardados
 	num = fgetc(file);
 	cout << "numero de personajes: "<< num << endl;
 	if (num == -1)
@@ -70,11 +75,11 @@ int main (void)
 	clspersonajes.reserve(num);
 	if (inicializacion == 1)
 	{
-		/*for (int i = 0; i < num; i++)
+		for (int i = 0; i < num; i++)
 		{
 			clsPersonaje * clasePers = new clsPersonaje();
 			clspersonajes.push_back(*clasePers);
-		}*/
+		}
 	}
 	else
 	{
@@ -96,12 +101,20 @@ int main (void)
 			}
 		}
 
-	/*
-	A modificar:
-	Si se combina con un new de Personaje *personajes, puede que no haya problema.
-	Pero para esto necesitamos un constructor...
-	Personaje *personajes = leerFicheroPersonajes();
-	*/
+
+	
+
+
+	
+//	A modificar:
+//	Si se combina con un new de Personaje *personajes, puede que no haya problema.
+//	Pero para esto necesitamos un constructor...
+//	Personaje *personajes = leerFicheroPersonajes();
+
+
+
+
+
 	if (inicializacion == 1)
 	{
 		num = -1;
@@ -508,7 +521,7 @@ cout << endl;
 
 
 
-cout << "LECTURA" << endl;
+cout << "LECTURA FIN" << endl;
 
 inicializacion = 0;
 file = fopen("personajes.dat", "rb");
@@ -525,7 +538,7 @@ file = fopen("personajes.dat", "rb");
 	if (inicializacion == 0)
 	{
 		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
-		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
+		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar la info que hay en el fichero al array de personajes
 	}
 	cout << "Nombre: " << personajes[0].nombre << endl;
 	cout << "Contrasena: " << personajes[0].contrasena << endl;
@@ -556,7 +569,7 @@ file = fopen("personajes.dat", "rb");
 		for (int i = 0; i < num; i++)
 		{
 			//cout << personajes[i].nombre << endl;
-			clsPersonaje * clasePers = new clsPersonaje(personajes[i]);
+			clsPersonaje * clasePers = new clsPersonaje(personajes[i], personajes[i].nombre);
 			clspersonajes.push_back(*clasePers);
 		}
 	}
@@ -570,17 +583,6 @@ file = fopen("personajes.dat", "rb");
 				listan.push_back(clspersonajes.at(i));
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
 
 	return 0;
 }

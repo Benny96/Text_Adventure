@@ -5,6 +5,27 @@
 
 using namespace std;
 
+clsPersonaje::clsPersonaje(Personaje p, string n): Persona(n)
+{
+		//cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
+	cout << "oooooooooooooooooooooooooooooooooooooooooooooooooo" << endl;
+	this->nump = p.nump;
+	this->x = p.x;
+	this->y = p.y;
+	this->contrasena = new char[strlen(p.contrasena) + 1];
+	strcpy(this->contrasena, p.contrasena);
+	//PUEDE PETAR.
+	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
+	{
+		setA(i, p.a[i]);
+		setB(i, p.b[i]);
+
+	}
+	
+	//this->a = p.a;
+	//this->b = p.b;
+}
+
 clsPersonaje::clsPersonaje(Personaje p): Persona(p.nombre)
 {
 		//cout << "AQUI PETAAAAAAAAAAAAAAA" << endl;
