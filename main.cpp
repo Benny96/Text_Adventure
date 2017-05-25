@@ -2,11 +2,15 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include <iostream>
+#include <vector>
+
+#include "Personaje.h"
 
 #include "clsPersonaje.h"
-#include "Personaje.h"
-#include <vector>
+#include "Persistencia/DBConnector.h"
+
 
 using namespace std;
 
@@ -15,8 +19,8 @@ using namespace std;
 #define ESPACIADO 5
 #define FICHERO_BINARIO "personajes.dat"
 #define FICHERO_HISTORIA "historia.txt"
+#define FICHERO_BD "datos.bd"
 #define TAMANYO_LINEA 80
-#define INIT_PERSONAJES 5
 
 void menu_personajes();
 void menu_partidas();
@@ -224,7 +228,6 @@ int main (void)
 	{
 		menu_partidas();
 		cin >> option;
-		cout << "HOLAAAAAAAAAAAAAAA" << endl;
 		if(a->getNump()==-1 && option==2)
 		{
 			cout << "No hay partidas guardadas" << endl;
@@ -324,6 +327,19 @@ int main (void)
 	a->setX(xx);
 	a->setY(yy);
 	mapear(a->getX(),a->getY());
+
+
+	DBConnector dbConnector(FICHERO_BD);
+	int result = dbConnector.db_build();
+	if (result != SQLITE_OK) 
+	{
+	  	cout << "Error creating table" << endl;
+	  	return result;
+	}
+	int reputacion = 0;
+	reputacion = dbConnector.recogerKarmaPersonaje(listan.at(q).getNombre());
+	cout << "VALOR DE REPUTACION: " << reputacion << endl;
+	
 	do
 	{
 		cout << "Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida)." << endl;
@@ -433,6 +449,13 @@ int main (void)
 
 	cout << "El juego se ha acabado. Agur!" << endl;
 
+	result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), 1);
+	if (result != SQLITE_OK) 
+	{
+		cout << "Error añadiendo el karma" << endl;
+		return result;
+	}
+	
 	file = fopen(FICHERO_BINARIO, "wb");
   
   	//escribir la cantidad de elementos

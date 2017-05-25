@@ -4,7 +4,7 @@
 #define TAMANYO_CADENAS 20
 #define TABLERO 3
 #define ESPACIADO 5
-
+#define INIT_PERSONAJES 5
 #define TAMANYO_PARTIDAS_PERSONAJE 10
 
 typedef struct {
@@ -17,4 +17,6 @@ typedef struct {
 	char contrasena[TAMANYO_CADENAS];
 } Personaje;
 
+//Personaje * leerPersonajes();
+//void escribirPersonajes(int num, )
 #endif

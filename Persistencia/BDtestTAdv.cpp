@@ -1,4 +1,3 @@
-#include "sqlite3.h"
 #include "DBConnector.h"
 #include <iostream>
 #include <stdio.h>

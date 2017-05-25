@@ -1,4 +1,4 @@
 Para compilar lo que por ahora nos interesa:
 
-gcc personaje.c -c
-g++ main.cpp personaje.o enemigo.cpp clsPersonaje.cpp persona.cpp -o main
+gcc Persistencia/sqlite3.c personaje.c -c
+g++ main.cpp personaje.o Persistencia/sqlite3.o DBConnector.cpp enemigo.cpp clsPersonaje.cpp persona.cpp -o main
