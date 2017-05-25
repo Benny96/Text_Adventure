@@ -37,8 +37,8 @@ clsPersonaje::clsPersonaje(const char* nombre, int nump, int x, int y, char* con
 	this->y = y;
 	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
-		setA(i, p.a[i]);
-		setB(i, p.b[i]);
+		setA(i, 0);
+		setB(i, 0);
 	}
 	//this->a = a;
 	//this->b = b;
