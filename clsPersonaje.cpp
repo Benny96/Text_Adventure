@@ -32,10 +32,14 @@ clsPersonaje::clsPersonaje(): Persona()
 //Personaje::Personaje(const char* nombre, int nump, int x, int y, int *a, int *b, char* contrasena): Persona(nombre)
 clsPersonaje::clsPersonaje(const char* nombre, int nump, int x, int y, char* contrasena): Persona(nombre)
 {
-
 	this->nump = nump;
 	this->x = x;
 	this->y = y;
+	for (int i = 0; i < TAMANYO_PARTIDAS_PERSONAJE; i++)
+	{
+		setA(i, p.a[i]);
+		setB(i, p.b[i]);
+	}
 	//this->a = a;
 	//this->b = b;
 
