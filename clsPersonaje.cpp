@@ -3,6 +3,9 @@
 #include <string.h>
 #include <iostream>
 
+
+#define MAX_LENGTH 20
+
 using namespace std;
 
 clsPersonaje::clsPersonaje(Personaje *p): Persona(string(p->nombre), p->x,p->y)
@@ -73,4 +76,30 @@ void clsPersonaje::setA(int pos, int valor)
 void clsPersonaje::setB(int pos, int valor)
 {
 	this->b[pos] = valor;
+}
+
+
+//ostream& operator<<(ostream &out, const clsPersonaje &p) //>> y << tienen que estar fuera de la clase a no ser que sean friend!!
+//{
+//
+//	cout << "sobrecarga >>>>>>>>>>>>>>>>>>>>>>>" << endl;
+//
+//	out << "(" << p.getX() << ", " << p.getY() << ")";
+//	return out;
+//}
+
+istream& operator>>(istream &in, clsPersonaje &p)
+{
+	
+		cout << "Introduce el nombre de tu personaje:" << endl; 
+		char * aux = new char[MAX_LENGTH];
+		cin >> aux;
+		p.setNombre(aux);
+
+
+		cout << "Introduce la contrasena de tu personaje:" << endl; 
+		char * aux2 = new char[MAX_LENGTH];
+		cin >> aux2;
+		p.setContrasena(aux2);
+
 }

@@ -186,32 +186,24 @@ int main (void)
 	if(option==1)
 	{
 		cout << "Ha seleccionado crear un personaje." << endl;
-		cout << "Introduce el nombre de tu personaje:" << endl; 
+
 		int aux;
-		char * aux2 = new char[MAX_LENGTH];
-		q=-1;
 		do
 		{
-			cin >> aux2;
-			a-> setNombre(aux2);
-			aux=0;
+			cin >> *a;
 			for(int i=0;i<num;i++)
 			{
 				q=i;
 				if(strcmp(a->getNombre().c_str(), clspersonajes.at(i).getNombre().c_str())==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
 				{	
-					cout << "Este nombre ya existe, introduce otro." << endl;
+					cout << "Este nombre de usuario ya existe, introduce otro." << endl;
 					aux=1;
 				}
 			}
 		}
 		while(aux==1);
+		
 
-		cout << "Introduce la contrasenya" << endl;
-		char * contra = new char [MAX_LENGTH];
-		cin >> contra;
-		a-> setContrasena(contra); /////////////////////////////////////La contrasenya se le asigna a ese nombre. Puede haber mas de una igual, por lo que no validamos que sea unica
-		nump_aux=-1;
 		a->setNump(-1);
 
 		if(num==-1)
@@ -362,7 +354,7 @@ int main (void)
 	do
 	{
 		cout << "Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida)." << endl;
-		cout << "Info de la casilla (" << a->getX() << ", "<< a->getY() << "): " << &hist[a->getX()][a->getY()] << endl;
+		cout << "Info de la casilla (" << a->getX() << ", "<< a->getY() << "): " << hist[a->getX()][a->getY()] << endl;
 		cin >> frmt_str;
 		if (strcmp(frmt_str, "g") == 0)
 		{

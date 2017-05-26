@@ -34,3 +34,6 @@ public:
 };
 
 #endif
+
+istream& operator>>(istream &in, clsPersonaje &p);
+//ostream& operator<<(ostream &out, const clsPersonaje p);
