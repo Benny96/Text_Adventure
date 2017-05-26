@@ -3,7 +3,6 @@
 #include <iostream>
 using namespace std;
 
-
 Enemigo::Enemigo():Persona()
 {
 	this->dificultad = NIVEL_DIFICULTAD;
@@ -23,5 +22,3 @@ void Enemigo::mostrarDatos() const
 	cout << "\tNombre: " << this->nombre << endl;
 	cout << "\tDificultad: " << this-> dificultad << endl;  
 }
-
-

@@ -23,11 +23,7 @@ class DBConnector
   		int db_build();
   		int insertarKarmaPersonaje(string personaje, int karma);
       int recogerKarmaPersonaje(string personaje);
-  		/*int showAllCountries();
-  		int deleteAllCountry();
-  		int insertNewCountry(std::string country);
-  		int insertNewCountryID(int id, std::string name);
-  		*/
+  		/*int deleteAllCountry();*/
   		DBConnector(std::string dbFile);
   		~DBConnector();
 };

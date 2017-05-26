@@ -37,7 +37,6 @@ int main (void)
 	int num;
 	int inicializacion = 0;
 	Personaje *personajes;
-	//Personaje *persaguardar;
 	int karma;
 	int i;
 	int q;
@@ -58,14 +57,12 @@ int main (void)
 	if (file == NULL)
 	{
 		num = -1;
-		cout << "PASA POR AQUI?" << endl;
 	}
 	else
 	{
 		num = fgetc(file);
 	}
 	//Obtenemos la cantidad de personajes guardados
-	//num = fgetc(file);
 	if (num == -1)
 	{
 		num = INIT_PERSONAJES;
@@ -110,9 +107,7 @@ int main (void)
 			clspersonajes.push_back(*clasePers);
 		}
 	}
-
 	vector <clsPersonaje> listan;
-	cout << "VALOR INI " << inicializacion << endl;
 	if (inicializacion == 0)
 		{
 			for (int i = 0; i < num; i++)
@@ -206,7 +201,6 @@ int main (void)
 			for (int i = 0; i < num; i++)
 			{
 				cout << clspersonajes.at(i);
-				//cout << "\t" << clspersonajes.at(i).getNombre() << endl;
 			}
 		}	
 		cout << "Introduce el nombre de tu personaje" << endl;
@@ -242,12 +236,8 @@ int main (void)
 				}
 		}
 		while(strcmp(frmt_str,clspersonajes.at(q).getContrasena().c_str())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
-		cout << "VECTOR1" << endl;
-		cout << "VALOR DE Q: " << q << endl;
 		*a=listan.at(q);
-                cout << "VECTOR2" << endl;
 		nump_aux = listan.at(q).getNump();
-                cout << "VECTOR3" << endl;
 	}
 	//Aqui acaba la opcion de cargar un personaje
 	option=3;
@@ -271,9 +261,7 @@ int main (void)
 			if (option == 3)
 			{
 				cout << "Agur!" << endl;
-				cout << "VALOR DE NUM 2: " << num << endl;
 				guardar (num, listan);
-				cout << "VALOR DE NUM: " << num << endl;
 				delete a;
 				free(personajes);
 				return 0;
@@ -540,33 +528,6 @@ int main (void)
 		}
 	}
 	guardar (num, listan);
-	//file = fopen(FICHERO_BINARIO, "wb");
- /* 	//escribir la cantidad de elementos
-  	if(num==0)
-  		num++;
-  	fputc(num, file);
-  	//escribir datos binarios
-	persaguardar = (Personaje*)malloc(num * sizeof(Personaje));
-	for (int i = 0; i < num; i++)
-	{
-		Personaje pers;
-		pers.nump = listan.at(i).getNump(); 
-		pers.x = listan.at(i).getX(); 
-		pers.y = listan.at(i).getY();
-		for (int j = 0; j < TAMANYO_PARTIDAS_PERSONAJE; j++)
-		{
-			pers.a[j] = listan.at(i).getA(j);
-			pers.b[j] = listan.at(i).getB(j);
-		}
-		strcpy(pers.nombre, listan.at(i).getNombre().c_str());
-		strcpy(pers.contrasena, listan.at(i).getContrasena().c_str());
-		persaguardar[i] = pers; 
-	}
-  	fwrite(persaguardar, sizeof(Personaje), num, file);
-  
-   	//cerrar fichero
-  	fclose(file);
-*/
   	//for (int i = 0; i < TABLERO; i++)
   	//{
   	//	for (int j = 0; j < TABLERO; j++)
@@ -589,20 +550,14 @@ int main (void)
   	//	free(hist[i]);
   	//}
   	//free(hist);
-	cout << "PETADELETE1" << endl;
 	if (file != NULL)
 	{
 		free(personajes);
 	}
-cout << "PETADELETE2" << endl;
   	delete e;
-cout << "PETADELETE3" << endl;
   	delete a;
-cout << "PETADELETE4" << endl;
   	clspersonajes.clear();
-cout << "PETADELETE5" << endl;
   	listan.clear();
-cout << "PETADELETE6" << endl;
 	return 0;
 }
 
@@ -640,11 +595,11 @@ void mapear(int x, int y, int ex, int ey)
 				cout << "*";
 			else
 			{
-				if(i==(ex*ESPACIADO +1) && j==(ey*ESPACIADO +1))
+				if(i==(ex*ESPACIADO +2) && j==(ey*ESPACIADO +2))
 				{
 					cout << "+";
 				}
-				else if (i==(ex*ESPACIADO +2) && j<(ey*ESPACIADO +2) && j>((ey*ESPACIADO)-1))
+				else if (i==(ex*ESPACIADO +1) && j<(ey*ESPACIADO +2) && j>((ey*ESPACIADO)-1))
 				{}
 				if(i==(x*ESPACIADO +2) && j==(y*ESPACIADO +2))
 				{
@@ -719,18 +674,14 @@ void guardar(int num, vector <clsPersonaje> listan)
 	FILE * file;
 	Personaje * persaguardar;
 	file = fopen(FICHERO_BINARIO, "wb");
-  	cout << "PETA1" << endl;
   	//escribir la cantidad de elementos
   	if(num==0)
 	{
   		num++;
-		cout << "PETA2" << endl;
 	}
   	fputc(num, file);
-	cout << "PETA3" << endl;
   	//escribir datos binarios
 	persaguardar = (Personaje*)malloc(num * sizeof(Personaje));
-	cout << "PETA4" << endl;
 	for (int i = 0; i < num; i++)
 	{
 		Personaje pers;
@@ -743,21 +694,11 @@ void guardar(int num, vector <clsPersonaje> listan)
 			pers.b[j] = listan.at(i).getB(j);
 		}
 		strcpy(pers.nombre, listan.at(i).getNombre().c_str());
-		cout << "PETA5" << endl;
 		strcpy(pers.contrasena, listan.at(i).getContrasena().c_str());
-		cout << "PETA6" << endl;
 		persaguardar[i] = pers; 
-		cout << "PETA7" << endl;
 	}
-	cout << "PETA8" << endl;
-	cout << "NUM ANTES DE FWRITE " << num << endl;
   	fwrite(persaguardar, sizeof(Personaje), num, file);
-	cout << "NUM DESPUES DE FWRITE " << num << endl;
-	cout << "PETA9" << endl;
   	free(persaguardar);
    	//cerrar fichero
-	cout << "PETA10" << endl;
   	fclose(file);
-	cout << "PETA11" << endl;
-
 }

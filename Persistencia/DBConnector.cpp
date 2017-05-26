@@ -86,13 +86,6 @@ using namespace std;
 
     char sql[] = "select * from KARMA WHERE NOMBRE = ?";
 
-   // string sql1 = "select KARMA_PARTIDA from KARMA where NOMBRE = '";
-   // string sql2 = personaje;
-   // string sql3 = "';";
-   // string sql = sql1 + sql2 + sql3;
-
-    //char sql[] = "select KARMA_PARTIDA from KARMA where NOMBRE = ?;"; //Una QUERY.
-
     int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ; //El NULL final siempre es NULL.
     if (result != SQLITE_OK) 
     {
@@ -137,60 +130,7 @@ using namespace std;
     cout << "Prepared statement finalized (SELECT)" << endl;
 
     return reputacion;
-  }
-  /*int DBConnector::showAllCountries() 
-  {
-    sqlite3_stmt *stmt; //Statement -> Lo necesitamos en todo momento.
-
-    char sql[] = "select id, name from country"; //Una QUERY.
-
-    int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ; //El NULL final siempre es NULL.
-    if (result != SQLITE_OK) 
-    {
-      cout << "Error preparing statement (SELECT)" << endl;      
-      cout << sqlite3_errmsg(db) << endl;
-      return result; //Se propaga el error, devolviendo el entero.
-    }
-
-    cout << "SQL query prepared (SELECT)" << endl;
-
-    int id;
-    char name[100];
-
-    cout << endl;
-    cout << endl;
-    cout << "Showing countries" << endl;
-
-    //Para el resultado de la QUERY: Un do-while().
-    //Step pasa por líneas de la QUERY SQL.
-    do 
-    {
-      result = sqlite3_step(stmt);
-      if (result == SQLITE_ROW) 
-      {
-        	id = sqlite3_column_int(stmt, 0); //Para imprimir el ID.
-        	strcpy(name, (char *) sqlite3_column_text(stmt, 1)); //Para imprimir el Name.
-        	cout << "ID: " << id << " Name: " << name << endl;
-      }
-    }
-    while (result == SQLITE_ROW);
-
-    cout << endl;
-    cout << endl;
-
-    //Cómo se cierra la transacción: Commit - Rollback.
-    result = sqlite3_finalize(stmt);
-    if (result != SQLITE_OK) 
-    {
-      cout << "Error finalizing statement (SELECT)" << endl;
-      cout << sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    cout << "Prepared statement finalized (SELECT)" << endl;
-
-    return SQLITE_OK;
-  }
+  }/*
 
   int DBConnector::deleteAllCountry() 
   {
@@ -225,95 +165,6 @@ using namespace std;
     }
 
     cout << "Prepared statement finalized (DELETE)" << endl;
-
-    return SQLITE_OK;
-  }
-
-  int DBConnector::insertNewCountry(std::string country) 
-  {
-    sqlite3_stmt *stmt;
-
-    char sql[] = "insert into country (id, name) values (NULL, ?)"; //Signo de interrogación: El valor del país está por definir.
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
-    if (result != SQLITE_OK) {
-      cout << "Error preparing statement (INSERT)" << endl;
-      cout <<  sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    cout << "SQL query prepared (INSERT)" << endl;
-    //Metemos el String que hemos dejado vacío.
-    result = sqlite3_bind_text(stmt, 1, country.c_str(), country.length(), SQLITE_STATIC);
-    if (result != SQLITE_OK) 
-    {
-      cout << "Error binding parameters" << endl;
-      cout <<  sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    result = sqlite3_step(stmt);
-    if (result != SQLITE_DONE) {
-      cout << "Error inserting new data into country table" << endl;
-      return result;
-    }
-
-    result = sqlite3_finalize(stmt);
-    if (result != SQLITE_OK) {
-      cout << "Error finalizing statement (INSERT)" << endl;
-      cout << sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    cout << "Prepared statement finalized (INSERT)" << endl;
-
-    return SQLITE_OK;
-  }*/
-  /*
-  int DBConnector::insertNewCountryID(int id, std::string name) {
-    sqlite3_stmt *stmt;
-
-    char sql[] = "insert into country (id, name) values (?, ?)";
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
-    if (result != SQLITE_OK) 
-    {
-      cout << "Error preparing statement (INSERT)" << endl;
-      cout << sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    cout << "SQL query prepared (INSERT)" << endl;
-
-    result = sqlite3_bind_int(stmt, 1, id);
-    if (result != SQLITE_OK)
-    {
-      cout << "Error binding parameters" << endl;
-      cout << sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 2, name.c_str(), name.length(), SQLITE_STATIC);
-    if (result != SQLITE_OK) 
-    {
-      cout << "Error binding parameters" << endl;
-      cout << sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    result = sqlite3_step(stmt);
-    if (result != SQLITE_DONE) 
-    {
-      cout << "Error inserting new data into country table" << endl;
-      return result;
-    }
-
-    result = sqlite3_finalize(stmt);
-    if (result != SQLITE_OK) {
-      cout << "Error finalizing statement (INSERT)" << endl;
-      cout << sqlite3_errmsg(db) << endl;
-      return result;
-    }
-
-    cout << "Prepared statement finalized (INSERT)" << endl;
 
     return SQLITE_OK;
   }

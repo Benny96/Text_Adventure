@@ -3,7 +3,6 @@
 #include <string.h>
 #include <iostream>
 
-
 #define MAX_LENGTH 20
 
 using namespace std;
@@ -20,13 +19,11 @@ clsPersonaje::clsPersonaje(Personaje *p): Persona(string(p->nombre), p->x,p->y)
 }
 clsPersonaje::clsPersonaje(): Persona()
 {
-	cout << "constructor vacio clsPersonaje" << endl;
 	this->nump = 0;
 	this->contrasena = string("");
 }
 clsPersonaje::clsPersonaje(string nombre, int x, int y, int nump, string contrasena): Persona(nombre,x,y)
 {
-	cout << "constructor con todo clsPersonaje" << endl;
 	this->nump = nump;
 	for(int i=0; i<TAMANYO_PARTIDAS_PERSONAJE; i++)
 	{
@@ -78,16 +75,6 @@ void clsPersonaje::setB(int pos, int valor)
 	this->b[pos] = valor;
 }
 
-
-//ostream& operator<<(ostream &out, const clsPersonaje &p) //>> y << tienen que estar fuera de la clase a no ser que sean friend!!
-//{
-//
-//	cout << "sobrecarga >>>>>>>>>>>>>>>>>>>>>>>" << endl;
-//
-//	out << "(" << p.getX() << ", " << p.getY() << ")";
-//	return out;
-//}
-
 istream& operator>>(istream &in, clsPersonaje &p)
 {
 	cout << "Introduce el nombre de tu personaje:" << endl; 
@@ -103,6 +90,5 @@ istream& operator>>(istream &in, clsPersonaje &p)
 ostream& operator<<(ostream &out, const clsPersonaje p)
 {
 	out << "\t" << p.getNombre() << endl;
-	//out << "(" << p.getX() << ", " << p.getY() << ")";
 	return out;
 }

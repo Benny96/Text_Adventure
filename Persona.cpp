@@ -7,7 +7,6 @@ using namespace std;
 
 Persona::Persona()
 {
-	cout << "constructor vacio Persona" << endl;
 	this->nombre = string(""); 
 	this->x = 0;
 	this->y = 0;

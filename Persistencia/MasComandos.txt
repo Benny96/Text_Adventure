@@ -1,4 +1,0 @@
-Comandos para ejecución de la BD:
-
-gcc sqlite3.c -c
-g++ BDtestTAdv.cpp DBConnector.cpp sqlite3.o -o main
