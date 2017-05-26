@@ -90,16 +90,19 @@ void clsPersonaje::setB(int pos, int valor)
 
 istream& operator>>(istream &in, clsPersonaje &p)
 {
-	
-		cout << "Introduce el nombre de tu personaje:" << endl; 
-		char * aux = new char[MAX_LENGTH];
-		cin >> aux;
-		p.setNombre(aux);
+	cout << "Introduce el nombre de tu personaje:" << endl; 
+	char * aux = new char[MAX_LENGTH];
+	cin >> aux;
+	p.setNombre(aux);
 
-
-		cout << "Introduce la contrasena de tu personaje:" << endl; 
-		char * aux2 = new char[MAX_LENGTH];
-		cin >> aux2;
-		p.setContrasena(aux2);
-
+	cout << "Introduce la contrasena de tu personaje:" << endl; 
+	char * aux2 = new char[MAX_LENGTH];
+	cin >> aux2;
+	p.setContrasena(aux2);
+}
+ostream& operator<<(ostream &out, const clsPersonaje p)
+{
+	out << "\t" << p.getNombre() << endl;
+	//out << "(" << p.getX() << ", " << p.getY() << ")";
+	return out;
 }
