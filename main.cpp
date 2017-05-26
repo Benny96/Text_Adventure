@@ -110,22 +110,32 @@ int main (void)
 	cout << "Bienvenido" << endl;
 	do 
 	{
+		option = 0;
 		menu_personajes();
 		cin >> option;
-		if(num==-1 && option==2)
+		if(!cin) // or if(cin.fail())
 		{
-			cout << "No hay personajes" << endl;
+		    cin.clear(); // reset failbit
+		  //  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
+		    option = 0;
 		}
-		if (option == 3)
+		else
 		{
-			cout << "Agur!" << endl;
-			delete a;
-			free(personajes);
-			return 0;
-		}
+			if(num==-1 && option==2)
+			{
+				cout << "No hay personajes" << endl;
+			}
+			if (option == 3)
+			{
+				cout << "Agur!" << endl;
+				delete a;
+				free(personajes);
+				return 0;
+			}
 		if(option!=1 && option!=2 && option!=3)
-		{
-			cout << "Introduce una opcion valida" << endl;
+			{
+				cout << "Introduce una opcion valida" << endl;
+			}
 		}
 	}
 	while( (option!=1 && num==-1 ) || (option!=2 && option!=1) );
@@ -187,7 +197,7 @@ int main (void)
 	{
 		cout << "Ha seleccionado crear un personaje." << endl;
 
-		int aux;
+		int aux = 0;
 		do
 		{
 			cin >> *a;
@@ -460,7 +470,7 @@ int main (void)
 	while(!(a->getX()==2 && a->getY()==2));
 
 	cout << "El juego se ha acabado. Agur!" << endl;
-
+	cout << "VALOR DE SEACABO: " << seacabo << endl;
 	if (seacabo == 1)
 	{
 		result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), 1);
