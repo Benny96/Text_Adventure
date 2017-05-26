@@ -3,7 +3,7 @@
 
 #include "Persona.h"
 
-#define NIVEL_DIFICULTAD 50
+#define NIVEL_DIFICULTAD 100
 #define NOMBRE_DEL_MALO "Darth Vader"
 
 using namespace std;
