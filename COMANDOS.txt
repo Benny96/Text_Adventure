@@ -2,3 +2,7 @@ Para compilar lo que por ahora nos interesa:
 
 gcc Persistencia/sqlite3.c personaje.c -c
 g++ main.cpp personaje.o sqlite3.o Persistencia/DBConnector.cpp enemigo.cpp clsPersonaje.cpp persona.cpp -o main
+
+Si queremos compilar en Ubuntu:
+
+{AÑADIR EL COMANDO}
