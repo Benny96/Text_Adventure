@@ -19,6 +19,7 @@ using namespace std;
 #define TABLERO 3
 #define ESPACIADO 5
 #define TAMANYO_LINEA 80
+#define CONSTANTE_PERSONAJE 100
 #define FICHERO_BINARIO "personajes.dat"
 #define FICHERO_HISTORIA "historia.txt"
 #define FICHERO_BD "datos.bd"
@@ -26,15 +27,18 @@ using namespace std;
 void menu_personajes();
 void menu_partidas();
 void clear_if_needed(char *str);
-void mapear(int x, int y);
+void mapear(int x, int y, int ex, int ey);
+int lucha (Enemigo &e, clsPersonaje &p);
+void guardar(int num, vector <clsPersonaje> listan);
 
 int main (void)
 {
 	FILE * file;	
 	int num;
-	int inicializacion;
+	int inicializacion = 0;
 	Personaje *personajes;
-	Personaje *persaguardar;
+	//Personaje *persaguardar;
+	int karma;
 	int i;
 	int q;
 	clsPersonaje * a = new clsPersonaje();
@@ -51,21 +55,33 @@ int main (void)
 	//Proceso de lectura del archivo binario:
 	file = fopen(FICHERO_BINARIO, "rb");
 	
+	if (file == NULL)
+	{
+		num = -1;
+		cout << "PASA POR AQUI?" << endl;
+	}
+	else
+	{
+		num = fgetc(file);
+	}
 	//Obtenemos la cantidad de personajes guardados
-	num = fgetc(file);
+	//num = fgetc(file);
 	if (num == -1)
 	{
 		num = INIT_PERSONAJES;
 		inicializacion = 1;
 	}
-	if (inicializacion == 0)
+	if (inicializacion == 0 || file != NULL)
 	{
 		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
 		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
 	}
 	
 	//cerrar el fichero
+	if (file != NULL)
+	{
 	fclose(file);
+	}
 
 	vector <clsPersonaje> clspersonajes;
 	if (inicializacion == 1)
@@ -96,11 +112,13 @@ int main (void)
 	}
 
 	vector <clsPersonaje> listan;
+	cout << "VALOR INI " << inicializacion << endl;
 	if (inicializacion == 0)
 		{
 			for (int i = 0; i < num; i++)
 			{
 				listan.push_back(clspersonajes.at(i));
+				cout << listan.at(i).getNombre() << endl;
 			}
 		}
 	if (inicializacion == 1)
@@ -112,12 +130,14 @@ int main (void)
 	{
 		option = 0;
 		menu_personajes();
+
 		cin >> option;
 		if(!cin) // or if(cin.fail())
 		{
 		    cin.clear(); // reset failbit
-		  //  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
+		    cin.ignore(); //skip bad input
 		    option = 0;
+		    cout << "Mete un caracter valido" << endl;
 		}
 		else
 		{
@@ -138,9 +158,44 @@ int main (void)
 			}
 		}
 	}
-	while( (option!=1 && num==-1 ) || (option!=2 && option!=1) );
+	while( (option!=1 && num==-1 ) || (option!=2 && option!=1)  );
 
-	/*Aqui empieza la opcion de cargar un personaje*/
+	//Aqui empieza la opcion de crear un personaje
+	if(option==1)
+	{
+		cout << "Ha seleccionado crear un personaje." << endl;
+
+		int aux = 0;
+		do
+		{
+			aux = 0;
+			cin >> *a;
+			for(int i=0;i<num;i++)
+			{
+				q=i;
+				if(strcmp(a->getNombre().c_str(), clspersonajes.at(i).getNombre().c_str())==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
+				{	
+					cout << "Este nombre de usuario ya existe, introduce otro." << endl;
+					aux=1;
+				}
+			}
+		}
+		while(aux==1);
+		
+
+		a->setNump(-1);
+
+		if(num==-1)
+		{
+  			num++;
+		}
+		listan.push_back(*a);
+		q = num;
+		num++;
+  	}
+  //Aqui acaba la opcion de crear un personaje
+
+/*Aqui empieza la opcion de cargar un personaje*/
 	if(option==2)
 	{
 		cout << "Ha seleccionado cargar un personaje." << endl;
@@ -150,7 +205,8 @@ int main (void)
 			//Un for que saque por pantalla los nombres existentes en el sistema.
 			for (int i = 0; i < num; i++)
 			{
-				cout << "\t" << clspersonajes.at(i).getNombre() << endl;
+				cout << clspersonajes.at(i);
+				//cout << "\t" << clspersonajes.at(i).getNombre() << endl;
 			}
 		}	
 		cout << "Introduce el nombre de tu personaje" << endl;
@@ -186,65 +242,46 @@ int main (void)
 				}
 		}
 		while(strcmp(frmt_str,clspersonajes.at(q).getContrasena().c_str())!=0); ////////////////////////Tambien validamos que este introduciendo la contrasenya que le correspone a ese nombre
-		
+		cout << "VECTOR1" << endl;
+		cout << "VALOR DE Q: " << q << endl;
 		*a=listan.at(q);
+                cout << "VECTOR2" << endl;
 		nump_aux = listan.at(q).getNump();
+                cout << "VECTOR3" << endl;
 	}
 	//Aqui acaba la opcion de cargar un personaje
-
-	//Aqui empieza la opcion de crear un personaje
-	if(option==1)
-	{
-		cout << "Ha seleccionado crear un personaje." << endl;
-
-		int aux = 0;
-		do
-		{
-			cin >> *a;
-			for(int i=0;i<num;i++)
-			{
-				q=i;
-				if(strcmp(a->getNombre().c_str(), clspersonajes.at(i).getNombre().c_str())==0)   /////////////////////////////////Obligamos que introduzca un nombre inexistente en el sistema
-				{	
-					cout << "Este nombre de usuario ya existe, introduce otro." << endl;
-					aux=1;
-				}
-			}
-		}
-		while(aux==1);
-		
-
-		a->setNump(-1);
-
-		if(num==-1)
-		{
-  			num++;
-		}
-		listan.push_back(*a);
-		q = num;
-		num++;
-  	}
-  //Aqui acaba la opcion de crear un personaje
-
 	option=3;
 	do 
 	{
 		menu_partidas();
 		cin >> option;
-		if(a->getNump()==-1 && option==2)
+		if(!cin) // or if(cin.fail())
 		{
-			cout << "No hay partidas guardadas" << endl;
+		    cin.clear(); // reset failbit
+		    cin.ignore(); //skip bad input
+		    option = 0;
+		    cout << "Mete un caracter valido" << endl;
 		}
-		if (option == 3)
+		else
 		{
-			cout << "Agur!" << endl;
-			delete a;
-			free(personajes);
-			return 0;
-		}
-		else if(option!=1 && option!=2 && option!=3)
-		{
-			cout << "Esta no es una opcion valida." << endl;
+			if(a->getNump()==-1 && option==2)
+			{
+				cout << "No hay partidas guardadas" << endl;
+			}
+			if (option == 3)
+			{
+				cout << "Agur!" << endl;
+				cout << "VALOR DE NUM 2: " << num << endl;
+				guardar (num, listan);
+				cout << "VALOR DE NUM: " << num << endl;
+				delete a;
+				free(personajes);
+				return 0;
+			}
+			else if(option!=1 && option!=2 && option!=3)
+			{
+				cout << "Esta no es una opcion valida." << endl;
+			}
 		}
 	}
 	while((option!=1 && a->getNump()==-1 ) || (option!=2 && option!=1));
@@ -330,8 +367,6 @@ int main (void)
 	}
 	a->setX(xx);
 	a->setY(yy);
-	mapear(a->getX(),a->getY());
-
 
 	DBConnector dbConnector(FICHERO_BD);
 	int result = dbConnector.db_build();
@@ -354,13 +389,18 @@ int main (void)
   		enemposX = rand()%3;
   		enemposY = rand()%3;
   	}
-  	while (enemposX == 0 && enemposY == 0);
-  	
-  	//////////////////////////////////////////////////////////////////////////////
+  	while ((enemposX == 0 && enemposY == 0) || (enemposX == 2 && enemposY == 2));
+
+		//////////////////////////////////////////////////////////////////////////////
   	Enemigo * e = new Enemigo (NOMBRE_DEL_MALO, enemposX, enemposY, -reputacion); 	//- reputacion hace que todo el Karma positivo acumulado por los anteriores personajes haga que la dificultad del enemigo sea mas baja.
   	//////////////////////////////////////////////////////////////////////////////
 
-  	int seacabo = 0;
+
+	mapear(a->getX(),a->getY(), e->getX(), e->getY());
+
+
+  	
+  	int haluchado = 0;
 	do
 	{
 		cout << "Desplazate hasta abajo a la derecha usando 'w', 'a', 's', 'd' ('g' para guardar la partida)." << endl;
@@ -402,6 +442,11 @@ int main (void)
 			else
 			{
 				a->setX(a->getX()-1);
+				if (e->getX()==a->getX() && e->getY()==a->getY() && haluchado == 0)
+				{
+					karma = lucha (*e, *a);
+					haluchado = 1;
+				}	
 			}
 		}
 		else if(strcmp(frmt_str, "a") == 0)
@@ -413,6 +458,11 @@ int main (void)
 			else
 			{
 				a->setY(a->getY()-1);
+				if (e->getX()==a->getX() && e->getY()==a->getY() && haluchado == 0)
+				{
+					karma = lucha (*e, *a);
+					haluchado = 1;
+				}		
 			}
 		}
 		else if(strcmp(frmt_str, "d") == 0)
@@ -424,6 +474,11 @@ int main (void)
 			else
 			{
 				a->setY(a->getY()+1);
+				if (e->getX()==a->getX() && e->getY()==a->getY() && haluchado == 0)
+				{
+					karma = lucha (*e, *a);
+					haluchado = 1;
+				}	
 			}
 		}
 		else if(strcmp(frmt_str, "s") == 0)
@@ -435,6 +490,11 @@ int main (void)
 			else
 			{
 				a->setX(a->getX()+1);
+				if (e->getX()==a->getX() && e->getY()==a->getY() && haluchado == 0)
+				{
+					karma = lucha (*e, *a);
+					haluchado = 1;
+				}		
 			}
 		}
 		else
@@ -442,11 +502,10 @@ int main (void)
 			cout << "Introduce una tecla valida." << endl;
 		}
 
-		mapear(a->getX(),a->getY());   ////////////////////////Renovamos el mapa una vez que haya introducido una tecla
 
+		mapear(a->getX(),a->getY(), e->getX(), e->getY());   ////////////////////////Renovamos el mapa una vez que haya introducido una tecla
 		if((a->getX()==(TABLERO-1) && a->getY()==(TABLERO-1)) && hola!=-2)
 		{
-			seacabo = 1;
 			int h=-2;
 			for(int i=0;i<=nump_aux;i++)
 			{
@@ -470,20 +529,19 @@ int main (void)
 	while(!(a->getX()==2 && a->getY()==2));
 
 	cout << "El juego se ha acabado. Agur!" << endl;
-	cout << "VALOR DE SEACABO: " << seacabo << endl;
-	if (seacabo == 1)
+
+	if (haluchado == 1)
 	{
-		result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), 1);
+		result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), karma);
 		if (result != SQLITE_OK) 
 		{
 			cout << "Error añadiendo el karma" << endl;
 			return result;
 		}
 	}
-	
-	file = fopen(FICHERO_BINARIO, "wb");
-  
-  	//escribir la cantidad de elementos
+	guardar (num, listan);
+	//file = fopen(FICHERO_BINARIO, "wb");
+ /* 	//escribir la cantidad de elementos
   	if(num==0)
   		num++;
   	fputc(num, file);
@@ -508,7 +566,7 @@ int main (void)
   
    	//cerrar fichero
   	fclose(file);
-
+*/
   	//for (int i = 0; i < TABLERO; i++)
   	//{
   	//	for (int j = 0; j < TABLERO; j++)
@@ -531,12 +589,20 @@ int main (void)
   	//	free(hist[i]);
   	//}
   	//free(hist);
-  	free(persaguardar);
-  	free(personajes);
+	cout << "PETADELETE1" << endl;
+	if (file != NULL)
+	{
+		free(personajes);
+	}
+cout << "PETADELETE2" << endl;
   	delete e;
+cout << "PETADELETE3" << endl;
   	delete a;
+cout << "PETADELETE4" << endl;
   	clspersonajes.clear();
+cout << "PETADELETE5" << endl;
   	listan.clear();
+cout << "PETADELETE6" << endl;
 	return 0;
 }
 
@@ -563,11 +629,10 @@ void clear_if_needed(char *str)
     	while ( (c = getchar()) != EOF && c != '\n');
     }
 }
-void mapear(int x, int y)
+void mapear(int x, int y, int ex, int ey)
 {
 	for(int i=0;i<=TABLERO*ESPACIADO;i++)
 	{
-		
 		for(int j=0;j<=TABLERO*ESPACIADO;j++)
 		{
 			
@@ -575,6 +640,12 @@ void mapear(int x, int y)
 				cout << "*";
 			else
 			{
+				if(i==(ex*ESPACIADO +1) && j==(ey*ESPACIADO +1))
+				{
+					cout << "+";
+				}
+				else if (i==(ex*ESPACIADO +2) && j<(ey*ESPACIADO +2) && j>((ey*ESPACIADO)-1))
+				{}
 				if(i==(x*ESPACIADO +2) && j==(y*ESPACIADO +2))
 				{
 					cout << "Tu";
@@ -587,4 +658,106 @@ void mapear(int x, int y)
 		}
 		cout << endl;
 	}
+}
+int lucha (Enemigo &e, clsPersonaje &p)
+{	
+	Persona* pers [2];
+	pers[0] = &e;
+	pers[1] = &p;
+	cout << " Hay un enemigo (o amigo) en esta posicion. Deseas hablar con la persona?" << endl;
+	cout << " Introduce 1 si quieres pegarte con el, y 2 si quieres ignorarlo." << endl;
+	int aux = 0;
+	do
+	{
+		aux = 0;
+		cin >> aux;
+		if(!cin) // or if(cin.fail())
+		{
+		    cin.clear(); // reset failbit
+		    cin.ignore(); //skip bad input
+		    aux = 0;
+		    cout << "Mete un caracter valido" << endl;
+		}
+		else
+		{
+			if(aux == 1)
+			{
+				//AQUI DEBERIA SER LA LUCHA.
+				for (int i = 0; i < 2; i++)
+				{
+					pers[i]->mostrarDatos();
+				}
+				srand (time(NULL));
+				int valorPersona = rand()%CONSTANTE_PERSONAJE;
+				int valorEnemigo = rand()%e.getDificultad();
+				if (valorPersona > valorEnemigo)
+				{
+					cout << "Le has vapuleado wey, pero a la siguiente no te costara tan poco..." << endl;
+					return -5; //DEVOLVEMOS EL KARMA QUE HA CONSEGUIDO 
+				}
+				if (valorPersona <= valorEnemigo)
+				{
+					cout << "Te han vapuleado wey, aunque a la siguiente tendra mas piedad contigo..." << endl;
+					return 5; //DEVOLVEMOS EL KARMA QUE HA CONSEGUIDO
+				}
+			}
+			if(aux == 2)
+			{
+				cout << "Puedes irte tranquilo... Pero todo tiene su coste." << endl;
+				return -3;
+			}
+			if(aux != 1 && aux != 2)
+			{
+				cout << "Introduce una opcion valida" << endl;
+			}
+		}
+	}
+	while(aux==1);
+}
+void guardar(int num, vector <clsPersonaje> listan)
+{
+	FILE * file;
+	Personaje * persaguardar;
+	file = fopen(FICHERO_BINARIO, "wb");
+  	cout << "PETA1" << endl;
+  	//escribir la cantidad de elementos
+  	if(num==0)
+	{
+  		num++;
+		cout << "PETA2" << endl;
+	}
+  	fputc(num, file);
+	cout << "PETA3" << endl;
+  	//escribir datos binarios
+	persaguardar = (Personaje*)malloc(num * sizeof(Personaje));
+	cout << "PETA4" << endl;
+	for (int i = 0; i < num; i++)
+	{
+		Personaje pers;
+		pers.nump = listan.at(i).getNump(); 
+		pers.x = listan.at(i).getX(); 
+		pers.y = listan.at(i).getY();
+		for (int j = 0; j < TAMANYO_PARTIDAS_PERSONAJE; j++)
+		{
+			pers.a[j] = listan.at(i).getA(j);
+			pers.b[j] = listan.at(i).getB(j);
+		}
+		strcpy(pers.nombre, listan.at(i).getNombre().c_str());
+		cout << "PETA5" << endl;
+		strcpy(pers.contrasena, listan.at(i).getContrasena().c_str());
+		cout << "PETA6" << endl;
+		persaguardar[i] = pers; 
+		cout << "PETA7" << endl;
+	}
+	cout << "PETA8" << endl;
+	cout << "NUM ANTES DE FWRITE " << num << endl;
+  	fwrite(persaguardar, sizeof(Personaje), num, file);
+	cout << "NUM DESPUES DE FWRITE " << num << endl;
+	cout << "PETA9" << endl;
+  	free(persaguardar);
+   	//cerrar fichero
+	cout << "PETA10" << endl;
+  	fclose(file);
+	cout << "PETA11" << endl;
+
 }
