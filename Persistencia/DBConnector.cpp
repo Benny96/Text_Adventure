@@ -84,7 +84,7 @@ using namespace std;
   {
     sqlite3_stmt *stmt; //Statement -> Lo necesitamos en todo momento.
 
-    string sql = "select * from KARMA;";
+    char sql[] = "select * from KARMA WHERE NOMBRE = ?";
 
    // string sql1 = "select KARMA_PARTIDA from KARMA where NOMBRE = '";
    // string sql2 = personaje;
@@ -93,7 +93,7 @@ using namespace std;
 
     //char sql[] = "select KARMA_PARTIDA from KARMA where NOMBRE = ?;"; //Una QUERY.
 
-    int result = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL) ; //El NULL final siempre es NULL.
+    int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ; //El NULL final siempre es NULL.
     if (result != SQLITE_OK) 
     {
       cout << "Error preparing statement (SELECT)" << endl;      
@@ -103,13 +103,13 @@ using namespace std;
 
     cout << "SQL query prepared (SELECT)" << endl;
 
- //  result = sqlite3_bind_text(stmt, 1  , personaje.c_str(), strlen(personaje.c_str())+1, SQLITE_STATIC);
- //  if (result != SQLITE_OK) 
- //  {
- //    cout << "Error binding parameters" << endl;
- //    cout << sqlite3_errmsg(db) << endl;
- //    return result;
- //  }
+  result = sqlite3_bind_text(stmt, 1  , personaje.c_str(), strlen(personaje.c_str())+1, SQLITE_STATIC);
+  if (result != SQLITE_OK) 
+  {
+    cout << "Error binding parameters" << endl;
+    cout << sqlite3_errmsg(db) << endl;
+    return result;
+  }
     int reputacion = 0;
 
     //Para el resultado de la QUERY: Un do-while().
