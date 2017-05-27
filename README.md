@@ -12,13 +12,13 @@ y yo, Beñat Galdós (Benny96). <br>
 
 Para que la aplicación ejecute correctamente, debemos hacer estas 2 compilaciones: <br>
 
-1) gcc Persistencia/sqlite3.c Personaje.c -c
-2) g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main
+<pre> gcc Persistencia/sqlite3.c Personaje.c -c </pre>
+<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main </pre>
 
 En Linux (probado con Ubuntu v.16.0.4), los comandos a aplicar no varían mucho:
 
-1) gcc Persistencia/sqlite3.c Personaje.c -c
-2) g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl
+<pre> gcc Persistencia/sqlite3.c Personaje.c -c </pre>
+<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl </pre>
 
 Decimos que es _moldeable_, ya que:
 
@@ -44,13 +44,13 @@ and me, Beñat Galdós (Benny96). <br>
 
 To run the application correctly, we have to do 2 compilations: <br>
 
-1) gcc Persistencia/sqlite3.c Personaje.c -c
-2) g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main
+<pre> gcc Persistencia/sqlite3.c Personaje.c -c </pre>
+<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main </pre>
 
 In Linux OS (tested with Ubuntu v.16.0.4), the commands to use don't differ too much:
 
-1) gcc Persistencia/sqlite3.c Personaje.c -c
-2) g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl
+<pre> gcc Persistencia/sqlite3.c Personaje.c -c </pre>
+<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl </pre>
 
 This prototype can be _altered_:
 
