@@ -43,7 +43,7 @@ int main (void)
 	int q;
 	clsPersonaje * a = new clsPersonaje();
 	int option = -1;
-	int nump_aux = 0;
+	int nump_aux = -1;
 	int hola=-2;
 	
 	int xx=0;
