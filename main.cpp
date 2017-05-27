@@ -1,9 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
-#include <iostream>
 #include <vector>
 
 #include "Personaje.h"
@@ -12,18 +6,13 @@
 #include "Enemigo.h"
 #include "Persistencia/DBConnector.h"
 
-
 using namespace std;
 
-#define TAMANYO_LINEA 80
 #define CONSTANTE_PERSONAJE 100
-#define FICHERO_BINARIO "personajes.dat"
-#define FICHERO_HISTORIA "historia.txt"
 #define FICHERO_BD "datos.bd"
 
 void menu_personajes();
 void menu_partidas();
-void clear_if_needed(char *str);
 void mapear(int x, int y, int ex, int ey);
 int lucha (Enemigo &e, clsPersonaje &p);
 void guardar(int num, vector <clsPersonaje> listan);
@@ -31,11 +20,7 @@ void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaj
 
 int main (void)
 {
-	FILE * file;	
-	int num;
-	int inicializacion = 0;
-	Personaje *personajes;
-	int karma;
+	int karma = 0;
 	int i;
 	int q;
 	clsPersonaje * a = new clsPersonaje();
@@ -55,34 +40,11 @@ int main (void)
 	  	cout << "Error creating table" << endl;
 	  	return result;
 	}
-	//Proceso de lectura del archivo binario:
-	file = fopen(FICHERO_BINARIO, "rb");
-	
-	if (file == NULL)
-	{
-		num = -1;
-	}
-	else
-	{
-		num = fgetc(file);
-	}
-	//Obtenemos la cantidad de personajes guardados
-	if (num == -1)
-	{
-		num = INIT_PERSONAJES;
-		inicializacion = 1;
-	}
-	if (inicializacion == 0 || file != NULL)
-	{
-		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
-		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
-	}
-	
-	//cerrar el fichero
-	if (file != NULL)
-	{
-	fclose(file);
-	}
+	//Comienzo del proceso de lectura del archivo binario en C (segmentado en 3 partes)
+	int inicializacion = lecturaBinarioParteuno();
+	int num = lecturaBinarioPartedos();
+	Personaje *personajes = lecturaBinarioPartetres(num);
+	//Final del proceso de lectura del archivo binario en C
 	vector <clsPersonaje> clspersonajes;
 	if (inicializacion == 1)
 	{
@@ -286,7 +248,6 @@ int main (void)
 		a->setX(0);
 		a->setY(0);
 	}
-
 	if(option==2)///////////////////////////////////////Si escoge la opcion 2, le mostraremos todas las partidas que tiene guardadas, si es que las hay
 	{
 		if(a->getNump()!=-1)
@@ -325,46 +286,7 @@ int main (void)
 		}
 	}
 
-	//char **** hist = leerFicheroTexto();
-	/*Bloque que se podría intentar mover*/
-	
-	char hist[TABLERO][TABLERO][80]; ///////////////////////////////////////////Esto es un array bidimensional de lo que en Java llamabamos Strings
-	int o;
-	int p;
-	int mn=0;
-	FILE* fd1;
-	fd1 = fopen(FICHERO_HISTORIA, "r"); ///////////////////////////////Ahora vamos a leer del fichero de texto
-	char str2[TAMANYO_LINEA];
-	char frmt_str2[TAMANYO_LINEA];
-	int d;
-	while(fgets(str2, TAMANYO_LINEA, fd1)) 
-	{
-	   	d = 0;
-	    if(sscanf(str2, "%d", &d) == 0) 
-	    {
-	    	sscanf(str2, "%[^\n]s", frmt_str2);
-	    }
-	    if(mn==0)
-	    {
-	    	o=d;
-	    	mn++;
-	    }
-	    else if(mn==1)
-	    {
-	    	p=d;
-	    	mn++;
-	    }
-	    else if(mn==2)
-	    {
-	    	mn=0;
-	       	strncpy(hist[o][p], frmt_str2, TAMANYO_LINEA);
-	    }
-	    clear_if_needed(str2);
-	}
-	fclose(fd1); ////////////////////////////Cerramos el fichero de texto
-
-	/*Fin del bloque*/
-
+	char *** hist = leerFicheroTexto();
 	if(option=1)
 	{
 		a->setX(0);
@@ -375,7 +297,6 @@ int main (void)
 
 	int reputacion = 0;
 	reputacion = dbConnector.recogerKarmaPersonaje(listan.at(q).getNombre());
-	cout << "VALOR DE REPUTACION: " << reputacion << endl;
 
 	 /* Inicializar semilla variable con respecto al tiempo: */
   	srand (time(NULL));
@@ -394,10 +315,7 @@ int main (void)
   	//////////////////////////////////////////////////////////////////////////////
 
 
-	mapear(a->getX(),a->getY(), e->getX(), e->getY());
-
-
-  	
+	mapear(a->getX(),a->getY(), e->getX(), e->getY());	
   	int haluchado = 0;
 	do
 	{
@@ -528,7 +446,7 @@ int main (void)
 
 	cout << "El juego se ha acabado. Agur!" << endl;
 
-	if (haluchado == 1)
+	if (a->getX()==(TABLERO-1) && a->getY()==(TABLERO-1))
 	{
 		result = dbConnector.insertarKarmaPersonaje(listan.at(q).getNombre(), karma);
 		if (result != SQLITE_OK) 
@@ -538,29 +456,19 @@ int main (void)
 		}
 	}
 	guardar (num, listan);
-  	//for (int i = 0; i < TABLERO; i++)
-  	//{
-  	//	for (int j = 0; j < TABLERO; j++)
-  	//	{
-  	//		for (int k = 0; k < TAMANYO_LINEA; k++)
-  	//		{
-  	//			free(hist[i][j][k]);
-  	//		}
-  	//	}
-  	//}
-  	//for (int i = 0; i < TABLERO; i++)
-  	//{
-  	//	for (int j = 0; j < TABLERO; j++)
-  	//	{
-  	//		free(hist[i][j]);
-  	//	}
-  	//}
-  	//for (int i = 0; i < TABLERO; i++)
-  	//{
-  	//	free(hist[i]);
-  	//}
-  	//free(hist);
-	if (file != NULL)
+  	for (int i = 0; i < TABLERO; i++)
+  	{
+  		for (int j = 0; j < TABLERO; j++)
+  		{
+  			free(hist[i][j]);
+  		}
+  	}
+  	for (int i = 0; i < TABLERO; i++)
+  	{
+  		free(hist[i]);
+  	}
+  	free(hist);
+	if (inicializacion == 0)
 	{
 		free(personajes);
 	}
@@ -579,6 +487,7 @@ void menu_personajes()
 	cout << "3.- Estadisticas de cada personaje." << endl;
 	cout << "4.- Salir." << endl;
 }
+
 void menu_partidas()
 {
 	cout << "Introduce:" << endl;
@@ -587,14 +496,6 @@ void menu_partidas()
 	cout << "3.- Salir." << endl;
 }
 
-void clear_if_needed(char *str)
-{
-	if (str[strlen(str) - 1] != '\n')
-	{
-		int c;    
-    	while ( (c = getchar()) != EOF && c != '\n');
-    }
-}
 void mapear(int x, int y, int ex, int ey)
 {
 	for(int i=0;i<=TABLERO*ESPACIADO;i++)
@@ -682,15 +583,11 @@ int lucha (Enemigo &e, clsPersonaje &p)
 }
 void guardar(int num, vector <clsPersonaje> listan)
 {
-	FILE * file;
 	Personaje * persaguardar;
-	file = fopen(FICHERO_BINARIO, "wb");
-  	//escribir la cantidad de elementos
   	if(num==0)
 	{
   		num++;
 	}
-  	fputc(num, file);
   	//escribir datos binarios
 	persaguardar = (Personaje*)malloc(num * sizeof(Personaje));
 	for (int i = 0; i < num; i++)
@@ -708,10 +605,7 @@ void guardar(int num, vector <clsPersonaje> listan)
 		strcpy(pers.contrasena, listan.at(i).getContrasena().c_str());
 		persaguardar[i] = pers; 
 	}
-  	fwrite(persaguardar, sizeof(Personaje), num, file);
-  	free(persaguardar);
-   	//cerrar fichero
-  	fclose(file);
+	guardarBinarioC(num, persaguardar);
 }
 
 void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaje> &clspersonajes)

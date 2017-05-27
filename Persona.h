@@ -1,7 +1,11 @@
 #ifndef _PERSONA_H_
 #define _PERSONA_H_
 
+#include <string.h>
+
 #include <string>
+#include <iostream>
+
 using namespace std;
 
 class Persona

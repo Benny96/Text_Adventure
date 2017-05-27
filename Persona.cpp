@@ -1,7 +1,4 @@
 #include "Persona.h"
-#include <string.h>
-#include <iostream>
-#include <string>
 
 using namespace std;
 
@@ -11,7 +8,9 @@ Persona::Persona()
 	this->x = 0;
 	this->y = 0;
 }
-
+/*
+No hemos añadido constructores copia debido a que no los necesitamos para el contexto de nuestra aplicación.
+*/
 Persona::Persona(const string nombre, int x, int y)
 {
 	this->nombre = nombre;

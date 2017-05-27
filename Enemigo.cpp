@@ -1,6 +1,5 @@
 #include "Enemigo.h"
 
-#include <iostream>
 using namespace std;
 
 Enemigo::Enemigo():Persona()
