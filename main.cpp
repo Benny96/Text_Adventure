@@ -30,6 +30,7 @@ void clear_if_needed(char *str);
 void mapear(int x, int y, int ex, int ey);
 int lucha (Enemigo &e, clsPersonaje &p);
 void guardar(int num, vector <clsPersonaje> listan);
+void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaje> &clspersonajes);
 
 int main (void)
 {
@@ -51,6 +52,7 @@ int main (void)
 	char str[MAX_LENGTH];
 	char frmt_str[MAX_LENGTH];
 
+	DBConnector dbConnector(FICHERO_BD);
 	//Proceso de lectura del archivo binario:
 	file = fopen(FICHERO_BINARIO, "rb");
 	
@@ -79,7 +81,6 @@ int main (void)
 	{
 	fclose(file);
 	}
-
 	vector <clsPersonaje> clspersonajes;
 	if (inicializacion == 1)
 	{
@@ -113,7 +114,6 @@ int main (void)
 			for (int i = 0; i < num; i++)
 			{
 				listan.push_back(clspersonajes.at(i));
-				cout << listan.at(i).getNombre() << endl;
 			}
 		}
 	if (inicializacion == 1)
@@ -142,18 +142,22 @@ int main (void)
 			}
 			if (option == 3)
 			{
+				mostrarEstadisticas (num, dbConnector, clspersonajes);
+			}
+			if (option == 4)
+			{
 				cout << "Agur!" << endl;
 				delete a;
 				free(personajes);
 				return 0;
 			}
-		if(option!=1 && option!=2 && option!=3)
+		if(option!=1 && option!=2 && option!=3 && option !=4)
 			{
 				cout << "Introduce una opcion valida" << endl;
 			}
 		}
 	}
-	while( (option!=1 && num==-1 ) || (option!=2 && option!=1)  );
+	while( (option!=1 && num==-1 ) || (option!=1 && option!=2) );
 
 	//Aqui empieza la opcion de crear un personaje
 	if(option==1)
@@ -240,6 +244,7 @@ int main (void)
 		nump_aux = listan.at(q).getNump();
 	}
 	//Aqui acaba la opcion de cargar un personaje
+
 	option=3;
 	do 
 	{
@@ -356,7 +361,6 @@ int main (void)
 	a->setX(xx);
 	a->setY(yy);
 
-	DBConnector dbConnector(FICHERO_BD);
 	int result = dbConnector.db_build();
 	if (result != SQLITE_OK) 
 	{
@@ -566,7 +570,8 @@ void menu_personajes()
 	cout << "Introduce:" << endl;
 	cout << "1.- Crear un personaje." << endl;
 	cout << "2.- Cargar un personaje." << endl;
-	cout << "3.- Salir." << endl;
+	cout << "3.- Estadisticas de cada personaje." << endl;
+	cout << "4.- Salir." << endl;
 }
 void menu_partidas()
 {
@@ -702,3 +707,33 @@ void guardar(int num, vector <clsPersonaje> listan)
    	//cerrar fichero
   	fclose(file);
 }
+
+void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaje> &clspersonajes)
+{
+	if (num == -1)
+	{
+		cout << "No hay estadisticas que mostrar, al no haber personajes registrados." << endl;
+	}
+	else
+	{
+		for (int i = 0; i < num; i++)
+		{
+			int * resultados = dbConnector.recogerDatosPersonaje(clspersonajes.at(i).getNombre());
+			cout << "Personaje: " << clspersonajes.at(i).getNombre() << endl;
+			if (resultados[CELDA_FINALIZADAS]==0)
+			{
+				cout << "Este personaje no ha finalizado ninguna partida." << endl;
+			}
+			else
+			{
+				cout << "\tNum. veces que ha vencido en combate: " << resultados[CELDA_VICTORIAS] << endl;
+				cout << "\tNum. veces que ha caido en combate: " << resultados[CELDA_DERROTAS] << endl;
+				cout << "\tNum. veces que ha huido del combate: " << resultados[CELDA_HUIDAS] << endl;
+				cout << "\tNum. veces que ha finalizado (sin necesariamente haberse encontrado con el enemigo): " << resultados[CELDA_FINALIZADAS] << endl;
+			}
+			delete resultados;
+			cout << endl;
+		}
+	}
+}
+	

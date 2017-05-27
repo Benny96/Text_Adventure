@@ -14,6 +14,10 @@
 using namespace std;
 
 #define TAMANYO_CONSULTA 250
+#define CELDA_VICTORIAS 0
+#define CELDA_DERROTAS 1
+#define CELDA_HUIDAS 2
+#define CELDA_FINALIZADAS 3
 
 class DBConnector
 {
@@ -22,7 +26,8 @@ class DBConnector
   	public:
   		int db_build();
   		int insertarKarmaPersonaje(string personaje, int karma);
-      int recogerKarmaPersonaje(string personaje);
+      	int recogerKarmaPersonaje(string personaje);
+      	int* recogerDatosPersonaje(string personaje);
   		/*int deleteAllCountry();*/
   		DBConnector(std::string dbFile);
   		~DBConnector();

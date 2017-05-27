@@ -36,9 +36,7 @@ using namespace std;
       cout << sqlite3_errmsg(db) << endl;
       return result;
     }
-     cout << "SQL query prepared (INSERT)" << endl;
 
-     //PUEDE PETAR; NO SE SI ES INT O NO.
      result = sqlite3_bind_int(stmt, 1, id);
     if (result != SQLITE_OK)
     {
@@ -75,9 +73,6 @@ using namespace std;
       cout << sqlite3_errmsg(db) << endl;
       return result;
     }
-
-    cout << "Prepared statement finalized (INSERT)" << endl;
-
     return SQLITE_OK;
   }
   int DBConnector::recogerKarmaPersonaje(string personaje)
@@ -93,8 +88,6 @@ using namespace std;
       cout << sqlite3_errmsg(db) << endl;
       return result; //Se propaga el error, devolviendo el entero.
     }
-
-    cout << "SQL query prepared (SELECT)" << endl;
 
   result = sqlite3_bind_text(stmt, 1  , personaje.c_str(), strlen(personaje.c_str())+1, SQLITE_STATIC);
   if (result != SQLITE_OK) 
@@ -127,10 +120,80 @@ using namespace std;
       cout << sqlite3_errmsg(db) << endl;
       return result;
     }
-    cout << "Prepared statement finalized (SELECT)" << endl;
-
     return reputacion;
-  }/*
+  }
+    int* DBConnector::recogerDatosPersonaje(string personaje)
+  {
+    sqlite3_stmt *stmt; //Statement -> Lo necesitamos en todo momento.
+
+    char sql[] = "select * from KARMA WHERE NOMBRE = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ; //El NULL final siempre es NULL.
+    if (result != SQLITE_OK) 
+    {
+      cout << "Error preparing statement (SELECT)" << endl;      
+      cout << sqlite3_errmsg(db) << endl;
+      int * resultpoint = new int;
+      * resultpoint = result;
+      return resultpoint; //Se propaga el error, devolviendo el entero.
+    }
+
+  result = sqlite3_bind_text(stmt, 1  , personaje.c_str(), strlen(personaje.c_str())+1, SQLITE_STATIC);
+  if (result != SQLITE_OK) 
+  {
+    cout << "Error binding parameters" << endl;
+    cout << sqlite3_errmsg(db) << endl;
+     int * resultpoint = new int;
+      * resultpoint = result;
+      return resultpoint; //Se propaga el error, devolviendo el entero.
+  }
+    int victorias = 0;
+    int derrotas = 0;
+    int huidas = 0;
+    int finalizadas = 0;
+    //Para el resultado de la QUERY: Un do-while().
+    //Step pasa por líneas de la QUERY SQL.
+    //result = sqlite3_step(stmt);
+    do 
+    {
+      result = sqlite3_step(stmt);
+      if (result == SQLITE_ROW) 
+      {
+          if (sqlite3_column_int(stmt,2)==-5)
+          {
+             victorias++;
+          } //Para acumular la reputacion.
+          if (sqlite3_column_int(stmt,2)==5)
+          {
+             derrotas++;
+          } //Para acumular la reputacion.
+          if (sqlite3_column_int(stmt,2)==-3)
+          {
+             huidas++;
+          } //Para acumular la reputacion.
+          finalizadas++;
+      }
+    }
+    while (result == SQLITE_ROW);
+
+    //Cómo se cierra la transacción: Commit - Rollback.
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) 
+    {
+      cout << "Error finalizing statement (SELECT)" << endl;
+      cout << sqlite3_errmsg(db) << endl;
+       int * resultpoint = new int;
+      * resultpoint = result;
+      return resultpoint; //Se propaga el error, devolviendo el entero.
+    }
+    int * informacion = new int [4];
+    informacion[CELDA_VICTORIAS] = victorias;
+    informacion[CELDA_DERROTAS] = derrotas;
+    informacion[CELDA_HUIDAS] = huidas;
+    informacion[CELDA_FINALIZADAS] = finalizadas;
+    return informacion;
+  }
+  /*/*
 
   int DBConnector::deleteAllCountry() 
   {
