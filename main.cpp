@@ -287,11 +287,7 @@ int main (void)
 	}
 
 	char *** hist = leerFicheroTexto();
-	if(option=1)
-	{
-		a->setX(0);
-		a->setY(0);
-	}
+	cout << "PETAAAAAAAAAA1 " << endl;
 	a->setX(xx);
 	a->setY(yy);
 
@@ -304,17 +300,17 @@ int main (void)
   	int enemposY;
   	do
   	{
-  		/* genera un número aleatorio entre 0 y 2, hasta que no se de el caso de una posición (0,0): */
-  		enemposX = rand()%3;
-  		enemposY = rand()%3;
+  		/* genera un número aleatorio entre 0 y el tamaño del TABLERO, hasta que no se de el caso de una posición (0,0): */
+  		enemposX = rand()%TABLERO;
+  		enemposY = rand()%TABLERO;
   	}
-  	while ((enemposX == 0 && enemposY == 0) || (enemposX == 2 && enemposY == 2));
+  	while ((enemposX == 0 && enemposY == 0) || (enemposX == (TABLERO-1) && enemposY == (TABLERO-1)));
 
 		//////////////////////////////////////////////////////////////////////////////
   	Enemigo * e = new Enemigo (NOMBRE_DEL_MALO, enemposX, enemposY, -reputacion); 	//- reputacion hace que todo el Karma positivo acumulado por los anteriores personajes haga que la dificultad del enemigo sea mas baja.
   	//////////////////////////////////////////////////////////////////////////////
 
-
+  	cout << "PETAAAAAAAAAA2 " << endl;
 	mapear(a->getX(),a->getY(), e->getX(), e->getY());	
   	int haluchado = 0;
 	do
