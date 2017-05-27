@@ -304,9 +304,19 @@ int main (void)
 			{
 				cout << "Introduce la partida que quieras cargar:" << endl;
 				cin >> hola;
-				if(hola>a->getNump() || hola<0)
+				if(!cin) // or if(cin.fail())
 				{
-					cout << "No es una opcion valida." << endl;
+				    cin.clear(); // reset failbit
+				    cin.ignore(); //skip bad input
+				    hola = -2;
+				    cout << "Mete un caracter valido" << endl;
+				}
+				else
+				{
+					if(hola>a->getNump() || hola<0)
+					{
+						cout << "No es una opcion valida." << endl;
+					}
 				}
 			}
 			while(hola>a->getNump() || hola<0);
@@ -635,7 +645,7 @@ int lucha (Enemigo &e, clsPersonaje &p)
 		{
 		    cin.clear(); // reset failbit
 		    cin.ignore(); //skip bad input
-		    aux = 0;
+		    aux = 3;
 		    cout << "Mete un caracter valido" << endl;
 		}
 		else
@@ -672,7 +682,7 @@ int lucha (Enemigo &e, clsPersonaje &p)
 			}
 		}
 	}
-	while(aux==1);
+	while((aux != 1 && aux != 2)||(aux == 3));
 }
 void guardar(int num, vector <clsPersonaje> listan)
 {
