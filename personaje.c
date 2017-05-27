@@ -58,7 +58,6 @@ Personaje * lecturaBinarioPartetres(int num)
 
 char *** leerFicheroTexto()
 {
-
 /*Bloque que se podría intentar mover*/
 	char *** hist = (char ***) malloc (TABLERO * sizeof(char**));
 	int i = 0;
