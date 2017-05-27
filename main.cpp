@@ -53,6 +53,12 @@ int main (void)
 	char frmt_str[MAX_LENGTH];
 
 	DBConnector dbConnector(FICHERO_BD);
+	int result = dbConnector.db_build();
+	if (result != SQLITE_OK) 
+	{
+	  	cout << "Error creating table" << endl;
+	  	return result;
+	}
 	//Proceso de lectura del archivo binario:
 	file = fopen(FICHERO_BINARIO, "rb");
 	
@@ -361,12 +367,6 @@ int main (void)
 	a->setX(xx);
 	a->setY(yy);
 
-	int result = dbConnector.db_build();
-	if (result != SQLITE_OK) 
-	{
-	  	cout << "Error creating table" << endl;
-	  	return result;
-	}
 	int reputacion = 0;
 	reputacion = dbConnector.recogerKarmaPersonaje(listan.at(q).getNombre());
 	cout << "VALOR DE REPUTACION: " << reputacion << endl;
