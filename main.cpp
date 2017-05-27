@@ -15,9 +15,6 @@
 
 using namespace std;
 
-#define MAX_LENGTH 20
-#define TABLERO 3
-#define ESPACIADO 5
 #define TAMANYO_LINEA 80
 #define CONSTANTE_PERSONAJE 100
 #define FICHERO_BINARIO "personajes.dat"
@@ -49,8 +46,7 @@ int main (void)
 	int xx=0;
 	int yy=0;
 
-	char str[MAX_LENGTH];
-	char frmt_str[MAX_LENGTH];
+	char frmt_str[TAMANYO_CADENAS];
 
 	DBConnector dbConnector(FICHERO_BD);
 	int result = dbConnector.db_build();
@@ -469,7 +465,7 @@ int main (void)
 		}
 		else if(strcmp(frmt_str, "d") == 0)
 		{
-			if(a->getY()==2)
+			if(a->getY()==(TABLERO-1))
 			{
 				cout << "No se puede ir mas a la derecha." << endl;
 			}
@@ -485,7 +481,7 @@ int main (void)
 		}
 		else if(strcmp(frmt_str, "s") == 0)
 		{
-			if(a->getX()==2)
+			if(a->getX()==(TABLERO-1))
 			{
 				cout << "No se puede ir mas abajo." << endl;
 			}
@@ -528,7 +524,7 @@ int main (void)
 			listan.at(q).setY(a->getY());
 		}
 	}
-	while(!(a->getX()==2 && a->getY()==2));
+	while(!(a->getX()==(TABLERO-1) && a->getY()==(TABLERO-1)));
 
 	cout << "El juego se ha acabado. Agur!" << endl;
 
