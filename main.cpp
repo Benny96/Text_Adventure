@@ -121,6 +121,7 @@ int main (void)
 				cout << "Introduce una opcion valida" << endl;
 			}
 		}
+		rewind(stdin); //Ponemos esta función para que el cin rebobine al inicio. Si no, si pusiéramos una cadena como "1 1 1 1 1", avanzaríamos muchos menús de golpe.
 	}
 	while( (option!=1 && num==-1 ) || (option!=1 && option!=2) );
 
@@ -178,6 +179,7 @@ int main (void)
 		do
 		{
 			cin >> frmt_str;
+			rewind(stdin);
 			aux=0;
 			for(int i=0;i<num;i++)
 			{
@@ -199,6 +201,7 @@ int main (void)
 		do
 		{
 			cin >> frmt_str;
+			rewind(stdin);
 			if(strcmp(frmt_str,clspersonajes.at(q).getContrasena().c_str())!=0)
 				{
 					cout << "La contrasenya es incorrecta, introduce otra." << endl;
@@ -291,7 +294,6 @@ int main (void)
 			cout << "No hay partidas que mostrar" << endl;
 		}
 	}
-
 	char *** hist = leerFicheroTexto();
 	a->setX(xx);
 	a->setY(yy);
@@ -578,6 +580,7 @@ int lucha (Enemigo &e, clsPersonaje &p)
 				cout << "Introduce una opcion valida" << endl;
 			}
 		}
+		rewind(stdin);
 	}
 	while((aux != 1 && aux != 2)||(aux == 3));
 }

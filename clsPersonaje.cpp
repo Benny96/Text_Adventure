@@ -76,11 +76,13 @@ istream& operator>>(istream &in, clsPersonaje &p)
 	cout << "Introduce el nombre de tu personaje:" << endl; 
 	char * aux = new char[TAMANYO_CADENAS];
 	cin >> aux;
+	rewind(stdin);
 	p.setNombre(aux);
 
 	cout << "Introduce la contrasena de tu personaje:" << endl; 
 	char * aux2 = new char[TAMANYO_CADENAS];
 	cin >> aux2;
+	rewind(stdin);
 	p.setContrasena(aux2);
 }
 ostream& operator<<(ostream &out, const clsPersonaje p)
