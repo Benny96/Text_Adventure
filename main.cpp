@@ -117,7 +117,6 @@ int main (void)
 					listan.clear();
 					free(personajes);
 				}
-				free(personajes);
 				return 0;
 			}
 		if(option!=1 && option!=2 && option!=3 && option !=4)
