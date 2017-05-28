@@ -1,3 +1,15 @@
+/**
+ ** @Autores: 
+ **
+ ** Garikoitz Bereciartua (garibere13) 
+ ** Imanol Echeverría (Echever) 
+ ** Beñat Galdós (Benny96)
+ **
+ ** @Objetivo:
+ **
+ ** Implementar los métodos definidos en el archivo de cabecera Personaje.h.
+ */
+
 #include "Personaje.h"
 
 int lecturaBinarioParteuno()
@@ -48,20 +60,17 @@ Personaje * lecturaBinarioPartetres(int num)
 	{
 		num = fgetc(file);
 	}
-	//Obtenemos la cantidad de personajes guardados
 	if (file != NULL)
 	{
 		personajes = (Personaje*)malloc(num * sizeof(Personaje));	///////////////Reservar memoria para el array de personajes
-		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar lainfo que hay en el fichero al array de personajes
+		fread(personajes, sizeof(Personaje), num, file);  ///////////////////Pasar la info que hay en el fichero al array de personajes
 		fclose(file);
 	}
-	//cerrar el fichero
 	return personajes;
 }
 
 char *** leerFicheroTexto()
 {
-/*Bloque que se podría intentar mover*/
 	char *** hist = (char ***) malloc (TABLERO * sizeof(char**));
 	int i = 0;
 	int j = 0;
@@ -110,7 +119,6 @@ char *** leerFicheroTexto()
 	}
 	fclose(fd1); ////////////////////////////Cerramos el fichero de texto
 	return hist;
-	/*Fin del bloque*/
 }
 void clear_if_needed(char *str)
 {

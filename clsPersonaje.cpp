@@ -1,3 +1,15 @@
+/**
+ ** @Autores: 
+ **
+ ** Garikoitz Bereciartua (garibere13) 
+ ** Imanol Echeverría (Echever) 
+ ** Beñat Galdós (Benny96)
+ **
+ ** @Objetivo:
+ **
+ ** Implementar los métodos definidos en el archivo de cabecera clsPersonaje.h.
+ */
+
 #include "Personaje.h"
 #include "clsPersonaje.h"
 

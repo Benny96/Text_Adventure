@@ -1,3 +1,15 @@
+/**
+ ** @Autores: 
+ **
+ **	Garikoitz Bereciartua (garibere13) 
+ **	Imanol Echeverría (Echever) 
+ **	Beñat Galdós (Benny96)
+ **
+ ** @Objetivo:
+ **
+ ** main.cpp será la clase que establecerá la interfaz con el usuario (mediante menús).
+ */
+
 #include <vector>
 
 #include "Personaje.h"
@@ -8,15 +20,77 @@
 
 using namespace std;
 
+/**
+ ** Método que mostrará el menú de personajes por pantalla.
+ */
+
 void menu_personajes();
+
+/**
+ ** Método que mostrará el menú de partidas por pantalla.
+ */
+
 void menu_partidas();
+
+/**
+ ** Método que dibujará el tablero por pantalla.
+ **
+ ** @Param:
+ **
+ ** int x: Coordenada X del clsPersonaje.
+ ** int y: Coordenada Y del clsPersonaje.
+ ** int ex: Coordenada X del Enemigo.
+ ** int ey: Coordenada Y del Enemigo.
+ */
+
 void mapear(int x, int y, int ex, int ey);
+
+/**
+ ** Método que realizará el combate entre el clsPersonaje y el Enemigo.
+ **
+ ** @Param:
+ **
+ ** Enemigo &e: Referencia al Enemigo que lucha.
+ ** clsPersonaje &p: Referencia al clsPersonaje que lucha.
+ **
+ ** @Return:
+ **
+ ** Karma devuelto por la lucha, que posteriormente se guardará en la Base de Datos.
+ */
+
 int lucha (Enemigo &e, clsPersonaje &p);
+
+/**
+ ** Método que comenzará el proceso de guardado en fichero binario, convirtiendo los
+ ** clsPersonajes (clase de C++) a Personajes (struct de C).
+ **
+ ** @Param:
+ **
+ ** int num: Número de elementos a almacenar.
+ ** vector <clsPersonaje> listan: Lista nueva de clsPersonajes a almacenar.
+ */
+
 void guardar(int num, vector <clsPersonaje> listan);
+
+/**
+ ** Método que imprimirá las estadísticas relacionadas a cada personaje por pantalla.
+ **
+ ** @Param:
+ **
+ ** int num: Número de personajes existentes.
+ ** DBConnector &dbConnector: Referencia al objeto DBConnector que permite establecer
+ ** conexiones con la Base de Datos.
+ ** vector <clsPersonaje> &clspersonajes: Referencia al vector de clsPersonajes a
+ ** mostrar.
+ */
+
 void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaje> &clspersonajes);
 
 int main (void)
 {
+	/**
+	 ** Inicializacion de variables auxiliares.
+	 */
 	int karma = 0;
 	int i = 0;
 	int q = 0;

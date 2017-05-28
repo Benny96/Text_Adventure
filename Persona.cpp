@@ -1,3 +1,15 @@
+/**
+ ** @Autores: 
+ **
+ ** Garikoitz Bereciartua (garibere13) 
+ ** Imanol Echeverría (Echever) 
+ ** Beñat Galdós (Benny96)
+ **
+ ** @Objetivo:
+ **
+ ** Implementar los métodos definidos en el archivo de cabecera Persona.h.
+ */
+
 #include "Persona.h"
 
 using namespace std;
@@ -11,7 +23,7 @@ Persona::Persona()
 /*
 No hemos añadido constructores copia debido a que no los necesitamos para el contexto de nuestra aplicación.
 */
-Persona::Persona(const string nombre, int x, int y)
+Persona::Persona(string nombre, int x, int y)
 {
 	this->nombre = nombre;
 	this->x = x;
