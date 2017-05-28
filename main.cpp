@@ -21,16 +21,15 @@ void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaj
 int main (void)
 {
 	int karma = 0;
-	int i;
-	int q;
-	clsPersonaje * a = new clsPersonaje();
+	int i = 0;
+	int q = 0;
 	int option = -1;
 	int nump_aux = -1;
 	int hola=-2;
-	
 	int xx=0;
 	int yy=0;
 
+	clsPersonaje * a = new clsPersonaje();
 	char frmt_str[TAMANYO_CADENAS];
 
 	DBConnector dbConnector(FICHERO_BD);
@@ -112,6 +111,12 @@ int main (void)
 			{
 				cout << "Agur!" << endl;
 				delete a;
+				clspersonajes.clear();
+				if (inicializacion == 0)
+				{
+					listan.clear();
+					free(personajes);
+				}
 				free(personajes);
 				return 0;
 			}
@@ -232,7 +237,12 @@ int main (void)
 				cout << "Agur!" << endl;
 				guardar (num, listan);
 				delete a;
-				free(personajes);
+				clspersonajes.clear();
+				if (inicializacion == 0)
+				{
+					listan.clear();
+					free(personajes);
+				}
 				return 0;
 			}
 			else if(option!=1 && option!=2 && option!=3)
@@ -287,7 +297,6 @@ int main (void)
 	}
 
 	char *** hist = leerFicheroTexto();
-	cout << "PETAAAAAAAAAA1 " << endl;
 	a->setX(xx);
 	a->setY(yy);
 
@@ -310,7 +319,6 @@ int main (void)
   	Enemigo * e = new Enemigo (NOMBRE_DEL_MALO, enemposX, enemposY, -reputacion); 	//- reputacion hace que todo el Karma positivo acumulado por los anteriores personajes haga que la dificultad del enemigo sea mas baja.
   	//////////////////////////////////////////////////////////////////////////////
 
-  	cout << "PETAAAAAAAAAA2 " << endl;
 	mapear(a->getX(),a->getY(), e->getX(), e->getY());	
   	int haluchado = 0;
 	do
@@ -611,7 +619,9 @@ void mostrarEstadisticas (int num, DBConnector &dbConnector, vector <clsPersonaj
 		cout << "No hay estadisticas que mostrar, al no haber personajes registrados." << endl;
 	}
 	else
-	{
+	{	
+		cout << endl;
+		cout << "|||||||||||||| ESTADISTICAS DE LOS PERSONAJES ||||||||||||||" << endl;
 		for (int i = 0; i < num; i++)
 		{
 			int * resultados = dbConnector.recogerDatosPersonaje(clspersonajes.at(i).getNombre());

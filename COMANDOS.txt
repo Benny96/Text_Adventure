@@ -6,4 +6,4 @@ g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsP
 Si queremos compilar en Ubuntu:
 
 gcc Persistencia/sqlite3.c Personaje.c -c
-g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl
+g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main -pthread -ldl

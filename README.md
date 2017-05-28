@@ -18,7 +18,7 @@ Para que la aplicación ejecute correctamente, debemos hacer estas 2 compilacion
 En Linux (probado con Ubuntu v.16.0.4), los comandos a aplicar no varían mucho:
 
 <pre> gcc Persistencia/sqlite3.c Personaje.c -c </pre>
-<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl </pre>
+<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main -pthread -ldl </pre>
 
 Decimos que es _moldeable_, ya que:
 
@@ -50,7 +50,7 @@ To run the application correctly, we have to do 2 compilations: <br>
 In Linux OS (tested with Ubuntu v.16.0.4), the commands to use don't differ too much:
 
 <pre> gcc Persistencia/sqlite3.c Personaje.c -c </pre>
-<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main - pthread -ldl </pre>
+<pre> g++ main.cpp Personaje.o sqlite3.o Persistencia/DBConnector.cpp Enemigo.cpp clsPersonaje.cpp Persona.cpp -o main -pthread -ldl </pre>
 
 This prototype can be _altered_:
 

@@ -9,7 +9,10 @@ int lecturaBinarioParteuno()
 	{
 		inicializacion = 1;
 	}
-	fclose(file);
+	else
+	{
+		fclose(file);
+	}
 	return inicializacion;
 }
 int lecturaBinarioPartedos()
@@ -24,12 +27,12 @@ int lecturaBinarioPartedos()
 	else
 	{
 		num = fgetc(file); 	//Obtenemos la cantidad de personajes guardados
+		fclose(file);
 	}
 	if (num == -1)
 	{
 		num = INIT_PERSONAJES;
 	}
-	fclose(file);
 	return num;
 }
 Personaje * lecturaBinarioPartetres(int num)
