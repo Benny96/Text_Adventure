@@ -8,9 +8,6 @@
 
 using namespace std;
 
-#define CONSTANTE_PERSONAJE 100
-#define FICHERO_BD "datos.bd"
-
 void menu_personajes();
 void menu_partidas();
 void mapear(int x, int y, int ex, int ey);

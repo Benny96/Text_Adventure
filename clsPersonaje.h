@@ -7,6 +7,7 @@
 using namespace std;
 
 #define TAMANYO_PARTIDAS_PERSONAJE 10
+#define CONSTANTE_PERSONAJE 100
 
 class clsPersonaje: public Persona
 {

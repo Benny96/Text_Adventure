@@ -18,17 +18,17 @@ using namespace std;
 #define CELDA_DERROTAS 1
 #define CELDA_HUIDAS 2
 #define CELDA_FINALIZADAS 3
+#define FICHERO_BD "datos.bd"
 
 class DBConnector
 {
 	private:
-  		sqlite3 *db = NULL; //El pointer a nuestra base de datos.
+  		sqlite3 *db = NULL;
   	public:
   		int db_build();
   		int insertarKarmaPersonaje(string personaje, int karma);
-      	int recogerKarmaPersonaje(string personaje);
-      	int* recogerDatosPersonaje(string personaje);
-  		/*int deleteAllCountry();*/
+      int recogerKarmaPersonaje(string personaje);
+      int* recogerDatosPersonaje(string personaje);
   		DBConnector(std::string dbFile);
   		~DBConnector();
 };
