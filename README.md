@@ -1,5 +1,7 @@
 # Text Adventure
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 ## Spanish:
 
 Este proyecto consiste en un prototipo de **videojuego de aventuras de texto** que puede ser moldeable al gusto del consumidor.
