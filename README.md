@@ -10,9 +10,9 @@ Este proyecto consiste en un prototipo de **videojuego de aventuras de texto** q
 
 Los integrantes del grupo somos los siguientes: <br>
 
-Garikoitz Bereciartua (garibere13) <br>
-Imanol Echeverría (Echever) <br>
-y yo, Beñat Galdós (Benny96). <br>
+Garikoitz Bereciartua ([garibere13](https://github.com/garibere13 "Perfil de GitHub de Gari Bereciartua")) <br>
+Imanol Echeverría ([Echever](https://github.com/Echever "Perfil de GitHub de Imanol Echeverría")) <br>
+y yo, Beñat Galdós ([Benny96](https://github.com/Benny96 "Perfil de GitHub de Beñat Galdós")). <br>
 
 Para que la aplicación ejecute correctamente, debemos hacer estas 2 compilaciones: <br>
 
@@ -46,9 +46,9 @@ This project consists on a prototype for **Text Adventure** games, which can be 
 
 It has been created by the following group: <br>
 
-Garikoitz Bereciartua (garibere13) <br>
-Imanol Echeverría (Echever) <br>
-and me, Beñat Galdós (Benny96). <br>
+Garikoitz Bereciartua ([garibere13](https://github.com/garibere13 "Gari Bereciartua's GitHub Profile")) <br>
+Imanol Echeverría ([Echever](https://github.com/Echever "Imanol Echeverría's GitHub Profile")) <br>
+and me, Beñat Galdós ([Benny96](https://github.com/Benny96 "Beñat Galdós' GitHub Profile")). <br>
 
 To run the application correctly, we have to do 2 compilations: <br>
 
