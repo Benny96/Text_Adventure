@@ -4,6 +4,8 @@
 
 ## Spanish:
 
+##### Manual de usuario: https://github.com/Benny96/Text_Adventure/blob/master/user_guide/TextAdventure_UserGuide.pdf
+
 Este proyecto consiste en un prototipo de **videojuego de aventuras de texto** que puede ser moldeable al gusto del consumidor.
 
 Los integrantes del grupo somos los siguientes: <br>
@@ -34,7 +36,11 @@ Se conseguirá ampliar o reducir (exceptuando un TABLERO 1X1, el cual no hemos c
 
 Por ello, hay que recompilar la aplicación, y sería hasta recomendable borrar los ficheros que guardan datos en nuestra aplicación: **datos.bd** y **personajes.dat**, generados en la carpeta de nivel superior.
 
+_____
+
 ## English:
+
+##### User guide (Spanish): https://github.com/Benny96/Text_Adventure/blob/master/user_guide/TextAdventure_UserGuide.pdf
 
 This project consists on a prototype for **Text Adventure** games, which can be altered on demand. 
 
